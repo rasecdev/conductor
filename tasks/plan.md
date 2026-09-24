@@ -23,7 +23,7 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 ### Fase 2: Validação dos gaps conhecidos
 
 - [x] [Tarefa 2: Validar Passo 6 (estrutura Notion) em execução real](https://github.com/rasecdev/conductor/issues/3)
-- [ ] [Tarefa 3: Automatizar o seam de teste com os scripts oficiais do skill-creator](https://github.com/rasecdev/conductor/issues/4)
+- [x] [Tarefa 3: Automatizar o seam de teste com os scripts oficiais do skill-creator](https://github.com/rasecdev/conductor/issues/4)
 - [ ] [Tarefa 4: Testar de ponta a ponta a escalada de avaliação quantitativa (Passo 5)](https://github.com/rasecdev/conductor/issues/5)
 
 ### Checkpoint: Fase 2

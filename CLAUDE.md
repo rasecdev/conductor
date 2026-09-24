@@ -58,9 +58,9 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
   resposta precisa demonstrar), avaliado por comparação `with_skill` vs.
   baseline — não por assertion determinística de string.
 - 4 casos cobertos no v1: projeto novo do zero (`fresh-project`), feature nova
-  em projeto maduro com pipeline formalizado (`mature-feature`, AutoFinance),
-  avaliação de skill nova proposta (`skill-evaluation`), projeto legado maduro
-  sem pipeline formalizado (`legacy-project`, Contabilidade).
+  em projeto maduro com pipeline formalizado (`mature-feature`), avaliação de
+  skill nova proposta (`skill-evaluation`), projeto legado maduro sem pipeline
+  formalizado (`legacy-project`).
 - **Pendência conhecida (Tarefa 3 do plano ativo):** essas 4 iterações foram
   rodadas manualmente durante o desenvolvimento da spec, não pelos scripts
   oficiais do `skill-creator` — automatizar isso é trabalho futuro, não

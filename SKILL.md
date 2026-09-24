@@ -46,8 +46,8 @@ recomendar.
 
 Antes de recomendar qualquer coisa, leia o `CLAUDE.md` (ou `AGENTS.md`) do
 repositório atual, se existir. Alguns projetos formalizam um fluxo próprio em
-cima deste pipeline genérico (ex: o AutoFinance amarra cada tarefa a uma
-branch, PR contra `development`, milestone e issue no GitHub). Quando essa
+cima deste pipeline genérico (ex: amarrar cada tarefa a uma branch, PR contra
+uma branch de homologação, milestone e issue no tracker). Quando essa
 convenção existir, ela tem precedência sobre a ordem genérica — o trabalho do
 `conductor` aqui é encaixar o pipeline de spec dentro dela, não substituí-la.
 

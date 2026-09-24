@@ -34,7 +34,7 @@ Quando o usuário propuser uma skill nova pra entrar no pipeline:
 ## Convenção por projeto pode mudar a ordem
 
 Um projeto específico pode ter seu próprio fluxo documentado no `CLAUDE.md` do
-repo (ex: o AutoFinance formaliza branch → PR → milestone → checkpoint em cima
-deste pipeline genérico). Quando existir, a convenção do projeto tem
+repo (ex: formalizar branch → PR → milestone → checkpoint em cima deste
+pipeline genérico). Quando existir, a convenção do projeto tem
 precedência sobre esta tabela genérica — leia o `CLAUDE.md` do repo atual
 antes de recomendar o próximo passo.

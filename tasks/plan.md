@@ -24,19 +24,19 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 
 - [x] [Tarefa 2: Validar Passo 6 (estrutura Notion) em execução real](https://github.com/rasecdev/conductor/issues/3)
 - [x] [Tarefa 3: Automatizar o seam de teste com os scripts oficiais do skill-creator](https://github.com/rasecdev/conductor/issues/4)
-- [ ] [Tarefa 4: Testar de ponta a ponta a escalada de avaliação quantitativa (Passo 5)](https://github.com/rasecdev/conductor/issues/5)
+- [x] [Tarefa 4: Testar de ponta a ponta a escalada de avaliação quantitativa (Passo 5)](https://github.com/rasecdev/conductor/issues/5)
 
 ### Checkpoint: Fase 2
-- [ ] Passo 6 (Notion) validado em execução real
-- [ ] Seam de teste roda pelos scripts oficiais do skill-creator, não manualmente
-- [ ] Escalada de avaliação quantitativa (Passo 5) testada ao menos uma vez de ponta a ponta
+- [x] Passo 6 (Notion) validado em execução real
+- [x] Seam de teste roda pelos scripts oficiais do skill-creator, não manualmente
+- [x] Escalada de avaliação quantitativa (Passo 5) testada ao menos uma vez de ponta a ponta
 
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| Conector Notion não autorizado/carregado na sessão de validação | Médio — bloqueia Tarefa 2 | Skill já degrada avisando (Passo 6); tarefa só pode ser fechada quando a sessão tiver o conector ativo |
-| Nenhum caso real ainda gerou ambiguidade suficiente pra escalar avaliação quantitativa (Passo 5) | Baixo — Tarefa 4 pode precisar de cenário sintético | Se não houver caso real disponível, construir um par de skills propositalmente ambíguo só para o teste |
+| Conector Notion não autorizado/carregado na sessão de validação | Médio — bloqueia Tarefa 2 | Skill já degrada avisando (Passo 6); tarefa só pode ser fechada quando a sessão tiver o conector ativo — **resolvido**, conector estava ativo na sessão de validação |
+| Nenhum caso real ainda gerou ambiguidade suficiente pra escalar avaliação quantitativa (Passo 5) | Baixo — Tarefa 4 pode precisar de cenário sintético | Se não houver caso real disponível, construir um par de skills propositalmente ambíguo só para o teste — **usado**: par sintético `spec-drafting`/`feature-spec-writer` |
 
 ## Open Questions
 

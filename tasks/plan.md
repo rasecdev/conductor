@@ -41,3 +41,23 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 ## Open Questions
 
 - ~~Vale rodar `/setup-matt-pocock-skills` formalmente pra esse repo, ou o `CLAUDE.md` próprio (Tarefa 1) já resolve o que falta?~~ Decidido ao executar a Tarefa 1: o `CLAUDE.md` já cobre estrutura, tracker e fluxo de commit reais — sem necessidade de rodar setup adicional.
+
+# Rodada v1.1 — Passo 6 agnóstico de ferramenta
+
+Spec: [issue #6](https://github.com/rasecdev/conductor/issues/6). Decidido em
+conversa com o usuário: o Passo 6 (hoje hardcoded pra Notion, com justificativa
+explícita contra Miro) deve detectar qual MCP de board/documentação está
+disponível na sessão e usar o que houver; se nenhum, perguntar uma vez e, se o
+usuário recusar, registrar a recusa persistentemente no projeto alvo (não no
+conductor) pra nunca mais perguntar ali.
+
+## Task List
+
+### Fase 1: Passo 6 agnóstico
+
+- [ ] [Tarefa 1: Tornar Passo 6 agnóstico de ferramenta (detecção + pergunta única + persistência por projeto)](https://github.com/rasecdev/conductor/issues/7)
+- [ ] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo o Passo 6 agnóstico](https://github.com/rasecdev/conductor/issues/8)
+
+### Checkpoint: Fase 1
+- [ ] SKILL.md não cita mais Notion como obrigatório nem descarta Miro
+- [ ] evals/evals.json cobre os três cenários da spec (ferramenta alternativa detectada, nenhuma disponível, recusa já registrada)

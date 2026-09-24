@@ -15,10 +15,10 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 
 ### Fase 1: Formalização de convenção
 
-- [ ] [Tarefa 1: CLAUDE.md formalizando a convenção do próprio repositório](https://github.com/rasecdev/conductor/issues/2)
+- [x] [Tarefa 1: CLAUDE.md formalizando a convenção do próprio repositório](https://github.com/rasecdev/conductor/issues/2)
 
 ### Checkpoint: Fase 1
-- [ ] `CLAUDE.md` do repositório existe e reflete a convenção real usada até aqui
+- [x] `CLAUDE.md` do repositório existe e reflete a convenção real usada até aqui
 
 ### Fase 2: Validação dos gaps conhecidos
 
@@ -40,4 +40,4 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 
 ## Open Questions
 
-- Vale rodar `/setup-matt-pocock-skills` formalmente pra esse repo, ou o `CLAUDE.md` próprio (Tarefa 1) já resolve o que falta? Decidir ao executar a Tarefa 1.
+- ~~Vale rodar `/setup-matt-pocock-skills` formalmente pra esse repo, ou o `CLAUDE.md` próprio (Tarefa 1) já resolve o que falta?~~ Decidido ao executar a Tarefa 1: o `CLAUDE.md` já cobre estrutura, tracker e fluxo de commit reais — sem necessidade de rodar setup adicional.

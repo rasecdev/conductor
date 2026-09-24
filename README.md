@@ -58,4 +58,4 @@ Histórico de correções encontradas nesse processo (e o porquê de cada uma) e
 
 ## Licença
 
-Uso pessoal — sem licença de distribuição definida ainda.
+[MIT](LICENSE).

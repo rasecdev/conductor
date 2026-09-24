@@ -245,6 +245,22 @@ hierarquia que qualquer projeto real precisa). Estrutura:
   atual; se for grande/multi-etapa, sugira uma subpágina dedicada, linkada da
   página do projeto. A decisão final é sempre do usuário.
 
+**Detectar mudança de arquitetura ou fluxo já mapeado.** Ao ler
+`PLANO.md`/`docs/adr/` (Passo 2), preste atenção não só ao estágio atual, mas
+a se algo que já está representado no Notion mudou desde a última vez — uma
+decisão de arquitetura revista, um ADR novo que substitui/altera um anterior,
+ou um fluxo (diagrama de fase, dependência de tarefas) que não bate mais com o
+que o `tasks/plan.md` ou o `PLANO.md` descrevem agora. Sinais disso: um ADR
+com data mais recente que a última atualização da página correspondente no
+Notion, ou uma seção do `PLANO.md` que diverge do que está registrado na
+página de fase.
+
+Quando notar isso, avise o usuário e pergunte se quer atualizar a página
+correspondente no Notion — nunca edite sozinho. Mesmo critério de tamanho da
+"página esporádica": mudança pontual vira nota na página da fase atual;
+mudança grande/estrutural vira sugestão de subpágina dedicada. A decisão de
+atualizar ou não, e como, continua sendo do usuário.
+
 As ferramentas de Notion chegam via o conector MCP (`plugin:design:notion`).
 Se elas não estiverem disponíveis nesta sessão (conector não autorizado, ou
 autorizado mas ainda não carregado — isso exige uma sessão nova depois da
@@ -260,6 +276,8 @@ retomar a atualização assim que as ferramentas estiverem acessíveis.
   `disable-model-invocation`).
 - Nunca cria uma página/board no Notion sem perguntar primeiro, fora da
   página de projeto e de fase que já são esperadas.
+- Nunca atualiza uma página do Notion por causa de mudança de
+  arquitetura/fluxo sem perguntar primeiro — só avisa e oferece.
 - Nunca decide sozinho qual skill "vence" quando o usuário está comparando
   duas — recomenda, não decide.
 - Nunca dispara uma avaliação quantitativa (via `skill-creator`) sem pedido

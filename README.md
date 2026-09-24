@@ -8,6 +8,10 @@ O pipeline de skills de spec development ([mattpocock/skills](https://github.com
 
 O `conductor` é essa peça que faltava: lê o estado real do projeto (specs existentes, tarefas, convenções do próprio repo) e diz exatamente qual skill chamar agora — sem nunca decidir por conta própria disparar as skills mais sensíveis (interrogatório, publicação de spec), que continuam exigindo confirmação explícita.
 
+### Em que difere do `ask-matt` (mattpocock/skills)
+
+O `mattpocock/skills` já tem seu próprio roteador, [`ask-matt`](https://github.com/mattpocock/skills/blob/main/skills/engineering/ask-matt/SKILL.md) — um mapa em prosa de cenário → sequência de skills, cobrindo bem mais fluxo (bugs, handoff, fronteiras de fase) do que este projeto tenta modelar. O `conductor` não substitui isso: a diferença é que `ask-matt` é estático (a mesma prosa pra qualquer projeto), enquanto o `conductor` lê o estado real do repositório atual — `CLAUDE.md`, `tasks/plan.md`, git log, milestones/issues — antes de recomendar. Os dois se complementam: `ask-matt` (ou equivalente) como vocabulário do pipeline, `conductor` como leitura de onde o projeto está de fato.
+
 ## Instalação
 
 Copie a pasta `conductor/` para `~/.claude/skills/conductor/` (escopo global — funciona em qualquer projeto automaticamente, sem configuração por repositório):

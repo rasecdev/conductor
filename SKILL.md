@@ -1,6 +1,6 @@
 ---
 name: conductor
-description: Orients any project through the spec-development pipeline (wayfinder → grilling/domain-modeling → to-spec → planning-and-task-breakdown → implement-specs → check-impl-against-spec) — reads project state and project-specific conventions, says exactly where things stand and what the next skill to run is, maintains a live Notion structure (project page → phase pages with task-dependency diagrams) for the project's spec history, and evaluates whether a newly proposed skill belongs in the pipeline or duplicates one already in use. Use this whenever the user starts a new project or a new feature in an existing one, asks "onde estamos" / "what's next" / "qual skill eu chamo agora", is about to write tasks or a spec without having gone through discovery first, mentions wanting to organize or track the spec process, or proposes adding a new skill to this workflow — even if they don't name "conductor" explicitly.
+description: Orients any project through a spec-development pipeline (discovery/wayfinder → sharpen/grilling/domain-modeling → formal spec/to-spec → task breakdown → implementation → review — exact skill names vary by installed pipeline) — reads project state and project-specific conventions, says exactly where things stand and what the next skill to run is, maintains a live Notion structure (project page → phase pages with task-dependency diagrams) for the project's spec history, and evaluates whether a newly proposed skill belongs in the pipeline or duplicates one already in use (including static prose routers like ask-matt). Use this whenever the user starts a new project or a new feature in an existing one, asks "onde estamos" / "what's next" / "qual skill eu chamo agora", is about to write tasks or a spec without having gone through discovery first, mentions wanting to organize or track the spec process, or proposes adding a new skill to this workflow — even if they don't name "conductor" explicitly.
 ---
 
 # Conductor
@@ -12,12 +12,24 @@ não implementa nada — ela sabe em que ponto do processo cada projeto está, d
 qual é o próximo instrumento a entrar, e mantém o registro de tudo isso vivo
 no Notion.
 
-Ela existe porque o pipeline de skills de spec (`wayfinder`, `grilling`,
-`grill-with-docs`, `domain-modeling`, `to-spec`, `planning-and-task-breakdown`,
-`implement-specs`, `check-impl-against-spec`) é poderoso mas fragmentado: cada
-peça sabe fazer sua parte, nenhuma sabe dizer "você está aqui, o próximo passo
-é ali". É fácil esquecer uma etapa (ex: começar a escrever tarefas sem ter
-passado por spec formal) simplesmente porque ninguém lembrou que ela existia.
+Ela existe porque um pipeline de skills de spec (descoberta → sharpen/modelo
+de domínio → spec formal → quebra em tarefas → implementação → revisão —
+ver `references/pipeline-stages.md` pra nomes de skill de exemplo, que variam
+por pipeline instalado) é poderoso mas fragmentado: cada peça sabe fazer sua
+parte, nenhuma sabe dizer "você está aqui, o próximo passo é ali". É fácil
+esquecer uma etapa (ex: começar a escrever tarefas sem ter passado por spec
+formal) simplesmente porque ninguém lembrou que ela existia.
+
+**Isso não é um roteador estático.** Alguns pipelines já trazem o próprio
+roteador em prosa (ex: `ask-matt` no
+[mattpocock/skills](https://github.com/mattpocock/skills), que mapeia cenário
+→ sequência de skills). O `conductor` não substitui isso nem tenta recriar
+esse mapa — a diferença é que ele lê o estado real do repositório atual
+(`CLAUDE.md`, `tasks/plan.md`, git log, milestones/issues) antes de
+recomendar, em vez de descrever o fluxo genericamente. Se um roteador desses
+estiver instalado, trate-o como referência de vocabulário do pipeline; a
+recomendação final do `conductor` continua vindo da leitura de estado, não da
+prosa dele.
 
 ## Por que várias dessas skills não podem ser chamadas automaticamente
 
@@ -37,10 +49,12 @@ etapa deveria virar automática, isso é decisão dele, tomada explicitamente
 sobre aquela skill específica — não algo que o `conductor` decide por conta
 própria.
 
-As demais skills do pipeline (`domain-modeling`, `planning-and-task-breakdown`,
-`implement-specs`, `check-impl-against-spec`) não têm essa flag — o
-`conductor` pode chamá-las diretamente quando fizer sentido, em vez de só
-recomendar.
+As demais skills do pipeline (ex: `domain-modeling`, e o que fizer o papel de
+"quebra em tarefas"/"implementação"/"revisão" no pipeline instalado) em geral
+não têm essa flag — o `conductor` pode chamá-las diretamente quando fizer
+sentido, em vez de só recomendar. Confira sempre `scripts/catalog.sh` pra
+saber, na hora, quais skills instaladas têm `disable-model-invocation` — não
+assuma pela lista de exemplo.
 
 ## Passo 1 — Ler a convenção do projeto atual
 

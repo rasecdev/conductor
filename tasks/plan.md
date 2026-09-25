@@ -81,3 +81,24 @@ registrado do projeto.
 ### Checkpoint: Fase 1
 - [ ] SKILL.md cobre desatualização de qualquer artefato vivo registrado, não só board
 - [ ] evals/evals.json cobre pelo menos um cenário de artefato não-board desatualizado
+
+# Rodada v1.3 — Detectar tipo de projeto pra escalar artefatos recomendados
+
+Spec: [issue #12](https://github.com/rasecdev/conductor/issues/12). Decidido
+em conversa com o usuário: o conductor vai orientar projetos bem diferentes
+entre si (mobile, web, microserviço/backend puro). Nem todo artefato do
+pipeline de diagramação (fluxo de tela, design de UI) faz sentido pra todo
+projeto — um backend headless não tem tela. Isso é só filtro de
+*recomendação*; qual ferramenta usar dentro de um artefato continua sendo
+decisão do usuário (mesmo princípio do Passo 6), o conductor não decide isso.
+
+## Task List
+
+### Fase 1: Detecção de tipo de projeto
+
+- [ ] [Tarefa 1: Estender Passo 1 com detecção de tipo de projeto (UI vs headless)](https://github.com/rasecdev/conductor/issues/13)
+- [ ] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo projeto headless sem recomendação de UI](https://github.com/rasecdev/conductor/issues/14)
+
+### Checkpoint: Fase 1
+- [ ] Passo 1 documenta sinais de tipo de projeto e como filtram recomendação de artefato
+- [ ] evals/evals.json cobre o cenário de projeto headless não recebendo recomendação de UI

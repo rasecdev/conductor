@@ -1,6 +1,6 @@
 ---
 name: conductor
-description: Orients any project through a spec-development pipeline (discovery/wayfinder → sharpen/grilling/domain-modeling → formal spec/to-spec → task breakdown → implementation → review — exact skill names vary by installed pipeline) — reads project state and project-specific conventions, says exactly where things stand and what the next skill to run is, maintains a live Notion structure (project page → phase pages with task-dependency diagrams) for the project's spec history, and evaluates whether a newly proposed skill belongs in the pipeline or duplicates one already in use (including static prose routers like ask-matt). Use this whenever the user starts a new project or a new feature in an existing one, asks "onde estamos" / "what's next" / "qual skill eu chamo agora", is about to write tasks or a spec without having gone through discovery first, mentions wanting to organize or track the spec process, or proposes adding a new skill to this workflow — even if they don't name "conductor" explicitly.
+description: Orients any project through a spec-development pipeline (discovery/wayfinder → sharpen/grilling/domain-modeling → formal spec/to-spec → task breakdown → implementation → review — exact skill names vary by installed pipeline) — reads project state and project-specific conventions, says exactly where things stand and what the next skill to run is, maintains a live board structure (project page → phase pages with task-dependency diagrams, in whichever tool the project uses or none) for the project's spec history, and evaluates whether a newly proposed skill belongs in the pipeline or duplicates one already in use (including static prose routers like ask-matt). Use this whenever the user starts a new project or a new feature in an existing one, asks "onde estamos" / "what's next" / "qual skill eu chamo agora", is about to write tasks or a spec without having gone through discovery first, mentions wanting to organize or track the spec process, or proposes adding a new skill to this workflow — even if they don't name "conductor" explicitly.
 ---
 
 # Conductor
@@ -225,20 +225,52 @@ formas de chegar lá:
    **oferece** rodar a avaliação — nunca decide sozinho que vale a pena e já
    dispara. Se o usuário preferir decidir só com a leitura, respeite isso.
 
-## Passo 6 — Manter a estrutura no Notion
+## Passo 6 — Manter a estrutura no board vivo do processo de spec
 
-O board vivo do processo de spec de cada projeto mora no Notion (não Miro —
-o plano free do Miro trava em 3 boards editáveis, incompatível com a
-hierarquia que qualquer projeto real precisa). Estrutura:
+Cada projeto pode ter um board vivo do processo de spec, mas a ferramenta que
+hospeda isso não é fixa — pode ser Notion, Miro, ClickUp Docs, ou qualquer
+outra que sirva ao mesmo propósito. Nenhuma delas é a recomendada por
+definição; a escolha é do usuário e do que já estiver em uso no projeto.
+
+### Qual ferramenta usar
+
+1. **Precedente do projeto.** Cheque primeiro se o projeto já tem uma
+   ferramenta registrada — uma menção em `PROGRESSO.md`/`CLAUDE.md`, um link
+   pra página/board já existente, ou o próprio uso ao longo da conversa. Se
+   houver, use essa ferramenta sem perguntar de novo.
+2. **Nenhum precedente: detectar o que está disponível.** Verifique quais
+   MCPs/conectores de board ou documentação estão disponíveis nesta sessão
+   (Notion, Miro, ClickUp Docs, etc.) — mesmo princípio do catálogo dinâmico
+   de skills do Passo 3, não mantenha uma lista fixa de cabeça. Se exatamente
+   um estiver disponível e conectado, use-o. Se mais de um estiver disponível
+   e não houver precedente, pergunte ao usuário qual prefere.
+3. **Nenhuma ferramenta disponível nem precedente registrado.** Pergunte ao
+   usuário, **uma única vez por projeto**, se ele usa alguma ferramenta desse
+   tipo (Notion, Miro, etc.) pra acompanhar o processo de spec.
+   - Se responder que sim: use a ferramenta indicada assim que o conector
+     correspondente estiver acessível (mesma degradação descrita no fim desta
+     seção).
+   - Se responder que não usa e não quer usar: registre essa decisão de forma
+     persistente **no projeto alvo** (nunca no `conductor`) — por exemplo uma
+     nota curta em `PROGRESSO.md` ou `CLAUDE.md` do projeto ("processo de spec
+     não usa board externo, decidido em `<data>`"). A partir daí, nunca mais
+     pergunte isso *naquele projeto* — continue orientando o processo
+     normalmente, só sem a parte de board.
+   - Antes de perguntar, sempre confira se essa decisão já foi registrada
+     (Passo 1/2 já leem `PROGRESSO.md`/`CLAUDE.md` do projeto) — a pergunta é
+     por projeto, não é feita de novo só porque a sessão mudou.
+
+### Estrutura, uma vez que haja ferramenta
 
 - **Página do projeto** (sempre existe, é o hub): estágio atual, link pra
   cada página de fase, link pro board de referência do pipeline de skills.
-- **Subpágina por fase/rodada** (ex: cada milestone do GitHub, ou cada
+- **Subpágina/nó por fase/rodada** (ex: cada milestone do GitHub, ou cada
   sub-fase documentada no `PLANO.md`): contém o grafo de dependência das
-  tarefas daquela fase, renderizado como diagrama Mermaid em bloco de código.
-  Tarefas individuais são nós dentro desse diagrama — nunca ganham página
-  própria (evita dezenas de páginas soltas; um projeto real já passa de 20
-  fases).
+  tarefas daquela fase, renderizado como diagrama Mermaid (ou o formato de
+  diagrama nativo da ferramenta escolhida, se ela não suportar Mermaid).
+  Tarefas individuais são nós dentro desse diagrama — nunca ganham
+  página/nó próprio (evita dezenas de páginas soltas; um projeto real já
+  passa de 20 fases).
 - **Página esporádica** (bug estrutural, correção de impacto, algo fora do
   mapeamento previsto): **nunca crie sozinho**. Pergunte primeiro. Se for algo
   pequeno e pontual, sugira registrar como nota dentro da página da fase
@@ -247,26 +279,29 @@ hierarquia que qualquer projeto real precisa). Estrutura:
 
 **Detectar mudança de arquitetura ou fluxo já mapeado.** Ao ler
 `PLANO.md`/`docs/adr/` (Passo 2), preste atenção não só ao estágio atual, mas
-a se algo que já está representado no Notion mudou desde a última vez — uma
+a se algo que já está representado no board mudou desde a última vez — uma
 decisão de arquitetura revista, um ADR novo que substitui/altera um anterior,
 ou um fluxo (diagrama de fase, dependência de tarefas) que não bate mais com o
 que o `tasks/plan.md` ou o `PLANO.md` descrevem agora. Sinais disso: um ADR
-com data mais recente que a última atualização da página correspondente no
-Notion, ou uma seção do `PLANO.md` que diverge do que está registrado na
-página de fase.
+com data mais recente que a última atualização da página/nó correspondente no
+board, ou uma seção do `PLANO.md` que diverge do que está registrado ali.
 
-Quando notar isso, avise o usuário e pergunte se quer atualizar a página
-correspondente no Notion — nunca edite sozinho. Mesmo critério de tamanho da
-"página esporádica": mudança pontual vira nota na página da fase atual;
-mudança grande/estrutural vira sugestão de subpágina dedicada. A decisão de
-atualizar ou não, e como, continua sendo do usuário.
+Quando notar isso, avise o usuário e pergunte se quer atualizar a página/nó
+correspondente na ferramenta em uso — nunca edite sozinho. Mesmo critério de
+tamanho da "página esporádica": mudança pontual vira nota na página da fase
+atual; mudança grande/estrutural vira sugestão de subpágina dedicada. A
+decisão de atualizar ou não, e como, continua sendo do usuário.
 
-As ferramentas de Notion chegam via o conector MCP (`plugin:design:notion`).
-Se elas não estiverem disponíveis nesta sessão (conector não autorizado, ou
-autorizado mas ainda não carregado — isso exige uma sessão nova depois da
-autorização), não trave o resto do trabalho: avise o usuário que a atualização
-do Notion ficou pendente, continue orientando o processo normalmente, e ofereça
-retomar a atualização assim que as ferramentas estiverem acessíveis.
+### Degradação
+
+As ferramentas chegam via conector MCP (ex: `plugin:design:notion` pra
+Notion, ou o que estiver instalado pra Miro/ClickUp Docs/outra). Se a
+ferramenta escolhida não estiver disponível nesta sessão (conector não
+autorizado, ou autorizado mas ainda não carregado — isso exige uma sessão
+nova depois da autorização), não trave o resto do trabalho: avise o usuário
+que a atualização do board ficou pendente, continue orientando o processo
+normalmente, e ofereça retomar a atualização assim que as ferramentas
+estiverem acessíveis.
 
 ## O que o conductor nunca faz
 
@@ -274,10 +309,13 @@ retomar a atualização assim que as ferramentas estiverem acessíveis.
   mecanicamente não consegue, e não deveria mesmo se conseguisse.
 - Nunca edita o frontmatter de outra skill (ex: pra remover
   `disable-model-invocation`).
-- Nunca cria uma página/board no Notion sem perguntar primeiro, fora da
-  página de projeto e de fase que já são esperadas.
-- Nunca atualiza uma página do Notion por causa de mudança de
+- Nunca cria uma página/nó no board sem perguntar primeiro, fora da página de
+  projeto e de fase que já são esperadas.
+- Nunca atualiza uma página do board por causa de mudança de
   arquitetura/fluxo sem perguntar primeiro — só avisa e oferece.
+- Nunca assume Notion (ou qualquer outra ferramenta específica) como padrão
+  do projeto sem checar precedente ou perguntar — nem insiste numa ferramenta
+  depois que o usuário já disse que não usa/não quer usar board nenhum.
 - Nunca decide sozinho qual skill "vence" quando o usuário está comparando
   duas — recomenda, não decide.
 - Nunca dispara uma avaliação quantitativa (via `skill-creator`) sem pedido

@@ -204,12 +204,12 @@ Issues.
 - [x] [Infra 1: Criar branch development e clone de trabalho em S:\Trampo\conductor](https://github.com/rasecdev/conductor/issues/28)
 - [x] [Infra 2: CI com gitleaks, shellcheck e validação do evals.json](https://github.com/rasecdev/conductor/issues/29)
 - [x] [Infra 3: markdownlint no CI](https://github.com/rasecdev/conductor/issues/30)
-- [ ] [Infra 4: Registrar fluxo branch/PR no CLAUDE.md e primeira promoção para master](https://github.com/rasecdev/conductor/issues/31)
+- [x] [Infra 4: Registrar fluxo branch/PR no CLAUDE.md e primeira promoção para master](https://github.com/rasecdev/conductor/issues/31)
 
 ### Checkpoint
 
-- [ ] CI verde em `development`, com teste negativo provando que o gate falha quando deve
-- [ ] `master` promovida e instalação atualizada via `git pull`
+- [x] CI verde em `development`, com teste negativo provando que o gate falha quando deve
+- [x] `master` promovida e instalação atualizada via `git pull`
 - [ ] Revisão com o usuário antes de voltar à v1.4
 
 ## Risks and Mitigations

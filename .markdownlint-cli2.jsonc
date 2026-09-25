@@ -1,0 +1,18 @@
+{
+  "config": {
+    // Prosa quebrada em ~80 colunas, mas tabelas, links e comandos passam
+    // disso legitimamente; comprimento de linha não é defeito aqui.
+    "MD013": false,
+    // Tabelas usam o separador compacto `|---|` de forma consistente;
+    // alinhar colunas é só estética.
+    "MD060": false,
+    // No SPEC.md e nas specs, o número da user story é o id dela
+    // (referenciado como "#<issue>:<nº>") e continua entre subseções.
+    "MD029": false,
+    // tasks/plan.md repete "Task List"/"Checkpoint" em cada rodada, sob H1s
+    // diferentes; só é erro repetir entre irmãos.
+    "MD024": { "siblings_only": true }
+  },
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules/**"]
+}

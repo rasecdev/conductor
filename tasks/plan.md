@@ -55,9 +55,9 @@ conductor) pra nunca mais perguntar ali.
 
 ### Fase 1: Passo 6 agnóstico
 
-- [ ] [Tarefa 1: Tornar Passo 6 agnóstico de ferramenta (detecção + pergunta única + persistência por projeto)](https://github.com/rasecdev/conductor/issues/7)
-- [ ] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo o Passo 6 agnóstico](https://github.com/rasecdev/conductor/issues/8)
+- [x] [Tarefa 1: Tornar Passo 6 agnóstico de ferramenta (detecção + pergunta única + persistência por projeto)](https://github.com/rasecdev/conductor/issues/7)
+- [x] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo o Passo 6 agnóstico](https://github.com/rasecdev/conductor/issues/8)
 
 ### Checkpoint: Fase 1
-- [ ] SKILL.md não cita mais Notion como obrigatório nem descarta Miro
-- [ ] evals/evals.json cobre os três cenários da spec (ferramenta alternativa detectada, nenhuma disponível, recusa já registrada)
+- [x] SKILL.md não cita mais Notion como obrigatório nem descarta Miro
+- [x] evals/evals.json cobre os três cenários da spec (ferramenta alternativa detectada, nenhuma disponível, recusa já registrada) — resultado em `evals/results-v1.1-passo6-agnostico.md`

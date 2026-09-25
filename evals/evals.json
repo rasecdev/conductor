@@ -28,6 +28,27 @@
       "prompt": "Quero adicionar uma melhoria/nova funcionalidade no ERPLegado. Por onde eu começo?",
       "expected_output": "Reconhece que C:\\Projetos\\ERPLegado é um sistema legado maduro (milhares de commits, código real em produção), NÃO trata como 'ideia nova' nem recomenda wayfinder/grilling como descoberta do zero. Encontra a convenção existente mesmo estando fora do padrão CLAUDE.md (.cursor/rules/my-custom-rules.mdc), nota que essa regra exige um development_plan.md que não existe ainda, e recomenda o passo certo em cima disso (gerar o plano exigido / mapear o sistema existente via domain-modeling ou grill-with-docs) em vez de uma recomendação genérica de pipeline do zero.",
       "files": []
+    },
+    {
+      "id": 4,
+      "name": "board-tool-precedent-non-notion",
+      "prompt": "O projeto FinanceBot (C:\\Projetos\\FinanceBot) usa Miro pra acompanhar as fases do processo de spec — tem um board lá, com o link registrado no PROGRESSO.md. Quero saber em que fase estamos agora.",
+      "expected_output": "Reconhece o precedente já registrado (Miro, não Notion) no PROGRESSO.md e usa essa ferramenta pra responder sobre o estado do board, sem sugerir trocar pra Notion, sem mencionar qualquer limitação do Miro, e sem perguntar de novo qual ferramenta usar.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "board-tool-first-ask",
+      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360) já tem CLAUDE.md e tasks/plan.md com uma fase em andamento, mas nunca mencionou nenhuma ferramenta de board em nenhum arquivo. Quero saber o estado atual do processo de spec.",
+      "expected_output": "Responde sobre o estágio do pipeline normalmente, e ao tratar do board verifica que não há precedente registrado nem MCP de board conectado — pergunta ao usuário, uma única vez, se ele usa alguma ferramenta desse tipo (Notion, Miro, etc.) pra acompanhar o processo, sem pressupor Notion como padrão nem prosseguir sem perguntar.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "board-tool-refusal-remembered",
+      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md já tem a nota 'processo de spec não usa board externo, decidido em 2026-08-10'. Quero saber o estado atual do processo de spec.",
+      "expected_output": "Reconhece a recusa já registrada no PROGRESSO.md e não pergunta de novo sobre ferramenta de board (Notion, Miro ou qualquer outra) — segue orientando o processo normalmente, só sem a parte de board.",
+      "files": []
     }
   ]
 }

@@ -143,7 +143,7 @@ Tarefas no GitHub Issues; aqui só o índice.
 - [x] [Tarefa 3: Sinalizar gate não acionado e só oferecer setup inicial](https://github.com/rasecdev/conductor/issues/18) — stories 9, 10, 16
 - [x] [Tarefa 4a: Fixtures dos casos de eval que dependem de estado real (0, 1, 3)](https://github.com/rasecdev/conductor/issues/40)
 - [x] [Tarefa 4b: Fixtures dos casos de eval descritivos (4, 5, 6, 8, 9)](https://github.com/rasecdev/conductor/issues/41)
-- [ ] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
+- [x] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
 - [ ] [Tarefa 5: Documentar a avaliação da skill](https://github.com/rasecdev/conductor/issues/42)
 
 Replanejado pela `planning-and-task-breakdown` (2026-09-25): os casos antigos
@@ -154,9 +154,9 @@ só quando a skill estiver pronta.
 
 ### Checkpoint: Fase 2
 
-- [ ] Suíte completa (10 casos antigos, agora com fixtures, + 6 novos) sem regressão
-- [ ] Requisitos de #24 conferidos contra o `SKILL.md`; toda story com caso ou justificativa
-- [ ] `SPEC.md` incorpora o delta da v1.4
+- [x] Suíte completa (10 casos antigos, agora com fixtures, + 6 novos) sem regressão
+- [x] Requisitos de #24 conferidos contra o `SKILL.md`; toda story com caso ou justificativa
+- [x] `SPEC.md` incorpora o delta da v1.4
 
 ## Risks and Mitigations
 

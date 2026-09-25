@@ -49,6 +49,13 @@
       "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md já tem a nota 'processo de spec não usa board externo, decidido em 2026-08-10'. Quero saber o estado atual do processo de spec.",
       "expected_output": "Reconhece a recusa já registrada no PROGRESSO.md e não pergunta de novo sobre ferramenta de board (Notion, Miro ou qualquer outra) — segue orientando o processo normalmente, só sem a parte de board.",
       "files": []
+    },
+    {
+      "id": 7,
+      "name": "board-tool-precedent-mismatch",
+      "prompt": "O projeto FinanceBot usa Miro pra acompanhar as fases do processo de spec, com o link do board registrado no PROGRESSO.md. Você tem um conector de Miro conectado, mas ao buscar não encontra nenhum board chamado 'FinanceBot' entre os que o conector enxerga. Quero saber em que fase estamos agora.",
+      "expected_output": "Não trava só pedindo confirmação de identidade do projeto. Lista os boards que a busca real encontrou nesse conector e pergunta ao usuário se algum deles é o board certo (ou se nenhum é) — em vez de devolver uma pergunta genérica sem oferecer as opções encontradas.",
+      "files": []
     }
   ]
 }

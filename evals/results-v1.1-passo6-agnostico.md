@@ -56,3 +56,29 @@ Nenhuma regressão observada. Pendência conhecida (mesma da Tarefa 3 da v1):
 formalizar isso no layout oficial do `skill-creator`
 (`conductor-workspace/`/`grading.json`) fica como trabalho futuro, não bloqueia
 esta rodada.
+
+## Fix pós-eval — precedente que não bate com a realidade (caso 4)
+
+Ao rodar o caso 4 numa sessão real (com Miro de fato conectado), o precedente
+registrado ("board FinanceBot no Miro") não correspondia a nenhum board real
+visível pelo conector — a skill (corretamente) não inventou uma fase, mas
+travou pedindo só uma confirmação de identidade do projeto, sem dizer quais
+boards a busca real encontrou. Ajuste no Passo 6 (seção "Qual ferramenta
+usar", item 1): quando o precedente não bate, listar os boards/páginas
+encontrados pela busca real e perguntar ao usuário se algum é o certo, em vez
+de uma pergunta genérica.
+
+Caso novo `board-tool-precedent-mismatch` (id 7) adicionado e rodado
+(`with_skill` vs baseline, ambos com Miro conectado de verdade nesta sessão):
+
+- **Com skill**: buscou no repo e no Miro reais, não encontrou "FinanceBot" em
+  nenhum dos dois, identificou "AutoFinance" como candidato mais próximo por
+  descrição mas notou que o conteúdo do board não batia com tracking de fases
+  de spec, listou os 5 boards reais encontrados e perguntou ao usuário qual (se
+  algum) é o certo. Não travou em confirmação vazia.
+- **Baseline**: fez a mesma busca real e chegou à mesma conclusão/lista —
+  diferenciação fraca de novo (mesmo padrão do caso 4 original: um agente
+  competente já tende a listar o que encontrou).
+- **Veredito**: comportamento correto pós-fix nos dois; a diferenciação fraca
+  não é falha do ajuste, é o mesmo limite de cenário já registrado para o caso
+  4.

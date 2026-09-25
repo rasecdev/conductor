@@ -238,6 +238,12 @@ definição; a escolha é do usuário e do que já estiver em uso no projeto.
    ferramenta registrada — uma menção em `PROGRESSO.md`/`CLAUDE.md`, um link
    pra página/board já existente, ou o próprio uso ao longo da conversa. Se
    houver, use essa ferramenta sem perguntar de novo.
+   - **Precedente que não bate com a realidade** (ex: o link/nome registrado
+     não é encontrado pelo conector, ou a busca não retorna o board/página
+     esperado): não trave pedindo só uma confirmação de identidade. Liste os
+     boards/páginas que a busca real *encontrou* nessa ferramenta e pergunte
+     ao usuário se algum deles é o certo — ou se nenhum é, seguindo então
+     pro passo 2 (nenhum precedente utilizável) a partir daí.
 2. **Nenhum precedente: detectar o que está disponível.** Verifique quais
    MCPs/conectores de board ou documentação estão disponíveis nesta sessão
    (Notion, Miro, ClickUp Docs, etc.) — mesmo princípio do catálogo dinâmico

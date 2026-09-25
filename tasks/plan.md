@@ -102,3 +102,27 @@ decisão do usuário (mesmo princípio do Passo 6), o conductor não decide isso
 ### Checkpoint: Fase 1
 - [x] Passo 1 documenta sinais de tipo de projeto e como filtram recomendação de artefato
 - [x] evals/evals.json cobre o cenário de projeto headless não recebendo recomendação de UI — resultado em `evals/results-v1.2-v1.3.md`
+
+# Rodada v1.4 — Reconhecer e verificar gates de qualidade da pipeline
+
+Spec: [issue #15](https://github.com/rasecdev/conductor/issues/15). Decidido
+em conversa com o usuário, na linha da definição operacional do `ROADMAP.md`
+("o conductor conduz o usuário a criar, manter e melhorar sua pipeline —
+nunca por conta própria"): reconhecer se cada etapa/artefato tem um gate de
+qualidade esperado (lint, teste, conformidade de arquitetura, validação de
+artefato visual), verificar seu estado real, e sinalizar lacuna — sem nunca
+criar/configurar o gate sozinho. A lógica de "qual gate é esperado onde" é
+referência fixa da skill (`references/gate-types.md`), não algo por projeto.
+
+## Task List
+
+### Fase 1: Gates de qualidade
+
+- [ ] [Tarefa 1: Criar references/gate-types.md](https://github.com/rasecdev/conductor/issues/16)
+- [ ] [Tarefa 2: Adicionar passo de verificação de gates ao SKILL.md](https://github.com/rasecdev/conductor/issues/17)
+- [ ] [Tarefa 3: Adicionar casos em evals/evals.json cobrindo gates](https://github.com/rasecdev/conductor/issues/18)
+
+### Checkpoint: Fase 1
+- [ ] references/gate-types.md criado
+- [ ] SKILL.md documenta o passo de verificação de gates, incluindo ordem de confiança das fontes
+- [ ] evals/evals.json cobre gate ausente e gate presente-mas-falhando

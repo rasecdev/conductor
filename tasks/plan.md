@@ -105,7 +105,7 @@ decisão do usuário (mesmo princípio do Passo 6), o conductor não decide isso
 
 # Rodada v1.4 — Reconhecer e verificar gates de qualidade da pipeline
 
-Spec: [issue #15](https://github.com/rasecdev/conductor/issues/15). Decidido
+Spec: [issue #24](https://github.com/rasecdev/conductor/issues/24) (refeita via `/to-spec`, substitui a #15). Decidido
 em conversa com o usuário, na linha da definição operacional do `ROADMAP.md`
 ("o conductor conduz o usuário a criar, manter e melhorar sua pipeline —
 nunca por conta própria"): reconhecer se cada etapa/artefato tem um gate de

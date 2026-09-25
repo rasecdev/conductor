@@ -17,6 +17,8 @@ via override local — não é a identidade git global da máquina).
 - `tasks/plan.md` — plano de tarefas ativo (ver "Como registrar trabalho").
 - `SPEC.md` — spec viva: comportamento **atual** da skill, fonte de verdade do
   que ela faz (ver "Spec Driven Development").
+- `CONTEXT.md` — glossário do domínio (termo canônico + termos a evitar). Usar
+  esse vocabulário em specs, tarefas e na própria skill.
 
 ## Spec Driven Development
 

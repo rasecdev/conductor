@@ -30,6 +30,9 @@ issue). Modelo "spec atual + propostas de mudança" (mesmo do OpenSpec):
 - Spec de rodada (issue) = delta. **Toda spec de rodada nova passa pelo
   `/to-spec`** (digitado pelo usuário — é skill manual), nunca escrita
   direto em conversa.
+- **Tarefas de uma rodada saem da `planning-and-task-breakdown`**, nunca
+  escritas à mão: fatias verticais, cada uma com Acceptance criteria +
+  Verification e as user stories da spec que cobre.
 - **Ao fechar uma rodada**: conferir cada requisito da issue de spec contra
   o `SKILL.md` (e referências/scripts tocados), requisito por requisito, antes
   de fechá-la; depois incorporar o delta ao `SPEC.md` e adicionar a linha em

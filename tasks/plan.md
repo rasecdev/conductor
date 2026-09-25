@@ -180,3 +180,30 @@ caso de verificação antes de a rodada fechar. Depende da v1.4.
 - [ ] scripts/check-gates.sh avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures
 - [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
 - [ ] Toda story da #25 coberta por caso de eval ou marcada como não verificável com justificativa
+
+# Rodada infra — branch/PR, CI e separação clone × instalação
+
+Sem spec de rodada: mudança de processo do repositório, não de comportamento
+da skill. Decidido em conversa com o usuário (2026-09-25), seguindo o
+precedente do AutoFinance. Executa **antes** da Tarefa 1 da v1.4, que já roda
+no fluxo novo. Tarefas geradas pela `planning-and-task-breakdown`, no GitHub
+Issues.
+
+## Task List
+
+- [ ] [Infra 1: Criar branch development e clone de trabalho em S:\Trampo\conductor](https://github.com/rasecdev/conductor/issues/28)
+- [ ] [Infra 2: CI com gitleaks, shellcheck e validação do evals.json](https://github.com/rasecdev/conductor/issues/29)
+- [ ] [Infra 3: markdownlint no CI](https://github.com/rasecdev/conductor/issues/30)
+- [ ] [Infra 4: Registrar fluxo branch/PR no CLAUDE.md e primeira promoção para master](https://github.com/rasecdev/conductor/issues/31)
+
+### Checkpoint
+- [ ] CI verde em `development`, com teste negativo provando que o gate falha quando deve
+- [ ] `master` promovida e instalação atualizada via `git pull`
+- [ ] Revisão com o usuário antes de voltar à v1.4
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| markdownlint acusa muitos erros nos docs atuais | Médio | Isolado na Infra 3, com config justificada |
+| Evals rodarem contra a instalação (versão antiga) em vez do clone | Médio | Regra explícita no `CLAUDE.md` (Infra 4) |

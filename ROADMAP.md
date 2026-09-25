@@ -18,6 +18,19 @@ qualidade ausente, artefato de UI sem dono) não é um problema novo pro
 `conductor` resolver sozinho — é mais uma coisa pra ele **orquestrar**,
 apontando pra skill/ferramenta certa.
 
+### Definição da skill (2026-09-25)
+
+O foco do `conductor` é **conduzir o usuário a criar, manter e melhorar a sua
+pipeline** — de spec, de artefato, de qualidade, o que for — pra **qualquer
+projeto** e em **qualquer momento** do projeto (do zero, no meio, legado
+maduro). Ele nunca é quem cria/mantém/melhora a pipeline por conta própria;
+ele identifica o que falta ou ficou pra trás e conduz o usuário até a peça
+certa pra resolver. Essa frase é a definição operacional da skill, não só uma
+aspiração — toda feature nova (gate, artefato, o que vier) deve caber dentro
+dela: se uma ideia faz o `conductor` **criar/implementar** algo em vez de
+**identificar e conduzir**, ela não pertence ao `conductor` — pertence à skill
+que ele aponta.
+
 ## Onde isso já chegou (v1.0 → v1.3)
 
 - v1.0: orienta o pipeline de spec (descoberta → sharpen → spec → tarefas →

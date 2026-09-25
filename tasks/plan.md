@@ -131,7 +131,7 @@ Tarefas no GitHub Issues; aqui só o índice.
 ### Fase 1: Fluxo principal de gate
 
 - [x] [Tarefa 1: Detectar gate esperado ausente, com fonte e confiança](https://github.com/rasecdev/conductor/issues/16) — stories 1–7, 11–15, 17, 21
-- [ ] [Tarefa 2: Verificar estado real do gate e avisar gate vermelho antes de avançar](https://github.com/rasecdev/conductor/issues/17) — stories 8, 18–20
+- [x] [Tarefa 2: Verificar estado real do gate e avisar gate vermelho antes de avançar](https://github.com/rasecdev/conductor/issues/17) — stories 8, 18–20
 
 ### Checkpoint: Fase 1
 

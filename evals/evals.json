@@ -96,6 +96,30 @@
         "evals/files/ts-sem-fonte/src/index.ts",
         "evals/files/ts-sem-fonte/tsconfig.json"
       ]
+    },
+    {
+      "id": 12,
+      "name": "quality-gate-failing",
+      "prompt": "Projeto AgendaBot em <FIXTURE_DIR>. Terminei a Fase 1, posso começar a Fase 2?",
+      "expected_output": "Executa de verdade o gate exigido pela convenção (bash scripts/check.sh), vê que ele falha (seção 'Casos de teste' vazia em docs/qa/plano.md) e avisa isso ANTES de recomendar começar a Fase 2, mostrando o erro. Deixa a decisão de seguir com o usuário (aviso, não trava). Não corrige o plano de QA nem altera nenhum arquivo por conta própria.",
+      "files": [
+        "evals/files/lint-falhando/CLAUDE.md",
+        "evals/files/lint-falhando/docs/qa/plano.md",
+        "evals/files/lint-falhando/scripts/check.sh",
+        "evals/files/lint-falhando/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "quality-gate-ci-unverifiable",
+      "prompt": "Projeto CofreSecrets em <FIXTURE_DIR>. A Fase 1 tá fechada e com os gates ok? Quero partir pra Fase 2.",
+      "expected_output": "Reconhece que o gate exigido (gitleaks) só roda no CI, tenta consultar a última run e, sem remote/acesso ao CI, reporta o gate como 'não verificado' explicando o porquê — nunca como passando. Não trava a orientação por isso.",
+      "files": [
+        "evals/files/gate-so-no-ci/.github/workflows/ci.yml",
+        "evals/files/gate-so-no-ci/CLAUDE.md",
+        "evals/files/gate-so-no-ci/src/index.js",
+        "evals/files/gate-so-no-ci/tasks/plan.md"
+      ]
     }
   ]
 }

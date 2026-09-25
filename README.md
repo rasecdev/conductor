@@ -35,7 +35,7 @@ Ver `SKILL.md` para o processo completo.
 
 ## Estrutura
 
-```
+```text
 conductor/
 ├── SKILL.md               — instruções e frontmatter (nome, description, gatilhos)
 ├── references/

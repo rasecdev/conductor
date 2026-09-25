@@ -1,3 +1,5 @@
+<!-- markdownlint-disable-file MD025 -- um H1 por rodada é a estrutura deste plano -->
+
 # Implementation Plan: conductor v1 — itens pendentes pós-spec
 
 Tarefas rastreadas no GitHub Issues do repositório `rasecdev/conductor` (não há `tasks/todo.md` — tracker externo, conforme convenção da skill `planning-and-task-breakdown` para quando o projeto designa um tracker).
@@ -18,6 +20,7 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 - [x] [Tarefa 1: CLAUDE.md formalizando a convenção do próprio repositório](https://github.com/rasecdev/conductor/issues/2)
 
 ### Checkpoint: Fase 1
+
 - [x] `CLAUDE.md` do repositório existe e reflete a convenção real usada até aqui
 
 ### Fase 2: Validação dos gaps conhecidos
@@ -27,6 +30,7 @@ O `SKILL.md`, `references/pipeline-stages.md` e `scripts/catalog.sh` já estão 
 - [x] [Tarefa 4: Testar de ponta a ponta a escalada de avaliação quantitativa (Passo 5)](https://github.com/rasecdev/conductor/issues/5)
 
 ### Checkpoint: Fase 2
+
 - [x] Passo 6 (Notion) validado em execução real
 - [x] Seam de teste roda pelos scripts oficiais do skill-creator, não manualmente
 - [x] Escalada de avaliação quantitativa (Passo 5) testada ao menos uma vez de ponta a ponta
@@ -59,6 +63,7 @@ conductor) pra nunca mais perguntar ali.
 - [x] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo o Passo 6 agnóstico](https://github.com/rasecdev/conductor/issues/8)
 
 ### Checkpoint: Fase 1
+
 - [x] SKILL.md não cita mais Notion como obrigatório nem descarta Miro
 - [x] evals/evals.json cobre os três cenários da spec (ferramenta alternativa detectada, nenhuma disponível, recusa já registrada) — resultado em `evals/results-v1.1-passo6-agnostico.md`
 
@@ -79,6 +84,7 @@ registrado do projeto.
 - [x] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo artefato não-board desatualizado](https://github.com/rasecdev/conductor/issues/11)
 
 ### Checkpoint: Fase 1
+
 - [x] SKILL.md cobre desatualização de qualquer artefato vivo registrado, não só board
 - [x] evals/evals.json cobre pelo menos um cenário de artefato não-board desatualizado — resultado em `evals/results-v1.2-v1.3.md`
 
@@ -100,6 +106,7 @@ decisão do usuário (mesmo princípio do Passo 6), o conductor não decide isso
 - [x] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo projeto headless sem recomendação de UI](https://github.com/rasecdev/conductor/issues/14)
 
 ### Checkpoint: Fase 1
+
 - [x] Passo 1 documenta sinais de tipo de projeto e como filtram recomendação de artefato
 - [x] evals/evals.json cobre o cenário de projeto headless não recebendo recomendação de UI — resultado em `evals/results-v1.2-v1.3.md`
 
@@ -127,6 +134,7 @@ Tarefas no GitHub Issues; aqui só o índice.
 - [ ] [Tarefa 2: Verificar estado real do gate e avisar gate vermelho antes de avançar](https://github.com/rasecdev/conductor/issues/17) — stories 8, 18–20
 
 ### Checkpoint: Fase 1
+
 - [ ] Casos (a)–(d) passam no formato oficial, sem regressão frente ao baseline
 - [ ] Revisão com o usuário antes de seguir
 
@@ -136,6 +144,7 @@ Tarefas no GitHub Issues; aqui só o índice.
 - [ ] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
 
 ### Checkpoint: Fase 2
+
 - [ ] Suíte completa (10 casos antigos + 6 novos) sem regressão
 - [ ] Requisitos de #24 conferidos contra o `SKILL.md`; toda story com caso ou justificativa
 - [ ] `SPEC.md` incorpora o delta da v1.4
@@ -176,6 +185,7 @@ caso de verificação antes de a rodada fechar. Depende da v1.4.
 - [ ] [Tarefa 4: Adicionar casos em evals/evals.json cobrindo gates de transição](https://github.com/rasecdev/conductor/issues/23)
 
 ### Checkpoint: Fase 1
+
 - [ ] references/transition-gates.md cobre todo portão hoje implícito nos Passos 2/4/6
 - [ ] scripts/check-gates.sh avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures
 - [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
@@ -193,10 +203,11 @@ Issues.
 
 - [x] [Infra 1: Criar branch development e clone de trabalho em S:\Trampo\conductor](https://github.com/rasecdev/conductor/issues/28)
 - [x] [Infra 2: CI com gitleaks, shellcheck e validação do evals.json](https://github.com/rasecdev/conductor/issues/29)
-- [ ] [Infra 3: markdownlint no CI](https://github.com/rasecdev/conductor/issues/30)
+- [x] [Infra 3: markdownlint no CI](https://github.com/rasecdev/conductor/issues/30)
 - [ ] [Infra 4: Registrar fluxo branch/PR no CLAUDE.md e primeira promoção para master](https://github.com/rasecdev/conductor/issues/31)
 
 ### Checkpoint
+
 - [ ] CI verde em `development`, com teste negativo provando que o gate falha quando deve
 - [ ] `master` promovida e instalação atualizada via `git pull`
 - [ ] Revisão com o usuário antes de voltar à v1.4

@@ -6,7 +6,9 @@ identidade git global da máquina.
 
 ## Estrutura
 
-- `SKILL.md` — frontmatter + processo em 6 passos (o corpo da skill).
+- `SKILL.md` — frontmatter + processo em 7 passos (o corpo da skill).
+- `references/gate-types.md` — gate de qualidade esperado por artefato/estágio
+  (Passo 7).
 - `references/pipeline-stages.md` — tabela de estágios do pipeline de spec
   development conhecido (`wayfinder` → `grilling`/`domain-modeling` → `to-spec`
   → `planning-and-task-breakdown` → `implement-specs` →
@@ -123,6 +125,16 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
   `grading.json` formal — nota livre é pulada pelo script. **Gravar toda
   rodada nesse formato desde o início.** As rodadas v1.1–v1.3 foram rodadas
   manualmente (`evals/results-*.md`), fora desse formato.
+- **Casos com fixture**: o prompt usa o marcador `<FIXTURE_DIR>`; antes de
+  cada run, `bash scripts/prepare_fixture.sh <nome>` copia `evals/files/<nome>`
+  para um diretório temporário exclusivo, com git próprio, e imprime o caminho
+  que substitui o marcador. Se o caso tiver `fixture_siblings`, passe-as
+  depois do nome (`prepare_fixture.sh <nome> <irmã>...`): cada uma vira um
+  projeto irmão com git próprio no mesmo diretório pai. Estado que não cabe
+  em arquivo (histórico longo, pasta sem git) vem de um `.fixture-setup.sh` na
+  fixture — ver o cabeçalho de `scripts/prepare_fixture.sh`. Uma cópia por run — nunca rodar direto em
+  `evals/files/` (herdaria o git do conductor e veria as outras fixtures como
+  projetos irmãos).
 - Ao adicionar um passo/comportamento novo ao `SKILL.md`, adicionar o caso
   correspondente em `evals/evals.json` antes de considerar o trabalho
   concluído, seguindo o mesmo formato dos existentes.

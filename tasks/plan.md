@@ -130,24 +130,33 @@ Tarefas no GitHub Issues; aqui só o índice.
 
 ### Fase 1: Fluxo principal de gate
 
-- [ ] [Tarefa 1: Detectar gate esperado ausente, com fonte e confiança](https://github.com/rasecdev/conductor/issues/16) — stories 1–7, 11–15, 17, 21
-- [ ] [Tarefa 2: Verificar estado real do gate e avisar gate vermelho antes de avançar](https://github.com/rasecdev/conductor/issues/17) — stories 8, 18–20
+- [x] [Tarefa 1: Detectar gate esperado ausente, com fonte e confiança](https://github.com/rasecdev/conductor/issues/16) — stories 1–7, 11–15, 17, 21
+- [x] [Tarefa 2: Verificar estado real do gate e avisar gate vermelho antes de avançar](https://github.com/rasecdev/conductor/issues/17) — stories 8, 18–20
 
 ### Checkpoint: Fase 1
 
-- [ ] Casos (a)–(d) passam no formato oficial, sem regressão frente ao baseline
-- [ ] Revisão com o usuário antes de seguir
+- [x] Casos (a)–(d) passam no formato oficial, sem regressão frente ao baseline
+- [x] Revisão com o usuário antes de seguir
 
 ### Fase 2: Acionamento e fechamento
 
-- [ ] [Tarefa 3: Sinalizar gate não acionado e só oferecer setup inicial](https://github.com/rasecdev/conductor/issues/18) — stories 9, 10, 16
-- [ ] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
+- [x] [Tarefa 3: Sinalizar gate não acionado e só oferecer setup inicial](https://github.com/rasecdev/conductor/issues/18) — stories 9, 10, 16
+- [x] [Tarefa 4a: Fixtures dos casos de eval que dependem de estado real (0, 1, 3)](https://github.com/rasecdev/conductor/issues/40)
+- [x] [Tarefa 4b: Fixtures dos casos de eval descritivos (4, 5, 6, 8, 9)](https://github.com/rasecdev/conductor/issues/41)
+- [x] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
+- [x] [Tarefa 5: Documentar a avaliação da skill](https://github.com/rasecdev/conductor/issues/42)
+
+Replanejado pela `planning-and-task-breakdown` (2026-09-25): os casos antigos
+citavam projetos em `C:\Projetos\...` inexistentes; viraram fixtures (T4a,
+T4b) antes da regressão. Fora da rodada, **provisória**:
+[Tarefa 6: comparar com o ask-matt](https://github.com/rasecdev/conductor/issues/43),
+só quando a skill estiver pronta.
 
 ### Checkpoint: Fase 2
 
-- [ ] Suíte completa (10 casos antigos + 6 novos) sem regressão
-- [ ] Requisitos de #24 conferidos contra o `SKILL.md`; toda story com caso ou justificativa
-- [ ] `SPEC.md` incorpora o delta da v1.4
+- [x] Suíte completa (10 casos antigos, agora com fixtures, + 6 novos) sem regressão
+- [x] Requisitos de #24 conferidos contra o `SKILL.md`; toda story com caso ou justificativa
+- [x] `SPEC.md` incorpora o delta da v1.4
 
 ## Risks and Mitigations
 
@@ -204,12 +213,12 @@ Issues.
 - [x] [Infra 1: Criar branch development e clone de trabalho em S:\Trampo\conductor](https://github.com/rasecdev/conductor/issues/28)
 - [x] [Infra 2: CI com gitleaks, shellcheck e validação do evals.json](https://github.com/rasecdev/conductor/issues/29)
 - [x] [Infra 3: markdownlint no CI](https://github.com/rasecdev/conductor/issues/30)
-- [ ] [Infra 4: Registrar fluxo branch/PR no CLAUDE.md e primeira promoção para master](https://github.com/rasecdev/conductor/issues/31)
+- [x] [Infra 4: Registrar fluxo branch/PR no CLAUDE.md e primeira promoção para master](https://github.com/rasecdev/conductor/issues/31)
 
 ### Checkpoint
 
-- [ ] CI verde em `development`, com teste negativo provando que o gate falha quando deve
-- [ ] `master` promovida e instalação atualizada via `git pull`
+- [x] CI verde em `development`, com teste negativo provando que o gate falha quando deve
+- [x] `master` promovida e instalação atualizada via `git pull`
 - [ ] Revisão com o usuário antes de voltar à v1.4
 
 ## Risks and Mitigations

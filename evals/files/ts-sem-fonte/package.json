@@ -1,0 +1,11 @@
+{
+  "name": "conversor-moedas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

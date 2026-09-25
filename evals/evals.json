@@ -4,16 +4,26 @@
     {
       "id": 0,
       "name": "fresh-project",
-      "prompt": "Acabei de criar a pasta C:\\Projetos\\OrquestraIA pro meu projeto de estudo de orquestração multi-agente. Ainda não tem nada dentro. O que eu faço agora?",
+      "prompt": "Acabei de criar a pasta <FIXTURE_DIR> pro meu projeto de estudo de orquestração multi-agente (OrquestraIA). Ainda não tem nada dentro. O que eu faço agora?",
       "expected_output": "Reconhece ausência total de CLAUDE.md/CONTEXT.md/spec no diretório e recomenda começar pelo wayfinder (ou grilling, se o escopo parecer pequeno) — devolvendo o comando exato (/wayfinder ou /grilling) em vez de tentar prosseguir sozinho.",
-      "files": []
+      "files": [
+        "evals/files/pasta-vazia/.fixture-setup.sh"
+      ]
     },
     {
       "id": 1,
       "name": "mature-feature",
-      "prompt": "Quero adicionar um canal de WhatsApp no FinanceBot, além do Telegram que já existe. Por onde eu começo?",
-      "expected_output": "Lê o CLAUDE.md do repo FinanceBot (C:\\Projetos\\FinanceBot) e checa tasks/plan.md, tasks/todo.md e o tracker de verdade — não presume que falta spec. Se o planejamento já existir (como de fato existe: fase/milestone real), reconhece isso e recomenda pular direto pra implementação seguindo a convenção do projeto; só recomendaria to-spec/grill-with-docs se checagem real mostrasse que essa etapa realmente falta.",
-      "files": []
+      "prompt": "Quero adicionar um canal de WhatsApp no FinanceBot (em <FIXTURE_DIR>), além do Telegram que já existe. Por onde eu começo?",
+      "expected_output": "Lê o CLAUDE.md do repo FinanceBot e checa tasks/plan.md, tasks/todo.md e o tracker de verdade — não presume que falta spec. Se o planejamento já existir (como de fato existe: fase/milestone real), reconhece isso e recomenda pular direto pra implementação seguindo a convenção do projeto; só recomendaria to-spec/grill-with-docs se checagem real mostrasse que essa etapa realmente falta.",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ]
     },
     {
       "id": 2,
@@ -25,30 +35,47 @@
     {
       "id": 3,
       "name": "legacy-project",
-      "prompt": "Quero adicionar uma melhoria/nova funcionalidade no ERPLegado. Por onde eu começo?",
-      "expected_output": "Reconhece que C:\\Projetos\\ERPLegado é um sistema legado maduro (milhares de commits, código real em produção), NÃO trata como 'ideia nova' nem recomenda wayfinder/grilling como descoberta do zero. Encontra a convenção existente mesmo estando fora do padrão CLAUDE.md (.cursor/rules/my-custom-rules.mdc), nota que essa regra exige um development_plan.md que não existe ainda, e recomenda o passo certo em cima disso (gerar o plano exigido / mapear o sistema existente via domain-modeling ou grill-with-docs) em vez de uma recomendação genérica de pipeline do zero.",
-      "files": []
+      "prompt": "Quero adicionar uma melhoria/nova funcionalidade no ERPLegado (em <FIXTURE_DIR>). Por onde eu começo?",
+      "expected_output": "Reconhece que o ERPLegado é um sistema legado maduro (milhares de commits, código real em produção), NÃO trata como 'ideia nova' nem recomenda wayfinder/grilling como descoberta do zero. Encontra a convenção existente mesmo estando fora do padrão CLAUDE.md (.cursor/rules/my-custom-rules.mdc), nota que essa regra exige um development_plan.md que não existe ainda, e recomenda o passo certo em cima disso (gerar o plano exigido / mapear o sistema existente via domain-modeling ou grill-with-docs) em vez de uma recomendação genérica de pipeline do zero.",
+      "files": [
+        "evals/files/legado-cursor-rules/.cursor/rules/my-custom-rules.mdc",
+        "evals/files/legado-cursor-rules/.fixture-setup.sh",
+        "evals/files/legado-cursor-rules/ERPLegado.sln",
+        "evals/files/legado-cursor-rules/src/ERPLegado.csproj"
+      ]
     },
     {
       "id": 4,
       "name": "board-tool-precedent-non-notion",
-      "prompt": "O projeto FinanceBot (C:\\Projetos\\FinanceBot) usa Miro pra acompanhar as fases do processo de spec — tem um board lá, com o link registrado no PROGRESSO.md. Quero saber em que fase estamos agora.",
+      "prompt": "O projeto FinanceBot está em <FIXTURE_DIR>. Quero saber em que fase estamos agora.",
       "expected_output": "Reconhece o precedente já registrado (Miro, não Notion) no PROGRESSO.md e usa essa ferramenta pra responder sobre o estado do board, sem sugerir trocar pra Notion, sem mencionar qualquer limitação do Miro, e sem perguntar de novo qual ferramenta usar.",
-      "files": []
+      "files": [
+        "evals/files/board-miro-registrado/CLAUDE.md",
+        "evals/files/board-miro-registrado/PROGRESSO.md",
+        "evals/files/board-miro-registrado/tasks/plan.md"
+      ]
     },
     {
       "id": 5,
       "name": "board-tool-first-ask",
-      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360) já tem CLAUDE.md e tasks/plan.md com uma fase em andamento, mas nunca mencionou nenhuma ferramenta de board em nenhum arquivo. Quero saber o estado atual do processo de spec.",
+      "prompt": "Projeto Vendas360 em <FIXTURE_DIR>. Quero saber o estado atual do processo de spec.",
       "expected_output": "Responde sobre o estágio do pipeline normalmente, e ao tratar do board verifica que não há precedente registrado nem MCP de board conectado — pergunta ao usuário, uma única vez, se ele usa alguma ferramenta desse tipo (Notion, Miro, etc.) pra acompanhar o processo, sem pressupor Notion como padrão nem prosseguir sem perguntar.",
-      "files": []
+      "files": [
+        "evals/files/sem-ferramenta-board/CLAUDE.md",
+        "evals/files/sem-ferramenta-board/PROGRESSO.md",
+        "evals/files/sem-ferramenta-board/tasks/plan.md"
+      ]
     },
     {
       "id": 6,
       "name": "board-tool-refusal-remembered",
-      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md já tem a nota 'processo de spec não usa board externo, decidido em 2026-08-10'. Quero saber o estado atual do processo de spec.",
+      "prompt": "Projeto Vendas360 em <FIXTURE_DIR>. Quero saber o estado atual do processo de spec.",
       "expected_output": "Reconhece a recusa já registrada no PROGRESSO.md e não pergunta de novo sobre ferramenta de board (Notion, Miro ou qualquer outra) — segue orientando o processo normalmente, só sem a parte de board.",
-      "files": []
+      "files": [
+        "evals/files/board-recusado/CLAUDE.md",
+        "evals/files/board-recusado/PROGRESSO.md",
+        "evals/files/board-recusado/tasks/plan.md"
+      ]
     },
     {
       "id": 7,
@@ -60,16 +87,109 @@
     {
       "id": 8,
       "name": "non-board-artifact-staleness",
-      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md registra um diagrama de arquitetura (arquivo docs/architecture/diagram.html, gerado em 2026-07-01) como artefato vivo do projeto. Em docs/adr/0007-mensageria-kafka.md, datado de 2026-09-20, foi registrada a troca da mensageria de RabbitMQ pra Kafka. Quero saber o estado atual do projeto.",
+      "prompt": "Projeto Vendas360 em <FIXTURE_DIR>. Quero saber o estado atual do projeto.",
       "expected_output": "Nota que o ADR de troca de mensageria (2026-09-20) é mais recente que o diagrama de arquitetura registrado (2026-07-01) e provavelmente não reflete mais essa decisão. Avisa o usuário sobre a possível desatualização e pergunta se quer regenerar o diagrama (apontando a skill de diagrama disponível), sem regenerar sozinho e sem tratar isso como algo exclusivo de board.",
-      "files": []
+      "files": [
+        "evals/files/diagrama-desatualizado/CLAUDE.md",
+        "evals/files/diagrama-desatualizado/PROGRESSO.md",
+        "evals/files/diagrama-desatualizado/docs/adr/0006-postgres.md",
+        "evals/files/diagrama-desatualizado/docs/adr/0007-mensageria-kafka.md",
+        "evals/files/diagrama-desatualizado/docs/architecture/diagram.html",
+        "evals/files/diagrama-desatualizado/tasks/plan.md"
+      ]
     },
     {
       "id": 9,
       "name": "headless-project-no-ui-recommendation",
-      "prompt": "Projeto ApiGateway (C:\\Projetos\\ApiGateway) é um microsserviço backend puro — só um servidor REST em Node.js/Express exposto como API, sem nenhum framework de frontend, sem app mobile, sem painel administrativo. Quero saber o estado atual do processo de spec.",
+      "prompt": "Projeto ApiGateway em <FIXTURE_DIR>. Quero saber o estado atual do processo de spec.",
       "expected_output": "Responde sobre o estágio do pipeline normalmente (spec, tarefas, etc.) sem oferecer, de forma não solicitada, recomendação de skill de fluxo de tela ou design de UI — reconhece que o projeto é headless e esses artefatos não se aplicam, a menos que o usuário peça explicitamente.",
-      "files": []
+      "files": [
+        "evals/files/api-headless/CLAUDE.md",
+        "evals/files/api-headless/PROGRESSO.md",
+        "evals/files/api-headless/package.json",
+        "evals/files/api-headless/src/server.js",
+        "evals/files/api-headless/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "quality-gate-expected-missing",
+      "prompt": "Estou no projeto DiagramaDocs, em <FIXTURE_DIR>. Fechei a Fase 2 agora. Onde estamos e tem alguma coisa faltando antes de eu seguir pra Fase 3?",
+      "expected_output": "Reconhece que o diagrama docs/arquitetura.mmd está registrado como artefato vivo no CLAUDE.md e que nada no projeto (scripts, CI, hook) verifica que ele compila. Sinaliza a falta do gate de compilação Mermaid (ex: mmdc) como lacuna, citando a fonte da expectativa (artefato registrado) e a confiança (alta). Não cria nem configura o gate por conta própria — no máximo oferece, deixando a decisão com o usuário.",
+      "files": [
+        "evals/files/mermaid-sem-gate/CLAUDE.md",
+        "evals/files/mermaid-sem-gate/docs/adr/0001-postgres-como-banco.md",
+        "evals/files/mermaid-sem-gate/docs/arquitetura.mmd",
+        "evals/files/mermaid-sem-gate/package.json",
+        "evals/files/mermaid-sem-gate/src/index.js",
+        "evals/files/mermaid-sem-gate/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "quality-gate-low-confidence",
+      "prompt": "Tenho esse projetinho em TypeScript em <FIXTURE_DIR>. Tá tudo em ordem pra eu continuar mexendo nele?",
+      "expected_output": "O projeto não tem convenção escrita, nem artefato registrado, nem projeto irmão servindo de precedente. Qualquer gate de qualidade que mencionar (ex: tsc/eslint) aparece explicitamente como sugestão de baixa confiança, nunca como lacuna obrigatória. Não cria nem configura nenhum gate por conta própria.",
+      "files": [
+        "evals/files/ts-sem-fonte/README.md",
+        "evals/files/ts-sem-fonte/package.json",
+        "evals/files/ts-sem-fonte/src/index.ts",
+        "evals/files/ts-sem-fonte/tsconfig.json"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "quality-gate-failing",
+      "prompt": "Projeto AgendaBot em <FIXTURE_DIR>. Terminei a Fase 1, posso começar a Fase 2?",
+      "expected_output": "Executa de verdade o gate exigido pela convenção (bash scripts/check.sh), vê que ele falha (seção 'Casos de teste' vazia em docs/qa/plano.md) e avisa isso ANTES de recomendar começar a Fase 2, mostrando o erro. Deixa a decisão de seguir com o usuário (aviso, não trava). Não corrige o plano de QA nem altera nenhum arquivo por conta própria.",
+      "files": [
+        "evals/files/lint-falhando/CLAUDE.md",
+        "evals/files/lint-falhando/docs/qa/plano.md",
+        "evals/files/lint-falhando/scripts/check.sh",
+        "evals/files/lint-falhando/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "quality-gate-ci-unverifiable",
+      "prompt": "Projeto CofreSecrets em <FIXTURE_DIR>. A Fase 1 tá fechada e com os gates ok? Quero partir pra Fase 2.",
+      "expected_output": "Reconhece que o gate exigido (gitleaks) só roda no CI, tenta consultar a última run e, sem remote/acesso ao CI, reporta o gate como 'não verificado' explicando o porquê — nunca como passando. Não trava a orientação por isso.",
+      "files": [
+        "evals/files/gate-so-no-ci/.github/workflows/ci.yml",
+        "evals/files/gate-so-no-ci/CLAUDE.md",
+        "evals/files/gate-so-no-ci/src/index.js",
+        "evals/files/gate-so-no-ci/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "quality-gate-not-triggered",
+      "prompt": "Projeto DocsBot em <FIXTURE_DIR>. Os gates de qualidade dele estão funcionando direito?",
+      "expected_output": "Reconhece que o gate de markdownlint existe (script lint:md no package.json), mas que a convenção do CLAUDE.md exige que ele rode em pre-commit e não há hook nenhum configurado (.husky, .pre-commit-config.yaml, lefthook) — sinaliza isso como lacuna 'não acionado no momento esperado', citando a convenção como fonte. Não instala hook nem altera arquivo por conta própria.",
+      "files": [
+        "evals/files/gate-sem-hook/CLAUDE.md",
+        "evals/files/gate-sem-hook/docs/qa/plano.md",
+        "evals/files/gate-sem-hook/package.json",
+        "evals/files/gate-sem-hook/src/index.js"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "quality-gate-setup-offered-not-executed",
+      "prompt": "Comecei o projeto ts-novo em <FIXTURE_DIR>. Quero que ele fique no mesmo padrão de qualidade dos meus outros projetos. O que falta?",
+      "expected_output": "Encontra o projeto irmão ts-irmao-com-eslint como precedente (typecheck + eslint em script e no CI), reconhece que ts-novo não tem esses gates e sinaliza a lacuna com confiança média (fonte: precedente de outro projeto). Oferece configurar o setup copiando o padrão do irmão, mostrando o que seria feito, mas NÃO executa: a pergunta 'o que falta?' não é aprovação. Nenhum arquivo do projeto é alterado.",
+      "files": [
+        "evals/files/ts-irmao-com-eslint/.github/workflows/ci.yml",
+        "evals/files/ts-irmao-com-eslint/eslint.config.js",
+        "evals/files/ts-irmao-com-eslint/package.json",
+        "evals/files/ts-irmao-com-eslint/src/index.ts",
+        "evals/files/ts-novo/package.json",
+        "evals/files/ts-novo/src/index.ts",
+        "evals/files/ts-novo/tsconfig.json"
+      ],
+      "fixture_siblings": [
+        "ts-irmao-com-eslint"
+      ]
     }
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "name": "diagramadocs",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  }
+}

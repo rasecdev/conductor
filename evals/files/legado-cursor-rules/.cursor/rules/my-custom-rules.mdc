@@ -1,0 +1,9 @@
+---
+description: Regras do projeto ERPLegado
+alwaysApply: true
+---
+
+- Todo projeto deve ter um `development_plan.md` na raiz descrevendo módulos,
+  dependências e a ordem de evolução. Para projeto existente que não tiver um,
+  gere o plano antes de qualquer mudança.
+- Siga o padrão de camadas: `Telas/` → `Services/` → `Repos/`.

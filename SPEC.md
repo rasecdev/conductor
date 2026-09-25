@@ -10,7 +10,7 @@ do que a skill faz; o `SKILL.md` é a implementação dela.
 - Visão de longo prazo e o princípio que não muda ficam em `ROADMAP.md`; plano
   de tarefas em `tasks/plan.md`.
 
-Estado consolidado: v1.0 → v1.3.
+Estado consolidado: v1.0 → v1.4.
 
 ## Problem Statement
 
@@ -27,11 +27,19 @@ fases, diagrama de arquitetura, fluxo de tela, artefatos de QA) que ficam
 desatualizados em silêncio quando a decisão que eles registram muda — e nem
 todo artefato faz sentido pra todo tipo de projeto.
 
+E um estágio pode estar "feito" sem nada checando a qualidade do que ele
+produziu: diagrama registrado que ninguém valida, lint que só roda quando alguém
+lembra, gate vermelho há semanas — e a recomendação de avançar sai como se
+estivesse tudo bem.
+
 ## Solution
 
 Uma skill global (`conductor`) que lê o estado real de um projeto e sua
 convenção específica, diz exatamente qual skill do pipeline chamar agora, e
-mantém os artefatos vivos do processo rastreados contra sua fonte de verdade.
+mantém os artefatos vivos do processo rastreados contra sua fonte de verdade,
+e reconhece os gates de qualidade que cada estágio/artefato deveria ter —
+verificando o estado real deles e avisando, sem travar, antes de recomendar
+avançar.
 Ela identifica o que falta ou ficou pra trás e conduz o usuário até a peça
 certa — nunca é ela quem cria, mantém ou melhora a pipeline por conta própria.
 Nunca dispara as skills sensíveis (marcadas como manuais), e nunca decide
@@ -48,13 +56,18 @@ sozinha entre alternativas: recomenda, o usuário decide.
 | Artefato vivo não fica desatualizado em silêncio | Avisa divergência e aponta a skill certa, sem regenerar (`non-board-artifact-staleness`) |
 | Recomendação proporcional ao projeto | Não oferece artefato de UI a projeto headless (`headless-project-no-ui-recommendation`) |
 | Pergunta só uma vez | Recusa de tipo de artefato registrada no projeto não é perguntada de novo (`board-tool-refusal-remembered`) |
+| Qualidade do estágio não passa em silêncio | Sinaliza gate esperado ausente citando fonte e confiança (`quality-gate-expected-missing`) |
+| Estado de gate nunca é presumido | Roda o gate ou reporta "não verificado" (`quality-gate-failing`, `quality-gate-ci-unverifiable`) |
+| Aviso, não trava | Gate vermelho é avisado antes de recomendar avançar, e a decisão continua do usuário (`quality-gate-failing`) |
 | Skill agrega sobre o baseline | `with_skill` ≥ baseline em todos os casos de `evals/evals.json` |
 
-Estado atual desse último critério: nenhuma regressão, mas diferenciação
-fraca (empate com o baseline) em `board-tool-precedent-non-notion`,
-`board-tool-precedent-mismatch`, `non-board-artifact-staleness` e
-`headless-project-no-ui-recommendation` — registrado nos `evals/results-*.md`
-como limite dos cenários escolhidos, não falha da skill.
+Estado atual desse último critério (regressão completa da v1.4, 16 casos em
+fixtures isoladas, formato oficial): `with_skill` 100%, baseline 77,9%; nenhuma
+regressão. Empate com o baseline em `mature-feature`, `legacy-project`,
+`board-tool-precedent-non-notion`, `board-tool-first-ask`,
+`board-tool-refusal-remembered`, `headless-project-no-ui-recommendation` e
+`quality-gate-not-triggered` — o modelo com as skills de SDD instaladas já faz
+isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
 
 ## User Stories
 
@@ -151,14 +164,37 @@ como limite dos cenários escolhidos, não falha da skill.
 27. Como desenvolvedor, quero poder pedir um artefato fora do perfil detectado
     e ser atendido — a detecção filtra recomendação, não trava pedido.
 
+### Gates de qualidade
+
+28. Como desenvolvedor, quero saber, ao perguntar "onde estamos", se os gates
+    de qualidade esperados do estágio atual existem e estão passando — não só
+    se o estágio está "feito".
+29. Como desenvolvedor, quero que "qual gate é esperado onde" seja uma régua
+    fixa da skill (lista aberta), filtrada pelo tipo e pela stack do projeto.
+30. Como desenvolvedor, quero que a expectativa de um gate venha de uma fonte
+    explícita — convenção, artefato registrado, projeto irmão, ou só sugestão
+    de baixa confiança — e que a resposta diga a fonte e a confiança.
+31. Como desenvolvedor, quero que o estado do gate seja verificado de verdade
+    (rodando o gate, ou lendo a última run de CI com data) e reportado como
+    "não verificado" quando não der para checar.
+32. Como desenvolvedor, quero ser avisado quando um gate existe mas não roda no
+    momento em que deveria (ex: convenção pede pre-commit e não há hook).
+33. Como desenvolvedor, quero ser avisado de gate vermelho antes de qualquer
+    recomendação de avançar, podendo seguir mesmo assim — aviso, não trava.
+34. Como desenvolvedor, quero que a skill nunca crie nem configure gate sozinha;
+    com precedente claro e risco baixo, que só ofereça o setup, e pergunte
+    quando houver mais de uma ferramenta possível.
+
 ## Implementation Decisions
 
 - **Skill global**, não por projeto: funciona em qualquer repositório sem
   configuração.
-- **Módulos**: `SKILL.md` (frontmatter + processo em 6 passos), referência de
+- **Módulos**: `SKILL.md` (frontmatter + processo em 7 passos), referência de
   estágios do pipeline (tabela estágio → o que resolve → skills de exemplo, e
-  como avaliar skill nova), script de catálogo (name / description / manual
-  de cada skill instalada, lido do frontmatter na hora).
+  como avaliar skill nova), referência de tipos de gate (artefato/estágio →
+  gate → ferramenta → comando → quando deveria rodar, e o que conta como gate
+  existente), script de catálogo (name / description / manual de cada skill
+  instalada, lido do frontmatter na hora).
 - **Auto-invocável** (sem `disable-model-invocation`): só informa/recomenda,
   sem efeito colateral irreversível. Reabrir isso exige decisão explícita.
 - **Skills manuais nunca invocadas**: bloqueio mecânico da ferramenta de
@@ -166,7 +202,7 @@ como limite dos cenários escolhidos, não falha da skill.
   catálogo, não da lista de exemplo.
 - **Nomes de skill são exemplo**: a referência de estágios não hardcoda nomes
   como universais; o catálogo é a fonte de verdade do que está instalado.
-- **Processo em 6 passos**:
+- **Processo em 7 passos**:
   1. Convenção do projeto (`CLAUDE.md`/`AGENTS.md`/equivalentes de outras
      ferramentas), sinais de maturidade, mineração de ~3 commits em legado, e
      detecção de tipo de projeto (UI / headless / ambíguo).
@@ -183,9 +219,16 @@ como limite dos cenários escolhidos, não falha da skill.
   6. Artefatos vivos: escolha de ferramenta (precedente → disponível →
      pergunta única), estrutura do board, detecção de desatualização por
      artefato, degradação.
+  7. Gates de qualidade: esperados pela referência (filtrados por tipo e
+     stack), confiança pela fonte, existência (script, CI ou hook), estado
+     real ou "não verificado", acionamento no momento esperado; lacuna sempre
+     com fonte e confiança. O Passo 4 avisa gate vermelho antes de recomendar
+     avançar. Setup só oferecido, executado com aprovação.
 - **Decisões persistidas no projeto alvo**, nunca no `conductor` (recusa de
   artefato, registro de artefato: onde vive + fonte de verdade que acompanha).
 - **Tipo de projeto é filtro de recomendação**, nunca trava.
+- **Avisa, nunca bloqueia** ([ADR 0001](docs/adr/0001-conductor-avisa-nunca-bloqueia.md)):
+  a ação mais forte diante de um gate é avisar e deixar de recomendar avanço.
 
 ## Testing Decisions
 
@@ -199,7 +242,19 @@ como limite dos cenários escolhidos, não falha da skill.
   `skill-evaluation`, `legacy-project`, `board-tool-precedent-non-notion`,
   `board-tool-first-ask`, `board-tool-refusal-remembered`,
   `board-tool-precedent-mismatch`, `non-board-artifact-staleness`,
-  `headless-project-no-ui-recommendation`. Resultados em `evals/results-*.md`.
+  `headless-project-no-ui-recommendation`, `quality-gate-expected-missing`,
+  `quality-gate-low-confidence`, `quality-gate-failing`,
+  `quality-gate-ci-unverifiable`, `quality-gate-not-triggered`,
+  `quality-gate-setup-offered-not-executed`. Resultados em
+  `evals/results-*.md`.
+- **Fixtures isoladas**: todo caso com estado roda numa cópia de
+  `evals/files/<fixture>` com git próprio, uma por run
+  (`scripts/prepare_fixture.sh`); estado que não cabe em arquivo (histórico
+  longo, pasta sem git) vem de um gancho de setup. A comparação com o baseline
+  só é válida a partir da v1.4: antes disso os casos citavam projetos reais e
+  descreviam o estado no próprio prompt.
+- **Formato oficial** do `skill-creator` (`run-N` + `grading.json`), com
+  assertions tiradas do `expected_output` e fixadas antes das runs.
 - **Validações em execução real** (fora do eval): Passo 6 com Notion num
   projeto piloto; seam rodado pelos scripts oficiais do `skill-creator`
   (`aggregate_benchmark`, `generate_review.py`); escalada quantitativa do
@@ -233,6 +288,6 @@ foi incorporada acima.
 | v1.1 | [#6](https://github.com/rasecdev/conductor/issues/6) | Passo 6 agnóstico de ferramenta (Notion deixa de ser obrigatório) | `evals/results-v1.1-passo6-agnostico.md` |
 | v1.2 | [#9](https://github.com/rasecdev/conductor/issues/9) | Desatualização checada para qualquer artefato vivo, não só board | `evals/results-v1.2-v1.3.md` |
 | v1.3 | [#12](https://github.com/rasecdev/conductor/issues/12) | Detecção de tipo de projeto filtra recomendação de artefato de UI | `evals/results-v1.2-v1.3.md` |
+| v1.4 | [#24](https://github.com/rasecdev/conductor/issues/24) | Gates de qualidade: esperados, fonte e confiança, estado real, acionamento, aviso sem trava; casos antigos migrados para fixtures | `evals/results-v1.4.md` |
 
-Em andamento (não incorporadas): v1.4 gates de qualidade, v1.5 gates de
-transição — ver `tasks/plan.md`.
+Em andamento (não incorporada): v1.5 gates de transição — ver `tasks/plan.md`.

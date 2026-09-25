@@ -190,6 +190,22 @@
       "fixture_siblings": [
         "ts-irmao-com-eslint"
       ]
+    },
+    {
+      "id": 16,
+      "name": "tasks-without-acceptance-criteria",
+      "prompt": "Projeto NotasAPI em <FIXTURE_DIR>. Onde paramos?",
+      "expected_output": "Lê o corpo das tarefas abertas (tasks/issues/, espelho do tracker), não só o índice do plano, e nota que nenhuma tem critério de aceite testável: a 'Verification' só confere que arquivo ou rota existe. Não recomenda começar a implementar a Tarefa 1; recomenda replanejar via planning-and-task-breakdown, apontando a falta de critério de aceite e, de preferência, o fatiamento horizontal (camada → endpoints → testes) em vez de fatias verticais ligadas às user stories. Não reescreve o plano nem as issues por conta própria.",
+      "files": [
+        "evals/files/tarefas-sem-criterio/CLAUDE.md",
+        "evals/files/tarefas-sem-criterio/docs/spec.md",
+        "evals/files/tarefas-sem-criterio/package.json",
+        "evals/files/tarefas-sem-criterio/src/server.ts",
+        "evals/files/tarefas-sem-criterio/tasks/issues/16.md",
+        "evals/files/tarefas-sem-criterio/tasks/issues/17.md",
+        "evals/files/tarefas-sem-criterio/tasks/issues/18.md",
+        "evals/files/tarefas-sem-criterio/tasks/plan.md"
+      ]
     }
   ]
 }

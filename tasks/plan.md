@@ -114,18 +114,43 @@ artefato visual), verificar seu estado real, e sinalizar lacuna — sem nunca
 criar/configurar o gate sozinho. A lógica de "qual gate é esperado onde" é
 referência fixa da skill (`references/gate-types.md`), não algo por projeto.
 
+Tarefas geradas pela `planning-and-task-breakdown` em fatias verticais (cada
+uma entrega um comportamento completo: referência + `SKILL.md` + fixture +
+caso de eval), com critério de aceite amarrado às user stories da #24.
+Tarefas no GitHub Issues; aqui só o índice.
+
 ## Task List
 
-### Fase 1: Gates de qualidade
+### Fase 1: Fluxo principal de gate
 
-- [ ] [Tarefa 1: Criar references/gate-types.md](https://github.com/rasecdev/conductor/issues/16)
-- [ ] [Tarefa 2: Adicionar passo de verificação de gates ao SKILL.md](https://github.com/rasecdev/conductor/issues/17)
-- [ ] [Tarefa 3: Adicionar casos em evals/evals.json cobrindo gates](https://github.com/rasecdev/conductor/issues/18)
+- [ ] [Tarefa 1: Detectar gate esperado ausente, com fonte e confiança](https://github.com/rasecdev/conductor/issues/16) — stories 1–7, 11–15, 17, 21
+- [ ] [Tarefa 2: Verificar estado real do gate e avisar gate vermelho antes de avançar](https://github.com/rasecdev/conductor/issues/17) — stories 8, 18–20
 
 ### Checkpoint: Fase 1
-- [ ] references/gate-types.md criado
-- [ ] SKILL.md documenta o passo de verificação de gates, incluindo ordem de confiança das fontes
-- [ ] evals/evals.json cobre gate ausente e gate presente-mas-falhando
+- [ ] Casos (a)–(d) passam no formato oficial, sem regressão frente ao baseline
+- [ ] Revisão com o usuário antes de seguir
+
+### Fase 2: Acionamento e fechamento
+
+- [ ] [Tarefa 3: Sinalizar gate não acionado e só oferecer setup inicial](https://github.com/rasecdev/conductor/issues/18) — stories 9, 10, 16
+- [ ] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
+
+### Checkpoint: Fase 2
+- [ ] Suíte completa (10 casos antigos + 6 novos) sem regressão
+- [ ] Requisitos de #24 conferidos contra o `SKILL.md`; toda story com caso ou justificativa
+- [ ] `SPEC.md` incorpora o delta da v1.4
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Fixture dentro deste repo herda o `git log` do conductor e contamina o sinal de maturidade do Passo 1 | Alto | Copiar a fixture para diretório temporário com `git init` próprio antes de cada run (Tarefa 1) |
+| Caso (c) "gate só no CI" sem CI real na fixture | Médio | Decidido: testar o comportamento degradado — sem acesso, reporta "não verificado" |
+| Campo `files` do schema do `skill-creator` pensado para arquivo, não diretório | Baixo | Listar os arquivos da fixture um a um |
+
+## Open Questions
+
+- A `planning-and-task-breakdown` referencia uma Definition of Done (`references/definition-of-done.md`) que não existe nesta instalação. DoD efetiva deste repo: a do `CLAUDE.md` (caso de eval para comportamento novo, conferência requisito por requisito, incorporação ao `SPEC.md`).
 
 # Rodada v1.5 — Gates de transição declarativos
 

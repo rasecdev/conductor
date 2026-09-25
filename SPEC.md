@@ -291,4 +291,4 @@ foi incorporada acima.
 | v1.3 | [#12](https://github.com/rasecdev/conductor/issues/12) | Detecção de tipo de projeto filtra recomendação de artefato de UI | `evals/results-v1.2-v1.3.md` |
 | v1.4 | [#24](https://github.com/rasecdev/conductor/issues/24) | Gates de qualidade: esperados, fonte e confiança, estado real, acionamento, aviso sem trava; casos antigos migrados para fixtures | `evals/results-v1.4.md` |
 
-Em andamento (não incorporada): v1.5 gates de transição — ver `tasks/plan.md`.
+Em andamento (não incorporadas): v1.5 enxugar o contexto ([#50](https://github.com/rasecdev/conductor/issues/50)) e v1.6 gates de transição ([#25](https://github.com/rasecdev/conductor/issues/25)) — ver `tasks/plan.md`.

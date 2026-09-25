@@ -12,12 +12,12 @@ não implementa nada — ela sabe em que ponto do processo cada projeto está, d
 qual é o próximo instrumento a entrar, e mantém os artefatos vivos do processo
 (board, diagramas, QA) em dia com o que o projeto de fato decidiu.
 
-**Definição operacional:** o foco do `conductor` é conduzir o usuário a
-**criar, manter e melhorar a sua pipeline** — de spec, de artefato, de
-qualidade — pra qualquer projeto e em qualquer momento dele (do zero, no meio,
-legado maduro). Ele identifica o que falta ou ficou pra trás; nunca é ele quem
-cria, mantém ou melhora a pipeline por conta própria — isso é sempre trabalho
-da skill/ferramenta certa que ele aponta. Qualquer feature nova só pertence ao
+**Definição operacional:** o foco do `conductor` é conduzir o usuário a criar,
+manter e melhorar a sua pipeline — de spec, de artefato, de qualidade — para
+qualquer projeto e em qualquer momento dele (do zero, no meio, legado maduro).
+Ele identifica o que falta ou ficou pra trás; nunca é ele quem cria, mantém ou
+melhora a pipeline por conta própria — isso é sempre trabalho da
+skill/ferramenta certa que ele aponta. Qualquer feature nova só pertence ao
 `conductor` se for da categoria "identificar e conduzir"; se for da categoria
 "criar/implementar", pertence a outra skill (ver `ROADMAP.md`).
 

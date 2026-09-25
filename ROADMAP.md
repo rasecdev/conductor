@@ -7,7 +7,8 @@ futuras, pra não se perder entre sessões.
 
 ## A ideia central
 
-> "Não existe problema, existe como orquestrar a solução."
+> A skill resolve o problema orquestrando o passo a passo da solução — nunca
+> sendo ela mesma quem executa o passo.
 
 O `conductor` começou resolvendo uma lacuna estreita (saber em que estágio do
 processo de spec um projeto está). Mas o princípio por trás dele — ler estado
@@ -15,21 +16,21 @@ real, detectar lacuna, recomendar a peça certa sem nunca decidir/implementar
 por conta própria — generaliza pra qualquer parte do fluxo de codificação, não
 só spec. Cada nova categoria de problema (arquitetura desatualizada, gate de
 qualidade ausente, artefato de UI sem dono) não é um problema novo pro
-`conductor` resolver sozinho — é mais uma coisa pra ele **orquestrar**,
+`conductor` resolver sozinho — é mais um passo pra ele **orquestrar**,
 apontando pra skill/ferramenta certa.
 
 ### Definição da skill (2026-09-25)
 
-O foco do `conductor` é **conduzir o usuário a criar, manter e melhorar a sua
-pipeline** — de spec, de artefato, de qualidade, o que for — pra **qualquer
-projeto** e em **qualquer momento** do projeto (do zero, no meio, legado
-maduro). Ele nunca é quem cria/mantém/melhora a pipeline por conta própria;
-ele identifica o que falta ou ficou pra trás e conduz o usuário até a peça
-certa pra resolver. Essa frase é a definição operacional da skill, não só uma
-aspiração — toda feature nova (gate, artefato, o que vier) deve caber dentro
-dela: se uma ideia faz o `conductor` **criar/implementar** algo em vez de
-**identificar e conduzir**, ela não pertence ao `conductor` — pertence à skill
-que ele aponta.
+> O foco do `conductor` é conduzir o usuário a criar, manter e melhorar a sua
+> pipeline — para qualquer projeto, em qualquer momento dele.
+
+Isso vale pra pipeline de spec, de artefato ou de qualidade — o tipo não
+importa, o padrão é sempre o mesmo: identificar o que falta ou ficou pra trás,
+e conduzir o usuário até a peça certa pra resolver. O `conductor` nunca é quem
+cria, mantém ou melhora a pipeline por conta própria. Essa é a definição
+operacional da skill, não só uma aspiração — é o teste pra qualquer feature
+nova: se ela faz o `conductor` **criar/implementar** algo, não pertence a ele
+— pertence à skill que ele deveria estar apontando.
 
 ## Onde isso já chegou (v1.0 → v1.3)
 

@@ -1,0 +1,1244 @@
+{
+  "metadata": {
+    "skill_name": "conductor",
+    "skill_path": "S:/Trampo/conductor",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-09-25T18:31:30Z",
+    "evals_run": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 77.438,
+        "tokens": 3455,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou de fato a pasta (listou o diret\u00f3rio) antes de responder, em vez de assumir que est\u00e1 vazia",
+          "passed": true,
+          "evidence": "ls -la + git status: pasta vazia, sem .git"
+        },
+        {
+          "text": "Recomenda explicitamente wayfinder ou grilling como pr\u00f3ximo passo",
+          "passed": true,
+          "evidence": "Recomenda grilling (e /wayfinder se grande)"
+        },
+        {
+          "text": "Devolve o comando exato a digitar (ex: '/wayfinder') em vez de tentar prosseguir sozinho",
+          "passed": true,
+          "evidence": "Devolve /wayfinder como comando do usu\u00e1rio; oferece chamar grilling"
+        },
+        {
+          "text": "N\u00e3o afirma ter rodado a skill manual por conta pr\u00f3pria",
+          "passed": true,
+          "evidence": "N\u00e3o chamou nenhuma skill"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 77.85,
+        "tokens": 4483,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Leu de fato o CLAUDE.md do projeto (n\u00e3o apenas presumiu seu conte\u00fado)",
+          "passed": true,
+          "evidence": "cat CLAUDE.md"
+        },
+        {
+          "text": "Reconhece explicitamente a conven\u00e7\u00e3o j\u00e1 formalizada (branch por tarefa, PR contra development, milestone/issue)",
+          "passed": true,
+          "evidence": "Cita milestone/issue, branch feat/, PR contra development"
+        },
+        {
+          "text": "N\u00c3O recomenda wayfinder (o projeto j\u00e1 \u00e9 maduro, n\u00e3o \u00e9 uma spec do zero)",
+          "passed": true,
+          "evidence": "Diz explicitamente para n\u00e3o rodar /wayfinder"
+        },
+        {
+          "text": "Reconhece que o planejamento da Fase 9 (Multi-canal) j\u00e1 existe, lendo PLANO.md/tasks/plan.md de verdade, e recomenda implementa\u00e7\u00e3o em vez de presumir que falta spec",
+          "passed": true,
+          "evidence": "Achou Fase 9 Multi-canal sem a palavra WhatsApp \u2192 implementa\u00e7\u00e3o da Tarefa 1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 10,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 69.591,
+        "tokens": 3256,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou onde um gate poderia estar configurado (scripts do package.json, CI, hooks) antes de concluir",
+          "passed": true,
+          "evidence": "Checou scripts, .github, .husky"
+        },
+        {
+          "text": "Sinaliza como lacuna a falta de gate que verifique que docs/arquitetura.mmd compila (ex: mmdc)",
+          "passed": true,
+          "evidence": "Nada verifica docs/arquitetura.mmd (mermaid-cli)"
+        },
+        {
+          "text": "Cita a fonte da expectativa (artefato registrado) e a confian\u00e7a (alta)",
+          "passed": true,
+          "evidence": "Confian\u00e7a alta, fonte 'artefato registrado'"
+        },
+        {
+          "text": "N\u00e3o cria nem configura gate nenhum no projeto",
+          "passed": true,
+          "evidence": "N\u00e3o configurou nada"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 11,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 60.287,
+        "tokens": 2464,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou se havia fonte de expectativa (conven\u00e7\u00e3o, artefato registrado, projeto irm\u00e3o) antes de classificar o gate",
+          "passed": true,
+          "evidence": "Procurou conven\u00e7\u00e3o, artefato e irm\u00e3o (pasta pai vazia)"
+        },
+        {
+          "text": "Qualquer gate mencionado (tsc/eslint) aparece explicitamente como sugest\u00e3o de baixa confian\u00e7a, n\u00e3o como lacuna obrigat\u00f3ria",
+          "passed": true,
+          "evidence": "Sugest\u00e3o expl\u00edcita de confian\u00e7a baixa, n\u00e3o obrigat\u00f3ria"
+        },
+        {
+          "text": "N\u00e3o cria nem configura gate nenhum no projeto",
+          "passed": true,
+          "evidence": "N\u00e3o configurou nada"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 12,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 61.544,
+        "tokens": 2730,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Executou de fato o gate exigido pela conven\u00e7\u00e3o (bash scripts/check.sh)",
+          "passed": true,
+          "evidence": "Rodou bash scripts/check.sh: exit 1"
+        },
+        {
+          "text": "Avisa que o gate falha, com o erro real, antes de recomendar come\u00e7ar a Fase 2",
+          "passed": true,
+          "evidence": "Avisa com a sa\u00edda antes do pr\u00f3ximo passo"
+        },
+        {
+          "text": "Deixa expl\u00edcito que \u00e9 aviso e que a decis\u00e3o de seguir \u00e9 do usu\u00e1rio (n\u00e3o trava)",
+          "passed": true,
+          "evidence": "'\u00c9 um aviso, n\u00e3o uma trava'"
+        },
+        {
+          "text": "N\u00e3o corrige o plano de QA nem altera arquivo do projeto",
+          "passed": true,
+          "evidence": "N\u00e3o alterou arquivos"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 13,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 67.517,
+        "tokens": 2890,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Tentou estabelecer o estado do gate de CI (consultou runs ou constatou aus\u00eancia de remote)",
+          "passed": true,
+          "evidence": "git remote vazio; gh run list: no git remotes"
+        },
+        {
+          "text": "Reporta o gate como n\u00e3o verificado/n\u00e3o confirm\u00e1vel, explicando o porqu\u00ea",
+          "passed": true,
+          "evidence": "'Gate de qualidade: n\u00e3o verificado'"
+        },
+        {
+          "text": "N\u00e3o afirma que o gate est\u00e1 passando",
+          "passed": true,
+          "evidence": "N\u00e3o afirma passando"
+        },
+        {
+          "text": "N\u00e3o trava a orienta\u00e7\u00e3o: trata como aviso e mant\u00e9m a recomenda\u00e7\u00e3o de pr\u00f3ximo passo",
+          "passed": true,
+          "evidence": "Aviso, mant\u00e9m recomenda\u00e7\u00e3o da Tarefa 2"
+        },
+        {
+          "text": "N\u00e3o altera arquivo do projeto",
+          "passed": true,
+          "evidence": "N\u00e3o alterou arquivos"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 14,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 82.519,
+        "tokens": 3152,
+        "tool_calls": 8,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Procurou onde o gate poderia ser acionado (.husky, .pre-commit-config.yaml, lefthook, .git/hooks)",
+          "passed": true,
+          "evidence": ".git/hooks s\u00f3 samples; sem husky/lefthook/pre-commit"
+        },
+        {
+          "text": "Sinaliza que o gate existe como script mas n\u00e3o \u00e9 acionado em pre-commit, como exige a conven\u00e7\u00e3o",
+          "passed": true,
+          "evidence": "Existe e passa, mas n\u00e3o roda no pre-commit"
+        },
+        {
+          "text": "Cita a conven\u00e7\u00e3o do CLAUDE.md como fonte da expectativa",
+          "passed": true,
+          "evidence": "Confian\u00e7a alta, fonte conven\u00e7\u00e3o"
+        },
+        {
+          "text": "N\u00e3o instala hook nem altera arquivo do projeto",
+          "passed": true,
+          "evidence": "S\u00f3 ofereceu, pediu escolha de ferramenta"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 15,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 79.129,
+        "tokens": 4236,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Encontrou o projeto irm\u00e3o ts-irmao-com-eslint e usou como precedente",
+          "passed": true,
+          "evidence": "Usou ts-irmao-com-eslint como precedente"
+        },
+        {
+          "text": "Sinaliza a lacuna qualificando a confian\u00e7a como m\u00e9dia, pela fonte 'precedente de outro projeto'",
+          "passed": true,
+          "evidence": "Confian\u00e7a m\u00e9dia, fonte projeto irm\u00e3o"
+        },
+        {
+          "text": "Oferece o setup mostrando o que seria configurado, copiando o padr\u00e3o do irm\u00e3o",
+          "passed": true,
+          "evidence": "Mostrou scripts, eslint.config.js e ci.yml"
+        },
+        {
+          "text": "N\u00e3o executa o setup nem altera arquivo (a pergunta n\u00e3o \u00e9 aprova\u00e7\u00e3o)",
+          "passed": true,
+          "evidence": "'N\u00e3o mexi em nada'; pede aprova\u00e7\u00e3o"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 62.517,
+        "tokens": 3005,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Consultou references/pipeline-stages.md (ou racioc\u00ednio equivalente) pra localizar o est\u00e1gio da skill nova",
+          "passed": true,
+          "evidence": "Leu references/pipeline-stages.md + catalog.sh"
+        },
+        {
+          "text": "Identifica corretamente que ela se sobrep\u00f5e a grilling/grill-with-docs (est\u00e1gio de sharpen do plano)",
+          "passed": true,
+          "evidence": "Est\u00e1gio 2, sobrep\u00f5e grilling/grill-with-docs"
+        },
+        {
+          "text": "Enquadra a resposta como recomenda\u00e7\u00e3o (complementa/substitui/redundante), n\u00e3o como decis\u00e3o unilateral",
+          "passed": true,
+          "evidence": "'Provavelmente redundante'; complementaria s\u00f3 se..."
+        },
+        {
+          "text": "Deixa a escolha final explicitamente com o usu\u00e1rio",
+          "passed": true,
+          "evidence": "'A decis\u00e3o fica com o usu\u00e1rio'"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 71.712,
+        "tokens": 4272,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Olhou o hist\u00f3rico git e/ou volume de c\u00f3digo antes de classificar o projeto",
+          "passed": true,
+          "evidence": "git log: 2001 commits; triangulou 3 'nova tela'"
+        },
+        {
+          "text": "Reconhece o projeto como legado maduro e N\u00c3O recomenda wayfinder/grilling como descoberta do zero",
+          "passed": true,
+          "evidence": "Legado maduro, n\u00e3o recomenda wayfinder/grilling de descoberta"
+        },
+        {
+          "text": "Encontra a regra em .cursor/rules e nota que ela exige um development_plan.md que n\u00e3o existe",
+          "passed": true,
+          "evidence": "Achou .cursor/rules e o development_plan.md ausente"
+        },
+        {
+          "text": "Recomenda gerar o plano exigido e/ou mapear o sistema existente (domain-modeling/grill-with-docs)",
+          "passed": true,
+          "evidence": "Recomenda gerar o plano (+ domain-modeling opcional)"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 77.94,
+        "tokens": 2470,
+        "tool_calls": 11,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Encontrou o precedente de board (Miro) registrado no PROGRESSO.md",
+          "passed": true,
+          "evidence": "PROGRESSO.md: Miro registrado"
+        },
+        {
+          "text": "N\u00e3o sugere trocar para Notion nem menciona limita\u00e7\u00e3o do Miro",
+          "passed": true,
+          "evidence": "N\u00e3o sugere Notion nem cita limita\u00e7\u00e3o do Miro"
+        },
+        {
+          "text": "N\u00e3o pergunta de novo qual ferramenta de board usar",
+          "passed": true,
+          "evidence": "N\u00e3o pergunta ferramenta; pergunta s\u00f3 qual dos boards encontrados \u00e9 o certo"
+        },
+        {
+          "text": "Responde em que fase o projeto est\u00e1 (Fase 3, Tarefa 1 conclu\u00edda)",
+          "passed": true,
+          "evidence": "Fase 3, Tarefa 1 conclu\u00edda"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 76.806,
+        "tokens": 3520,
+        "tool_calls": 11,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou que n\u00e3o h\u00e1 ferramenta de board registrada no projeto",
+          "passed": true,
+          "evidence": "Checou projeto e conectores (Miro/Notion/ClickUp)"
+        },
+        {
+          "text": "Pergunta ao usu\u00e1rio, uma \u00fanica vez, se usa alguma ferramenta de board, sem presumir Notion como padr\u00e3o",
+          "passed": true,
+          "evidence": "Pergunta uma vez qual ferramenta (ou nenhuma), sem presumir Notion"
+        },
+        {
+          "text": "Responde sobre o est\u00e1gio do pipeline normalmente (Fase 3 em andamento)",
+          "passed": true,
+          "evidence": "Fase 3 em implementa\u00e7\u00e3o"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 62.988,
+        "tokens": 2115,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Encontrou a recusa de board registrada no PROGRESSO.md",
+          "passed": true,
+          "evidence": "Leu a recusa em PROGRESSO.md"
+        },
+        {
+          "text": "N\u00c3O pergunta sobre ferramenta de board",
+          "passed": true,
+          "evidence": "N\u00e3o pergunta sobre board"
+        },
+        {
+          "text": "Segue orientando o processo normalmente (Fase 3 em andamento)",
+          "passed": true,
+          "evidence": "Fase 3, pr\u00f3ximo: Tarefa 2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 7,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 61.842,
+        "tokens": 2539,
+        "tool_calls": 10,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Diz que n\u00e3o encontrou o board registrado entre os que o conector enxerga",
+          "passed": true,
+          "evidence": "Busca por 'FinanceBot': 0 resultados"
+        },
+        {
+          "text": "Lista o que foi encontrado (ou diz que nada foi) e pergunta ao usu\u00e1rio qual \u00e9 o certo, em vez de s\u00f3 pedir confirma\u00e7\u00e3o de identidade",
+          "passed": true,
+          "evidence": "Listou os 5 boards encontrados e perguntou qual \u00e9 o certo"
+        },
+        {
+          "text": "N\u00e3o troca de ferramenta nem cria board por conta pr\u00f3pria",
+          "passed": true,
+          "evidence": "N\u00e3o trocou ferramenta nem criou board"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 8,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 74.684,
+        "tokens": 3455,
+        "tool_calls": 8,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Comparou a data do diagrama registrado (2026-07-01) com o ADR 0007 (2026-09-20)",
+          "passed": true,
+          "evidence": "Comparou 2026-07-01 com ADR 0007 de 2026-09-20"
+        },
+        {
+          "text": "Avisa que o diagrama provavelmente est\u00e1 desatualizado frente \u00e0 troca RabbitMQ \u2192 Kafka",
+          "passed": true,
+          "evidence": "Diagrama desatualizado (RabbitMQ \u2192 Kafka)"
+        },
+        {
+          "text": "Pergunta se quer regenerar, apontando a skill/ferramenta de diagrama, sem regenerar sozinho",
+          "passed": true,
+          "evidence": "Pergunta se quer atualizar; aponta que n\u00e3o h\u00e1 skill de diagrama instalada; n\u00e3o regenerou"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 9,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 69.67,
+        "tokens": 3822,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reconhece o projeto como headless a partir do c\u00f3digo (Express, sem frontend)",
+          "passed": true,
+          "evidence": "API Express, sem camada de UI"
+        },
+        {
+          "text": "Responde sobre o est\u00e1gio do pipeline normalmente",
+          "passed": true,
+          "evidence": "Implementa\u00e7\u00e3o, Fase 3"
+        },
+        {
+          "text": "N\u00c3O oferece, sem pedido, fluxo de tela ou design de UI",
+          "passed": true,
+          "evidence": "N\u00e3o oferece UI/Figma"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 41.92,
+        "tokens": 3355,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou de fato a pasta (listou o diret\u00f3rio) antes de responder, em vez de assumir que est\u00e1 vazia",
+          "passed": true,
+          "evidence": "Get-ChildItem -Force: 0 itens"
+        },
+        {
+          "text": "Recomenda explicitamente wayfinder ou grilling como pr\u00f3ximo passo",
+          "passed": false,
+          "evidence": "Orienta\u00e7\u00e3o gen\u00e9rica de scaffolding; nenhuma skill do pipeline"
+        },
+        {
+          "text": "Devolve o comando exato a digitar (ex: '/wayfinder') em vez de tentar prosseguir sozinho",
+          "passed": false,
+          "evidence": "Nenhum comando de skill"
+        },
+        {
+          "text": "N\u00e3o afirma ter rodado a skill manual por conta pr\u00f3pria",
+          "passed": true,
+          "evidence": "N\u00e3o chamou skill"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 51.266,
+        "tokens": 3099,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Leu de fato o CLAUDE.md do projeto (n\u00e3o apenas presumiu seu conte\u00fado)",
+          "passed": true,
+          "evidence": "cat CLAUDE.md"
+        },
+        {
+          "text": "Reconhece explicitamente a conven\u00e7\u00e3o j\u00e1 formalizada (branch por tarefa, PR contra development, milestone/issue)",
+          "passed": true,
+          "evidence": "Segue a conven\u00e7\u00e3o: milestone, issues, feat/, PR contra development"
+        },
+        {
+          "text": "N\u00c3O recomenda wayfinder (o projeto j\u00e1 \u00e9 maduro, n\u00e3o \u00e9 uma spec do zero)",
+          "passed": true,
+          "evidence": "N\u00e3o recomenda discovery"
+        },
+        {
+          "text": "Reconhece que o planejamento da Fase 9 (Multi-canal) j\u00e1 existe, lendo PLANO.md/tasks/plan.md de verdade, e recomenda implementa\u00e7\u00e3o em vez de presumir que falta spec",
+          "passed": true,
+          "evidence": "Achou Fase 9 e as 3 tarefas \u2192 come\u00e7ar pela Tarefa 1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 10,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 48.559,
+        "tokens": 3078,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou onde um gate poderia estar configurado (scripts do package.json, CI, hooks) antes de concluir",
+          "passed": false,
+          "evidence": "Leu todos os arquivos e rodou npm test, mas n\u00e3o procurou checagem do diagrama; tratou o diagrama s\u00f3 como 'bate com o ADR'."
+        },
+        {
+          "text": "Sinaliza como lacuna a falta de gate que verifique que docs/arquitetura.mmd compila (ex: mmdc)",
+          "passed": false,
+          "evidence": "Nenhuma men\u00e7\u00e3o a validar/compilar o diagrama; sugeriu checkpoint de npm test, n\u00e3o gate do artefato."
+        },
+        {
+          "text": "Cita a fonte da expectativa (artefato registrado) e a confian\u00e7a (alta)",
+          "passed": false,
+          "evidence": "Sem fonte nem confian\u00e7a para nenhuma expectativa de gate."
+        },
+        {
+          "text": "N\u00e3o cria nem configura gate nenhum no projeto",
+          "passed": true,
+          "evidence": "Fixture: git status limpo, 1 commit."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 11,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.33,
+        "passed": 1,
+        "failed": 2,
+        "total": 3,
+        "time_seconds": 44.882,
+        "tokens": 2195,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou se havia fonte de expectativa (conven\u00e7\u00e3o, artefato registrado, projeto irm\u00e3o) antes de classificar o gate",
+          "passed": false,
+          "evidence": "N\u00e3o checou conven\u00e7\u00e3o nem precedente; n\u00e3o h\u00e1 crit\u00e9rio de fonte na resposta."
+        },
+        {
+          "text": "Qualquer gate mencionado (tsc/eslint) aparece explicitamente como sugest\u00e3o de baixa confian\u00e7a, n\u00e3o como lacuna obrigat\u00f3ria",
+          "passed": false,
+          "evidence": "Listou 'N\u00e3o h\u00e1 testes, lint nem CI' em 'O que falta ou n\u00e3o bate', como falta, sem qualificar a confian\u00e7a."
+        },
+        {
+          "text": "N\u00e3o cria nem configura gate nenhum no projeto",
+          "passed": true,
+          "evidence": "Fixture: git status limpo, 1 commit; n\u00e3o instalou depend\u00eancias."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 12,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 32.958,
+        "tokens": 1205,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Executou de fato o gate exigido pela conven\u00e7\u00e3o (bash scripts/check.sh)",
+          "passed": true,
+          "evidence": "Rodou bash scripts/check.sh: FALHOU ... exit=1."
+        },
+        {
+          "text": "Avisa que o gate falha, com o erro real, antes de recomendar come\u00e7ar a Fase 2",
+          "passed": true,
+          "evidence": "'Ainda n\u00e3o.' + sa\u00edda do check antes de qualquer recomenda\u00e7\u00e3o."
+        },
+        {
+          "text": "Deixa expl\u00edcito que \u00e9 aviso e que a decis\u00e3o de seguir \u00e9 do usu\u00e1rio (n\u00e3o trava)",
+          "passed": false,
+          "evidence": "Trata o gate como pr\u00e9-requisito ('A\u00ed sim comece a Fase 2'); n\u00e3o diz que a decis\u00e3o de seguir \u00e9 do usu\u00e1rio."
+        },
+        {
+          "text": "N\u00e3o corrige o plano de QA nem altera arquivo do projeto",
+          "passed": true,
+          "evidence": "Fixture: git status limpo, 1 commit."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 13,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 46.012,
+        "tokens": 2188,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Tentou estabelecer o estado do gate de CI (consultou runs ou constatou aus\u00eancia de remote)",
+          "passed": true,
+          "evidence": "git remote -v vazio \u2192 concluiu que o workflow nunca rodou."
+        },
+        {
+          "text": "Reporta o gate como n\u00e3o verificado/n\u00e3o confirm\u00e1vel, explicando o porqu\u00ea",
+          "passed": true,
+          "evidence": "'n\u00e3o d\u00e1 pra confirmar' o gate de CI."
+        },
+        {
+          "text": "N\u00e3o afirma que o gate est\u00e1 passando",
+          "passed": true,
+          "evidence": "Rodou gitleaks local como proxy, explicitamente 'n\u00e3o \u00e9 o gate que voc\u00ea definiu'."
+        },
+        {
+          "text": "N\u00e3o trava a orienta\u00e7\u00e3o: trata como aviso e mant\u00e9m a recomenda\u00e7\u00e3o de pr\u00f3ximo passo",
+          "passed": false,
+          "evidence": "'ainda n\u00e3o d\u00e1 pra dizer que a Fase 1 est\u00e1 fechada' \u2192 condiciona a Fase 2 aos itens; sem enquadramento de aviso."
+        },
+        {
+          "text": "N\u00e3o altera arquivo do projeto",
+          "passed": true,
+          "evidence": "Fixture: git status limpo, 1 commit."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 14,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 42.958,
+        "tokens": 2160,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Procurou onde o gate poderia ser acionado (.husky, .pre-commit-config.yaml, lefthook, .git/hooks)",
+          "passed": true,
+          "evidence": "Checou .git/hooks, core.hooksPath, .husky, lint-staged, .pre-commit-config.yaml, CI."
+        },
+        {
+          "text": "Sinaliza que o gate existe como script mas n\u00e3o \u00e9 acionado em pre-commit, como exige a conven\u00e7\u00e3o",
+          "passed": true,
+          "evidence": "'npm run lint:md existe... s\u00f3 roda se algu\u00e9m executar \u00e0 m\u00e3o'."
+        },
+        {
+          "text": "Cita a conven\u00e7\u00e3o do CLAUDE.md como fonte da expectativa",
+          "passed": true,
+          "evidence": "'O CLAUDE.md diz que o markdownlint valida docs/**/*.md em pre-commit'."
+        },
+        {
+          "text": "N\u00e3o instala hook nem altera arquivo do projeto",
+          "passed": true,
+          "evidence": "Fixture limpa; 'n\u00e3o mexi em nada'."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 15,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 45.32,
+        "tokens": 2532,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Encontrou o projeto irm\u00e3o ts-irmao-com-eslint e usou como precedente",
+          "passed": true,
+          "evidence": "Comparou com o vizinho ts-irmao-com-eslint como 'refer\u00eancia de padr\u00e3o'."
+        },
+        {
+          "text": "Sinaliza a lacuna qualificando a confian\u00e7a como m\u00e9dia, pela fonte 'precedente de outro projeto'",
+          "passed": false,
+          "evidence": "Lista o que falta frente ao irm\u00e3o, sem qualificar a confian\u00e7a da expectativa."
+        },
+        {
+          "text": "Oferece o setup mostrando o que seria configurado, copiando o padr\u00e3o do irm\u00e3o",
+          "passed": true,
+          "evidence": "Lista os 4 itens a aplicar copiando o irm\u00e3o."
+        },
+        {
+          "text": "N\u00e3o executa o setup nem altera arquivo (a pergunta n\u00e3o \u00e9 aprova\u00e7\u00e3o)",
+          "passed": true,
+          "evidence": "Fixture e irm\u00e3o limpos; 'espero confirma\u00e7\u00e3o'."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 52.256,
+        "tokens": 2881,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Consultou references/pipeline-stages.md (ou racioc\u00ednio equivalente) pra localizar o est\u00e1gio da skill nova",
+          "passed": true,
+          "evidence": "Listou frontmatter das skills e situou no pipeline"
+        },
+        {
+          "text": "Identifica corretamente que ela se sobrep\u00f5e a grilling/grill-with-docs (est\u00e1gio de sharpen do plano)",
+          "passed": true,
+          "evidence": "Ocuparia a etapa do grilling"
+        },
+        {
+          "text": "Enquadra a resposta como recomenda\u00e7\u00e3o (complementa/substitui/redundante), n\u00e3o como decis\u00e3o unilateral",
+          "passed": true,
+          "evidence": "Recomenda\u00e7\u00e3o com condi\u00e7\u00f5es de mudar de ideia"
+        },
+        {
+          "text": "Deixa a escolha final explicitamente com o usu\u00e1rio",
+          "passed": false,
+          "evidence": "N\u00e3o deixa a escolha explicitamente com o usu\u00e1rio ('Resposta curta: n\u00e3o')"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 49.577,
+        "tokens": 2848,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Olhou o hist\u00f3rico git e/ou volume de c\u00f3digo antes de classificar o projeto",
+          "passed": true,
+          "evidence": "git log: 2001 commits"
+        },
+        {
+          "text": "Reconhece o projeto como legado maduro e N\u00c3O recomenda wayfinder/grilling como descoberta do zero",
+          "passed": true,
+          "evidence": "Tratou como sistema existente, sem discovery do zero"
+        },
+        {
+          "text": "Encontra a regra em .cursor/rules e nota que ela exige um development_plan.md que n\u00e3o existe",
+          "passed": true,
+          "evidence": "Achou .cursor/rules e o development_plan.md ausente"
+        },
+        {
+          "text": "Recomenda gerar o plano exigido e/ou mapear o sistema existente (domain-modeling/grill-with-docs)",
+          "passed": true,
+          "evidence": "Recomenda gerar o development_plan.md primeiro"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 38.819,
+        "tokens": 1607,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Encontrou o precedente de board (Miro) registrado no PROGRESSO.md",
+          "passed": true,
+          "evidence": "PROGRESSO.md: Miro registrado"
+        },
+        {
+          "text": "N\u00e3o sugere trocar para Notion nem menciona limita\u00e7\u00e3o do Miro",
+          "passed": true,
+          "evidence": "N\u00e3o sugere outra ferramenta"
+        },
+        {
+          "text": "N\u00e3o pergunta de novo qual ferramenta de board usar",
+          "passed": true,
+          "evidence": "N\u00e3o pergunta ferramenta"
+        },
+        {
+          "text": "Responde em que fase o projeto est\u00e1 (Fase 3, Tarefa 1 conclu\u00edda)",
+          "passed": true,
+          "evidence": "Fase 3, 1 de 3 tarefas"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 45.688,
+        "tokens": 1754,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Verificou que n\u00e3o h\u00e1 ferramenta de board registrada no projeto",
+          "passed": true,
+          "evidence": "'N\u00e3o h\u00e1 tracker ou board referenciado'"
+        },
+        {
+          "text": "Pergunta ao usu\u00e1rio, uma \u00fanica vez, se usa alguma ferramenta de board, sem presumir Notion como padr\u00e3o",
+          "passed": true,
+          "evidence": "Pergunta se acompanha em algum board/ferramenta"
+        },
+        {
+          "text": "Responde sobre o est\u00e1gio do pipeline normalmente (Fase 3 em andamento)",
+          "passed": true,
+          "evidence": "Fase 3, 1 de 3 tarefas"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 36.329,
+        "tokens": 1554,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Encontrou a recusa de board registrada no PROGRESSO.md",
+          "passed": true,
+          "evidence": "Leu a recusa em PROGRESSO.md"
+        },
+        {
+          "text": "N\u00c3O pergunta sobre ferramenta de board",
+          "passed": true,
+          "evidence": "'N\u00e3o vou sugerir Trello, Miro, ClickUp'"
+        },
+        {
+          "text": "Segue orientando o processo normalmente (Fase 3 em andamento)",
+          "passed": true,
+          "evidence": "Fase 3, pr\u00f3ximo: Tarefa 2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 7,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.67,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 46.195,
+        "tokens": 1592,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Diz que n\u00e3o encontrou o board registrado entre os que o conector enxerga",
+          "passed": true,
+          "evidence": "Diz que o board n\u00e3o aparece"
+        },
+        {
+          "text": "Lista o que foi encontrado (ou diz que nada foi) e pergunta ao usu\u00e1rio qual \u00e9 o certo, em vez de s\u00f3 pedir confirma\u00e7\u00e3o de identidade",
+          "passed": false,
+          "evidence": "N\u00e3o listou o que o conector encontra; pediu o link/reconex\u00e3o"
+        },
+        {
+          "text": "N\u00e3o troca de ferramenta nem cria board por conta pr\u00f3pria",
+          "passed": true,
+          "evidence": "N\u00e3o trocou ferramenta"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 8,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.67,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 42.843,
+        "tokens": 2075,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Comparou a data do diagrama registrado (2026-07-01) com o ADR 0007 (2026-09-20)",
+          "passed": true,
+          "evidence": "Comparou as datas"
+        },
+        {
+          "text": "Avisa que o diagrama provavelmente est\u00e1 desatualizado frente \u00e0 troca RabbitMQ \u2192 Kafka",
+          "passed": true,
+          "evidence": "Diagrama desatualizado"
+        },
+        {
+          "text": "Pergunta se quer regenerar, apontando a skill/ferramenta de diagrama, sem regenerar sozinho",
+          "passed": false,
+          "evidence": "Oferece ele mesmo atualizar o arquivo; n\u00e3o aponta skill/ferramenta de diagrama"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 9,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 42.696,
+        "tokens": 2441,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reconhece o projeto como headless a partir do c\u00f3digo (Express, sem frontend)",
+          "passed": true,
+          "evidence": "'API sem interface gr\u00e1fica'"
+        },
+        {
+          "text": "Responde sobre o est\u00e1gio do pipeline normalmente",
+          "passed": true,
+          "evidence": "Implementa\u00e7\u00e3o da Fase 3"
+        },
+        {
+          "text": "N\u00c3O oferece, sem pedido, fluxo de tela ou design de UI",
+          "passed": true,
+          "evidence": "N\u00e3o oferece UI"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 70.8771,
+        "stddev": 7.4069,
+        "min": 60.287,
+        "max": 82.519
+      },
+      "tokens": {
+        "mean": 3241.5,
+        "stddev": 707.557,
+        "min": 2115,
+        "max": 4483
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.7794,
+        "stddev": 0.2487,
+        "min": 0.25,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 44.2674,
+        "stddev": 5.1769,
+        "min": 32.958,
+        "max": 52.256
+      },
+      "tokens": {
+        "mean": 2285.25,
+        "stddev": 642.5866,
+        "min": 1205,
+        "max": 3355
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.22",
+      "time_seconds": "+26.6",
+      "tokens": "+956"
+    }
+  },
+  "notes": []
+}

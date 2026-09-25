@@ -41,10 +41,12 @@ issue). Modelo "spec atual + propostas de mudança" (mesmo do OpenSpec):
   "Histórico de rodadas".
 - `ROADMAP.md` continua como visão + princípio que não muda (papel de
   "constitution"), não como spec.
-- **Dogfooding**: o `conductor` é usado pra conduzir o próprio
-  desenvolvimento (rodar a skill pra decidir o próximo passo neste repo). Se a
-  recomendação dela estiver errada aqui, isso é defeito da skill — vira issue
-  e caso de eval.
+- **Dogfooding — o `conductor` é sempre usado**, sem esperar ser chamado:
+  roda no início de cada pedido novo, de cada tarefa e em cada checkpoint,
+  antes de decidir o próximo passo neste repo. Se a recomendação dele estiver
+  errada aqui, isso é defeito da skill — vira issue (label `bug`) e caso de
+  eval (ex: [#27](https://github.com/rasecdev/conductor/issues/27)).
+- Decisões difíceis de reverter ficam em `docs/adr/`.
 
 ## Como registrar trabalho
 

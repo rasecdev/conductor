@@ -1,8 +1,8 @@
 # CLAUDE.md — conductor
 
-Convenção deste repositório. Skill global instalada em `~/.claude/skills/conductor/`
-(git próprio, remote `github.com/rasecdev/conductor`, privado, identidade `rasecdev`
-via override local — não é a identidade git global da máquina).
+Convenção deste repositório. Remote `github.com/rasecdev/conductor`, público,
+licença MIT, identidade `rasecdev` via override local em cada clone — não é a
+identidade git global da máquina.
 
 ## Estrutura
 
@@ -66,14 +66,43 @@ duplicar critério de aceite.
   issue correspondente (via `Closes #N` no commit, ou manualmente quando o
   commit não referencia a issue).
 
-## Fluxo de commit (estado atual: sem branch/PR por tarefa)
+## Clone de trabalho × instalação
 
-As duas tarefas feitas até aqui (`feat: skill inicial do conductor`,
-`docs: adiciona plano de tarefas pos-spec v1`) foram commitadas direto em
-`master` — projeto solo, sem CI configurado ainda, sem exigência de revisão
-externa. **Esse é o padrão real até este ponto, não uma decisão formal de
-"nunca usar branch/PR".** Se o repositório ganhar CI ou colaboração externa no
-futuro, formalizar branch por tarefa + PR nesse momento, não antes.
+- **Instalação**: `~/.claude/skills/conductor/` — é a skill que roda em todos
+  os projetos. Fica sempre em `master` e só muda por `git pull`. Nunca
+  desenvolver nem fazer checkout de outra branch aqui: a skill instalada
+  mudaria na hora, pra todo projeto.
+- **Clone de trabalho**: `S:\Trampo\conductor` — onde todo desenvolvimento
+  acontece.
+- **Evals** rodam contra o `SKILL.md` do clone de trabalho (a versão em
+  desenvolvimento), nunca contra a instalação. O dogfooding, ao contrário, usa
+  a instalação: a versão estável conduz o desenvolvimento da próxima.
+
+## Fluxo de branch e PR
+
+Formalizado em 2026-09-25 na rodada infra (seguindo o precedente do
+AutoFinance). Branches: `master` = versão instalada; `development` =
+integração.
+
+Por tarefa:
+
+1. Branch a partir de `development`: `<tipo>/<slug-curto>` (`feat/`, `fix/`,
+   `chore/`, `docs/`, `test/`) — sem número de tarefa no nome.
+2. Implementar conforme o critério de aceite da tarefa e marcar a caixinha em
+   `tasks/plan.md` **no mesmo PR**.
+3. Push e PR **contra `development`**, corpo com o que foi feito e
+   `Closes #<issue>`.
+4. CI verde (`gitleaks`, `shellcheck`, `evals`, `markdownlint`) → merge
+   (merge commit, não squash) sem pedir aprovação a cada PR. Como
+   `development` não é a branch padrão, `Closes #N` não fecha a issue no
+   merge: fechar manualmente logo depois.
+
+**Promoção `development` → `master` nunca é automática**: só com decisão
+explícita do usuário. Depois dela, `git pull` na instalação e rodar
+`scripts/catalog.sh` lá pra confirmar que a skill instalada funciona.
+
+Fora do ciclo de tarefa (mudança pontual), commit/PR/merge exigem pedido
+explícito.
 
 ## Como validar (seam de eval)
 

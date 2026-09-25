@@ -372,6 +372,44 @@ resto do trabalho: avise o usuário que a atualização daquele artefato ficou
 pendente, continue orientando o processo normalmente, e ofereça retomar assim
 que as ferramentas estiverem acessíveis.
 
+## Passo 7 — Reconhecer os gates de qualidade esperados
+
+Rode isto antes de fechar a recomendação do Passo 4: um estágio pode estar
+"feito" sem nada checando a qualidade do que ele produziu. Um **gate de
+qualidade** é uma checagem do projeto alvo (lint, teste, build, conformidade de
+arquitetura, validação de artefato) — o `conductor` reconhece se o esperado
+existe e sinaliza lacuna; nunca cria nem configura o gate.
+
+1. **Quais gates são esperados.** Cruze o estágio atual e os artefatos vivos
+   registrados (Passos 2 e 6) com `references/gate-types.md`. Aplique o mesmo
+   filtro de tipo de projeto do Passo 1 (projeto headless não espera gate de
+   artefato de UI) e de stack (não espere `tsc` num projeto que não é TS/JS).
+2. **Com que confiança.** Para cada gate candidato, a expectativa vem da fonte
+   mais forte disponível, nesta ordem:
+   1. **Convenção do projeto** exige o gate explicitamente — confiança alta.
+   2. **Artefato registrado** que implica o gate (ex: diagrama Mermaid
+      registrado → gate de compilação Mermaid) — confiança alta.
+   3. **Precedente de outro projeto do mesmo usuário** (repositórios irmãos do
+      projeto alvo, ou os que o usuário indicar) que usa esse gate — confiança
+      média.
+   4. **Nenhuma das anteriores** — só sugestão de baixa confiança, nunca
+      apresentada como obrigatória.
+3. **Se ele existe.** Veja em `references/gate-types.md` → "Como saber se um
+   gate existe": o comando precisa estar configurado em script, CI ou hook que
+   o projeto executa. Dependência instalada sem ninguém chamando não conta.
+4. **Como sinalizar.** Gate esperado ausente é uma lacuna — diga isso na mesma
+   linguagem de "próximo passo" do Passo 4, **sempre citando a fonte da
+   expectativa e a confiança** (ex: "o diagrama `docs/arquitetura.mmd` está
+   registrado como artefato vivo, mas nada verifica que ele compila — gate
+   esperado com confiança alta, pela fonte 'artefato registrado'"). Sugestão de
+   baixa confiança vai separada, como sugestão, não como lacuna.
+5. **Ferramenta.** Se houver mais de uma ferramenta possível para o mesmo gate e
+   o projeto não tiver precedente, pergunte ao usuário qual prefere — mesmo
+   princípio da escolha de ferramenta do Passo 6.
+
+Configurar o gate é trabalho do usuário (ou implementação normal que ele
+pedir), nunca iniciativa do `conductor`.
+
 ## O que o conductor nunca faz
 
 - Nunca invoca `wayfinder`, `to-spec` ou `grill-with-docs` por conta própria —
@@ -394,3 +432,6 @@ que as ferramentas estiverem acessíveis.
 - Nunca dispara uma avaliação quantitativa (via `skill-creator`) sem pedido
   explícito ou aprovação — só oferece quando a comparação por leitura ficar
   ambígua.
+- Nunca cria nem configura um gate de qualidade por conta própria, e nunca
+  apresenta como obrigatório um gate que só tem expectativa de baixa confiança
+  (Passo 7).

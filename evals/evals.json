@@ -70,6 +70,32 @@
       "prompt": "Projeto ApiGateway (C:\\Projetos\\ApiGateway) é um microsserviço backend puro — só um servidor REST em Node.js/Express exposto como API, sem nenhum framework de frontend, sem app mobile, sem painel administrativo. Quero saber o estado atual do processo de spec.",
       "expected_output": "Responde sobre o estágio do pipeline normalmente (spec, tarefas, etc.) sem oferecer, de forma não solicitada, recomendação de skill de fluxo de tela ou design de UI — reconhece que o projeto é headless e esses artefatos não se aplicam, a menos que o usuário peça explicitamente.",
       "files": []
+    },
+    {
+      "id": 10,
+      "name": "quality-gate-expected-missing",
+      "prompt": "Estou no projeto DiagramaDocs, em <FIXTURE_DIR>. Fechei a Fase 2 agora. Onde estamos e tem alguma coisa faltando antes de eu seguir pra Fase 3?",
+      "expected_output": "Reconhece que o diagrama docs/arquitetura.mmd está registrado como artefato vivo no CLAUDE.md e que nada no projeto (scripts, CI, hook) verifica que ele compila. Sinaliza a falta do gate de compilação Mermaid (ex: mmdc) como lacuna, citando a fonte da expectativa (artefato registrado) e a confiança (alta). Não cria nem configura o gate por conta própria — no máximo oferece, deixando a decisão com o usuário.",
+      "files": [
+        "evals/files/mermaid-sem-gate/CLAUDE.md",
+        "evals/files/mermaid-sem-gate/docs/adr/0001-postgres-como-banco.md",
+        "evals/files/mermaid-sem-gate/docs/arquitetura.mmd",
+        "evals/files/mermaid-sem-gate/package.json",
+        "evals/files/mermaid-sem-gate/src/index.js",
+        "evals/files/mermaid-sem-gate/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "quality-gate-low-confidence",
+      "prompt": "Tenho esse projetinho em TypeScript em <FIXTURE_DIR>. Tá tudo em ordem pra eu continuar mexendo nele?",
+      "expected_output": "O projeto não tem convenção escrita, nem artefato registrado, nem projeto irmão servindo de precedente. Qualquer gate de qualidade que mencionar (ex: tsc/eslint) aparece explicitamente como sugestão de baixa confiança, nunca como lacuna obrigatória. Não cria nem configura nenhum gate por conta própria.",
+      "files": [
+        "evals/files/ts-sem-fonte/README.md",
+        "evals/files/ts-sem-fonte/package.json",
+        "evals/files/ts-sem-fonte/src/index.ts",
+        "evals/files/ts-sem-fonte/tsconfig.json"
+      ]
     }
   ]
 }

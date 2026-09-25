@@ -11,7 +11,7 @@
 # The output is a map of what exists and where, never a conclusion: a plan
 # file existing does not mean the stage is done — the skill still reads it.
 #
-# Groups: convencao, maturidade, tipo_projeto, pipeline, git.
+# Groups: convencao, maturidade, tipo_projeto, pipeline, git, gates.
 #
 # Helpers write to R instead of printing, and file contents are matched in
 # bash, to keep subprocesses few: on Git Bash (Windows) every fork is slow and
@@ -185,6 +185,168 @@ else
   unavailable "sem repositório git"; git_json=$R
 fi
 
+# --- gates ------------------------------------------------------------------
+# Tools come from the table in references/gate-types.md (single source): each
+# backticked name in the "Ferramenta" column, plus the npx command in the same
+# position of the "Comando típico" column as an alias of it.
+# A gate "exists" only where something runs it: project scripts, CI or hooks;
+# a dependency nobody calls does not count (gate-types.md).
+
+gate_ref="$(dirname "$0")/../references/gate-types.md"
+tools=()
+declare -A alias_of=()
+if [ -f "$gate_ref" ]; then
+  # shellcheck disable=SC2016 # literal backticks, not command substitution
+  tick_re='`([^`]+)`'
+  while IFS= read -r line; do
+    [[ "$line" == "| "* ]] || continue  # header and separator have no backticks
+    IFS='|' read -r _ _ _ col_tool col_cmd _ <<<"$line"
+    names=() cmds=()
+    while [[ "$col_tool" =~ $tick_re ]]; do
+      names+=("${BASH_REMATCH[1]}"); col_tool=${col_tool#*"${BASH_REMATCH[0]}"}
+    done
+    while [[ "$col_cmd" =~ $tick_re ]]; do
+      c=${BASH_REMATCH[1]#npx }; c=${c%% *}; cmds+=("${c##*/}"); col_cmd=${col_cmd#*"${BASH_REMATCH[0]}"}
+    done
+    for i in "${!names[@]}"; do
+      tools+=("${names[$i]}")
+      alias_of[${names[$i]}]=${cmds[$i]:-${names[$i]}}
+    done
+  done <"$gate_ref"
+fi
+
+mentions() { # does text $1 call tool $2 (or its alias)?
+  local n re
+  for n in "$2" "${alias_of[$2]:-$2}"; do
+    re="(^|[^A-Za-z0-9_.-])${n//./\\.}([^A-Za-z0-9_]|$)"
+    [[ "$1" =~ $re ]] && return 0
+  done
+  return 1
+}
+
+# gate_scan <dir>: sets G_WHERE[tool] ("; "-joined places), G_POINTS_* lists.
+gate_scan() {
+  local dir="$1" f text name cmd tool kind label scripts_block
+  G_WHERE=()
+  G_POINTS_SCRIPTS=() G_POINTS_CI=() G_POINTS_HOOKS=()
+  local -A pkg_scripts=()
+  local -a srcs=()
+  shopt -s nullglob
+  for f in "$dir"/package.json "$dir"/Makefile "$dir"/justfile "$dir"/scripts/*.sh; do
+    [ -f "$f" ] || continue
+    srcs+=("scripts|$f"); G_POINTS_SCRIPTS+=("${f#"$dir"/}")
+  done
+  for f in "$dir"/.github/workflows/*.yml "$dir"/.github/workflows/*.yaml "$dir"/.gitlab-ci.yml \
+    "$dir"/azure-pipelines.yml "$dir"/bitbucket-pipelines.yml; do
+    [ -f "$f" ] || continue
+    srcs+=("ci|$f"); G_POINTS_CI+=("${f#"$dir"/}")
+  done
+  for f in "$dir"/.husky/* "$dir"/.pre-commit-config.yaml "$dir"/lefthook.yml \
+    "$dir"/.git/hooks/pre-commit "$dir"/.git/hooks/pre-push; do
+    [ -f "$f" ] || continue
+    srcs+=("hook|$f"); G_POINTS_HOOKS+=("${f#"$dir"/}")
+  done
+  shopt -u nullglob
+
+  # package.json: only the "scripts" block counts (not devDependencies).
+  if [ -f "$dir/package.json" ]; then
+    text=$(<"$dir/package.json")
+    scripts_block=""
+    if [[ "$text" == *'"scripts"'* ]]; then
+      scripts_block=${text#*\"scripts\"}; scripts_block=${scripts_block#*\{}; scripts_block=${scripts_block%%\}*}
+    fi
+    local pair_re='"([^"]+)"[[:space:]]*:[[:space:]]*"([^"]*)"'
+    while [[ "$scripts_block" =~ $pair_re ]]; do
+      pkg_scripts[${BASH_REMATCH[1]}]=${BASH_REMATCH[2]}
+      scripts_block=${scripts_block#*"${BASH_REMATCH[0]}"}
+    done
+  fi
+
+  local -a script_names=()
+  [ ${#pkg_scripts[@]} -eq 0 ] || mapfile -t script_names < <(printf '%s
+' "${!pkg_scripts[@]}" | LC_ALL=C sort)
+  for tool in "${tools[@]}"; do
+    local where=""
+    for name in "${script_names[@]}"; do
+      mentions "${pkg_scripts[$name]}" "$tool" && where+="${where:+; }package.json scripts.$name"
+    done
+    for f in "${srcs[@]}"; do
+      kind=${f%%|*}; f=${f#*|}
+      [ "${f##*/}" = package.json ] && continue
+      text=$(<"$f"); label="$kind: ${f#"$dir"/}"
+      if mentions "$text" "$tool"; then
+        where+="${where:+; }$label"
+      elif [ "$kind" != scripts ]; then
+        # Indirect: CI/hook runs a package.json script that calls the tool.
+        for name in "${script_names[@]}"; do
+          cmd=${pkg_scripts[$name]}
+          mentions "$cmd" "$tool" || continue
+          [[ "$text" == *"run $name"* || "$text" == *"yarn $name"* || "$text" == *"pnpm $name"* ]] &&
+            where+="${where:+; }$label (via scripts.$name)"
+        done
+      fi
+    done
+    [ -n "$where" ] && G_WHERE[$tool]=$where
+  done
+}
+
+declare -A G_WHERE=()
+gate_scan "."
+configured="" absent=()
+for tool in "${tools[@]}"; do
+  if [ -n "${G_WHERE[$tool]+x}" ]; then
+    js "$tool"; t=$R; js "${G_WHERE[$tool]}"
+    configured+="${configured:+, }{\"ferramenta\": $t, \"configurado_em\": $R}"
+  else
+    absent+=("$tool")
+  fi
+done
+arr "${absent[@]}"; o_absent=$R
+arr "${G_POINTS_SCRIPTS[@]}"; p_s=$R
+arr "${G_POINTS_CI[@]}"; p_c=$R
+arr "${G_POINTS_HOOKS[@]}"; p_h=$R
+
+if [ ${#tools[@]} -eq 0 ]; then
+  unavailable "referência de tipos de gate não encontrada"; o_tools=$R
+else
+  o_tools="{\"configurados\": [$configured], \"ausentes\": $o_absent}"
+fi
+
+if [ "$has_git" != yes ]; then
+  unavailable "sem repositório git"
+elif [ -z "$(git remote 2>/dev/null)" ]; then
+  unavailable "sem remote"
+elif ! command -v gh >/dev/null 2>&1; then
+  unavailable "gh não instalado"
+elif ! run=$(gh run list --branch "$branch" --limit 1 --json workflowName,status,conclusion,createdAt \
+  --template '{{range .}}{{.workflowName}}|{{.status}}|{{.conclusion}}|{{.createdAt}}{{end}}' 2>/dev/null); then
+  unavailable "gh sem acesso ao CI"
+elif [ -z "$run" ]; then
+  unavailable "nenhuma run de CI na branch $branch"
+else
+  IFS='|' read -r w s c d <<<"$run"
+  js "$w"; w=$R; js "$s"; s=$R; js "$c"; c=$R; js "$d"; d=$R
+  R="{\"workflow\": $w, \"status\": $s, \"conclusao\": $c, \"data\": $d}"
+fi
+o_ci=$R
+
+# Sibling projects (same parent dir): which gate tools each one configures.
+siblings=""
+here=$(pwd -P)
+for sib in ../*/; do
+  sib=${sib%/}
+  [ "$(cd "$sib" 2>/dev/null && pwd -P)" = "$here" ] && continue
+  [ -d "$sib/.git" ] || [ -f "$sib/package.json" ] || continue
+  gate_scan "$sib"
+  [ ${#G_WHERE[@]} -gt 0 ] || continue
+  sib_tools=()
+  for tool in "${tools[@]}"; do [ -n "${G_WHERE[$tool]+x}" ] && sib_tools+=("$tool: ${G_WHERE[$tool]}"); done
+  js "${sib##*/}"; n=$R; arr "${sib_tools[@]}"
+  siblings+="${siblings:+, }{\"projeto\": $n, \"gates\": $R}"
+done
+
+gates_json="{\"ferramentas\": $o_tools, \"pontos_de_execucao\": {\"scripts\": $p_s, \"ci\": $p_c, \"hooks\": $p_h}, \"ultima_run_ci\": $o_ci, \"irmaos\": [$siblings]}"
+
 # --- output -----------------------------------------------------------------
 
 files_json "${conv[@]}"; o_conv=$R
@@ -201,6 +363,7 @@ cat <<EOF
   "maturidade": {"historico": $history, "manifestos": $o_man, "arquivos_de_codigo": $code_count},
   "tipo_projeto": {"sinais_ui": $o_ui, "sinais_headless": $o_head},
   "pipeline": {"spec": $o_spec, "planejamento": $o_plan, "tarefas": [$tasks], "glossario": $o_glos, "adrs": $adr_count},
-  "git": $git_json
+  "git": $git_json,
+  "gates": $gates_json
 }
 EOF

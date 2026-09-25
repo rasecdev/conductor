@@ -191,7 +191,7 @@ de 1M de tokens.
 
 ### Fase 1: Script de estado
 
-- [ ] [Tarefa 1: Script de estado com teste determinístico no CI](https://github.com/rasecdev/conductor/issues/51) — stories 11–14, 17–19, 23
+- [x] [Tarefa 1: Script de estado com teste determinístico no CI](https://github.com/rasecdev/conductor/issues/51) — stories 11–14, 17–19, 23
 - [ ] [Tarefa 2: Script de estado detecta gates e precedente de irmãos](https://github.com/rasecdev/conductor/issues/52) — stories 8–10, 16, 20
 
 ### Checkpoint: Fase 1

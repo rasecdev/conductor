@@ -1,0 +1,7 @@
+{
+  "convencao": [{"caminho": "CLAUDE.md", "bytes": "<n>"}],
+  "maturidade": {"historico": {"commits": 1, "primeiro_commit": "<data>", "ultimo_commit": "<data>"}, "manifestos": ["package.json"], "arquivos_de_codigo": 1},
+  "tipo_projeto": {"sinais_ui": [], "sinais_headless": []},
+  "pipeline": {"spec": [], "planejamento": [{"caminho": "tasks/plan.md", "bytes": "<n>"}], "tarefas": [{"caminho": "tasks/plan.md", "abertas": 1, "marcadas": 3}], "glossario": [], "adrs": 1},
+  "git": {"branch_atual": "<branch-padrao>", "branches_locais": ["<branch-padrao>"], "prs_abertos": {"indisponivel": "sem remote"}}
+}

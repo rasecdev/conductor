@@ -15,10 +15,31 @@ via override local — não é a identidade git global da máquina).
   toda skill instalada, lido dinamicamente (nunca uma lista fixa mantida à mão).
 - `evals/evals.json` — casos de teste do seam de eval (ver "Como validar").
 - `tasks/plan.md` — plano de tarefas ativo (ver "Como registrar trabalho").
+- `SPEC.md` — spec viva: comportamento **atual** da skill, fonte de verdade do
+  que ela faz (ver "Spec Driven Development").
 
-Não há `PRODUCT.md`/`TECH.md` neste repositório: a spec do v1 vive como issue
-no tracker (ver abaixo), não como arquivo checked-in — decisão tomada ao
-publicá-la, não uma lacuna a corrigir.
+## Spec Driven Development
+
+Decidido em 2026-09-25 (substitui a decisão anterior de manter a spec só como
+issue). Modelo "spec atual + propostas de mudança" (mesmo do OpenSpec):
+
+- `SPEC.md` = estado atual, com o conteúdo de PRD (problema, objetivos e
+  critérios de sucesso, user stories) e as decisões técnicas e de teste. Não
+  há `PRD.md`/`PRODUCT.md`/`TECH.md` separados — o mesmo "o quê" em dois
+  lugares diverge.
+- Spec de rodada (issue) = delta. **Toda spec de rodada nova passa pelo
+  `/to-spec`** (digitado pelo usuário — é skill manual), nunca escrita
+  direto em conversa.
+- **Ao fechar uma rodada**: conferir cada requisito da issue de spec contra
+  o `SKILL.md` (e referências/scripts tocados), requisito por requisito, antes
+  de fechá-la; depois incorporar o delta ao `SPEC.md` e adicionar a linha em
+  "Histórico de rodadas".
+- `ROADMAP.md` continua como visão + princípio que não muda (papel de
+  "constitution"), não como spec.
+- **Dogfooding**: o `conductor` é usado pra conduzir o próprio
+  desenvolvimento (rodar a skill pra decidir o próximo passo neste repo). Se a
+  recomendação dela estiver errada aqui, isso é defeito da skill — vira issue
+  e caso de eval.
 
 ## Como registrar trabalho
 
@@ -28,7 +49,7 @@ normal de `planning-and-task-breakdown`), mas cada tarefa individual é uma
 issue — o texto de `tasks/plan.md` linka pra issue correspondente em vez de
 duplicar critério de aceite.
 
-- Spec de uma rodada nova: publicada como issue própria (ex.
+- Spec de uma rodada nova: publicada como issue própria via `/to-spec` (ex.
   [issue #1](https://github.com/rasecdev/conductor/issues/1), spec do v1),
   label `ready-for-agent` quando pronta pra implementação.
 - Plano pós-spec: `tasks/plan.md`, cada tarefa linkando a issue já criada
@@ -73,7 +94,7 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
 
 - Frontmatter sem `disable-model-invocation` — a skill só informa/recomenda,
   sem efeito colateral irreversível, por isso pode ser auto-invocável. Ver
-  "Implementation Decisions" da issue #1 antes de reabrir essa decisão.
+  "Implementation Decisions" do `SPEC.md` antes de reabrir essa decisão.
 - `conductor` nunca invoca `wayfinder`/`to-spec`/`grill-with-docs` por conta
   própria (bloqueio mecânico do `disable-model-invocation` dessas skills,
   reforçado como regra explícita no próprio `SKILL.md`) — não editar essas

@@ -1,0 +1,3 @@
+# Scripts run under bash/python on Linux CI and in Git Bash; CRLF breaks them.
+*.sh text eol=lf
+*.py text eol=lf

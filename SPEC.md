@@ -245,8 +245,9 @@ isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
   `headless-project-no-ui-recommendation`, `quality-gate-expected-missing`,
   `quality-gate-low-confidence`, `quality-gate-failing`,
   `quality-gate-ci-unverifiable`, `quality-gate-not-triggered`,
-  `quality-gate-setup-offered-not-executed`. Resultados em
-  `evals/results-*.md`.
+  `quality-gate-setup-offered-not-executed`, `tasks-without-acceptance-criteria`
+  (#27; não reproduziu o bug, fica como proteção da regra do Passo 2).
+  Resultados em `evals/results-*.md`.
 - **Fixtures isoladas**: todo caso com estado roda numa cópia de
   `evals/files/<fixture>` com git próprio, uma por run
   (`scripts/prepare_fixture.sh`); estado que não cabe em arquivo (histórico

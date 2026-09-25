@@ -126,3 +126,29 @@ referência fixa da skill (`references/gate-types.md`), não algo por projeto.
 - [ ] references/gate-types.md criado
 - [ ] SKILL.md documenta o passo de verificação de gates, incluindo ordem de confiança das fontes
 - [ ] evals/evals.json cobre gate ausente e gate presente-mas-falhando
+
+# Rodada v1.5 — Gates de transição declarativos
+
+Spec: [issue #19](https://github.com/rasecdev/conductor/issues/19). Decidido
+em conversa com o usuário: além dos gates de qualidade (v1.4, do projeto), o
+conductor tem portões próprios de transição — quando uma skill/fluxo do
+pipeline pode começar, e quando um evento (ex: mudança de arquitetura com
+fluxograma registrado) exige revisitar um artefato. Hoje implícitos em prosa
+nos Passos 2/4/6; esta rodada os torna uma tabela declarativa (uma linha por
+gatilho → consequência) com sinais mecânicos avaliados por script. O conductor
+avisa e deixa de recomendar avanço; nunca bloqueia mecanicamente (hook/CI é
+decisão do usuário). Depende da v1.4.
+
+## Task List
+
+### Fase 1: Gates de transição
+
+- [ ] [Tarefa 1: Criar references/transition-gates.md](https://github.com/rasecdev/conductor/issues/20)
+- [ ] [Tarefa 2: Criar scripts/check-gates.sh](https://github.com/rasecdev/conductor/issues/21)
+- [ ] [Tarefa 3: Adicionar passo de gates de transição ao SKILL.md](https://github.com/rasecdev/conductor/issues/22)
+- [ ] [Tarefa 4: Adicionar casos em evals/evals.json cobrindo gates de transição](https://github.com/rasecdev/conductor/issues/23)
+
+### Checkpoint: Fase 1
+- [ ] references/transition-gates.md cobre todo portão hoje implícito nos Passos 2/4/6
+- [ ] scripts/check-gates.sh avalia sinais mecânicos de forma determinística
+- [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências e etapa pulada rumo a skill manual

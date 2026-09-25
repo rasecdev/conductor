@@ -47,23 +47,35 @@
     {
       "id": 4,
       "name": "board-tool-precedent-non-notion",
-      "prompt": "O projeto FinanceBot (C:\\Projetos\\FinanceBot) usa Miro pra acompanhar as fases do processo de spec — tem um board lá, com o link registrado no PROGRESSO.md. Quero saber em que fase estamos agora.",
+      "prompt": "O projeto FinanceBot está em <FIXTURE_DIR>. Quero saber em que fase estamos agora.",
       "expected_output": "Reconhece o precedente já registrado (Miro, não Notion) no PROGRESSO.md e usa essa ferramenta pra responder sobre o estado do board, sem sugerir trocar pra Notion, sem mencionar qualquer limitação do Miro, e sem perguntar de novo qual ferramenta usar.",
-      "files": []
+      "files": [
+        "evals/files/board-miro-registrado/CLAUDE.md",
+        "evals/files/board-miro-registrado/PROGRESSO.md",
+        "evals/files/board-miro-registrado/tasks/plan.md"
+      ]
     },
     {
       "id": 5,
       "name": "board-tool-first-ask",
-      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360) já tem CLAUDE.md e tasks/plan.md com uma fase em andamento, mas nunca mencionou nenhuma ferramenta de board em nenhum arquivo. Quero saber o estado atual do processo de spec.",
+      "prompt": "Projeto Vendas360 em <FIXTURE_DIR>. Quero saber o estado atual do processo de spec.",
       "expected_output": "Responde sobre o estágio do pipeline normalmente, e ao tratar do board verifica que não há precedente registrado nem MCP de board conectado — pergunta ao usuário, uma única vez, se ele usa alguma ferramenta desse tipo (Notion, Miro, etc.) pra acompanhar o processo, sem pressupor Notion como padrão nem prosseguir sem perguntar.",
-      "files": []
+      "files": [
+        "evals/files/sem-ferramenta-board/CLAUDE.md",
+        "evals/files/sem-ferramenta-board/PROGRESSO.md",
+        "evals/files/sem-ferramenta-board/tasks/plan.md"
+      ]
     },
     {
       "id": 6,
       "name": "board-tool-refusal-remembered",
-      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md já tem a nota 'processo de spec não usa board externo, decidido em 2026-08-10'. Quero saber o estado atual do processo de spec.",
+      "prompt": "Projeto Vendas360 em <FIXTURE_DIR>. Quero saber o estado atual do processo de spec.",
       "expected_output": "Reconhece a recusa já registrada no PROGRESSO.md e não pergunta de novo sobre ferramenta de board (Notion, Miro ou qualquer outra) — segue orientando o processo normalmente, só sem a parte de board.",
-      "files": []
+      "files": [
+        "evals/files/board-recusado/CLAUDE.md",
+        "evals/files/board-recusado/PROGRESSO.md",
+        "evals/files/board-recusado/tasks/plan.md"
+      ]
     },
     {
       "id": 7,
@@ -75,16 +87,29 @@
     {
       "id": 8,
       "name": "non-board-artifact-staleness",
-      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md registra um diagrama de arquitetura (arquivo docs/architecture/diagram.html, gerado em 2026-07-01) como artefato vivo do projeto. Em docs/adr/0007-mensageria-kafka.md, datado de 2026-09-20, foi registrada a troca da mensageria de RabbitMQ pra Kafka. Quero saber o estado atual do projeto.",
+      "prompt": "Projeto Vendas360 em <FIXTURE_DIR>. Quero saber o estado atual do projeto.",
       "expected_output": "Nota que o ADR de troca de mensageria (2026-09-20) é mais recente que o diagrama de arquitetura registrado (2026-07-01) e provavelmente não reflete mais essa decisão. Avisa o usuário sobre a possível desatualização e pergunta se quer regenerar o diagrama (apontando a skill de diagrama disponível), sem regenerar sozinho e sem tratar isso como algo exclusivo de board.",
-      "files": []
+      "files": [
+        "evals/files/diagrama-desatualizado/CLAUDE.md",
+        "evals/files/diagrama-desatualizado/PROGRESSO.md",
+        "evals/files/diagrama-desatualizado/docs/adr/0006-postgres.md",
+        "evals/files/diagrama-desatualizado/docs/adr/0007-mensageria-kafka.md",
+        "evals/files/diagrama-desatualizado/docs/architecture/diagram.html",
+        "evals/files/diagrama-desatualizado/tasks/plan.md"
+      ]
     },
     {
       "id": 9,
       "name": "headless-project-no-ui-recommendation",
-      "prompt": "Projeto ApiGateway (C:\\Projetos\\ApiGateway) é um microsserviço backend puro — só um servidor REST em Node.js/Express exposto como API, sem nenhum framework de frontend, sem app mobile, sem painel administrativo. Quero saber o estado atual do processo de spec.",
+      "prompt": "Projeto ApiGateway em <FIXTURE_DIR>. Quero saber o estado atual do processo de spec.",
       "expected_output": "Responde sobre o estágio do pipeline normalmente (spec, tarefas, etc.) sem oferecer, de forma não solicitada, recomendação de skill de fluxo de tela ou design de UI — reconhece que o projeto é headless e esses artefatos não se aplicam, a menos que o usuário peça explicitamente.",
-      "files": []
+      "files": [
+        "evals/files/api-headless/CLAUDE.md",
+        "evals/files/api-headless/PROGRESSO.md",
+        "evals/files/api-headless/package.json",
+        "evals/files/api-headless/src/server.js",
+        "evals/files/api-headless/tasks/plan.md"
+      ]
     },
     {
       "id": 10,

@@ -78,17 +78,18 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
 - Cada caso em `evals/evals.json` tem um `expected_output` em prosa (o que a
   resposta precisa demonstrar), avaliado por comparação `with_skill` vs.
   baseline — não por assertion determinística de string.
-- 4 casos cobertos no v1: projeto novo do zero (`fresh-project`), feature nova
-  em projeto maduro com pipeline formalizado (`mature-feature`), avaliação de
-  skill nova proposta (`skill-evaluation`), projeto legado maduro sem pipeline
-  formalizado (`legacy-project`).
-- **Pendência conhecida (Tarefa 3 do plano ativo):** essas 4 iterações foram
-  rodadas manualmente durante o desenvolvimento da spec, não pelos scripts
-  oficiais do `skill-creator` — automatizar isso é trabalho futuro, não
-  reprocessar os casos já validados.
+- Lista de casos cobertos: `SPEC.md` → "Testing Decisions" (não duplicar
+  aqui).
+- Scripts oficiais do `skill-creator` (`scripts.aggregate_benchmark`,
+  `eval-viewer/generate_review.py --static`) validados contra as iterações do
+  v1 em `conductor-workspace/` ([#4](https://github.com/rasecdev/conductor/issues/4)).
+  Exigem o layout oficial (camada `run-N` entre config e `grading.json`) e
+  `grading.json` formal — nota livre é pulada pelo script. **Gravar toda
+  rodada nesse formato desde o início.** As rodadas v1.1–v1.3 foram rodadas
+  manualmente (`evals/results-*.md`), fora desse formato.
 - Ao adicionar um passo/comportamento novo ao `SKILL.md`, adicionar o caso
   correspondente em `evals/evals.json` antes de considerar o trabalho
-  concluído, seguindo o mesmo formato dos 4 existentes.
+  concluído, seguindo o mesmo formato dos existentes.
 
 ## O que nunca mudar sem decisão explícita
 

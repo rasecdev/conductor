@@ -4,16 +4,26 @@
     {
       "id": 0,
       "name": "fresh-project",
-      "prompt": "Acabei de criar a pasta C:\\Projetos\\OrquestraIA pro meu projeto de estudo de orquestração multi-agente. Ainda não tem nada dentro. O que eu faço agora?",
+      "prompt": "Acabei de criar a pasta <FIXTURE_DIR> pro meu projeto de estudo de orquestração multi-agente (OrquestraIA). Ainda não tem nada dentro. O que eu faço agora?",
       "expected_output": "Reconhece ausência total de CLAUDE.md/CONTEXT.md/spec no diretório e recomenda começar pelo wayfinder (ou grilling, se o escopo parecer pequeno) — devolvendo o comando exato (/wayfinder ou /grilling) em vez de tentar prosseguir sozinho.",
-      "files": []
+      "files": [
+        "evals/files/pasta-vazia/.fixture-setup.sh"
+      ]
     },
     {
       "id": 1,
       "name": "mature-feature",
-      "prompt": "Quero adicionar um canal de WhatsApp no FinanceBot, além do Telegram que já existe. Por onde eu começo?",
-      "expected_output": "Lê o CLAUDE.md do repo FinanceBot (C:\\Projetos\\FinanceBot) e checa tasks/plan.md, tasks/todo.md e o tracker de verdade — não presume que falta spec. Se o planejamento já existir (como de fato existe: fase/milestone real), reconhece isso e recomenda pular direto pra implementação seguindo a convenção do projeto; só recomendaria to-spec/grill-with-docs se checagem real mostrasse que essa etapa realmente falta.",
-      "files": []
+      "prompt": "Quero adicionar um canal de WhatsApp no FinanceBot (em <FIXTURE_DIR>), além do Telegram que já existe. Por onde eu começo?",
+      "expected_output": "Lê o CLAUDE.md do repo FinanceBot e checa tasks/plan.md, tasks/todo.md e o tracker de verdade — não presume que falta spec. Se o planejamento já existir (como de fato existe: fase/milestone real), reconhece isso e recomenda pular direto pra implementação seguindo a convenção do projeto; só recomendaria to-spec/grill-with-docs se checagem real mostrasse que essa etapa realmente falta.",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ]
     },
     {
       "id": 2,
@@ -25,9 +35,14 @@
     {
       "id": 3,
       "name": "legacy-project",
-      "prompt": "Quero adicionar uma melhoria/nova funcionalidade no ERPLegado. Por onde eu começo?",
-      "expected_output": "Reconhece que C:\\Projetos\\ERPLegado é um sistema legado maduro (milhares de commits, código real em produção), NÃO trata como 'ideia nova' nem recomenda wayfinder/grilling como descoberta do zero. Encontra a convenção existente mesmo estando fora do padrão CLAUDE.md (.cursor/rules/my-custom-rules.mdc), nota que essa regra exige um development_plan.md que não existe ainda, e recomenda o passo certo em cima disso (gerar o plano exigido / mapear o sistema existente via domain-modeling ou grill-with-docs) em vez de uma recomendação genérica de pipeline do zero.",
-      "files": []
+      "prompt": "Quero adicionar uma melhoria/nova funcionalidade no ERPLegado (em <FIXTURE_DIR>). Por onde eu começo?",
+      "expected_output": "Reconhece que o ERPLegado é um sistema legado maduro (milhares de commits, código real em produção), NÃO trata como 'ideia nova' nem recomenda wayfinder/grilling como descoberta do zero. Encontra a convenção existente mesmo estando fora do padrão CLAUDE.md (.cursor/rules/my-custom-rules.mdc), nota que essa regra exige um development_plan.md que não existe ainda, e recomenda o passo certo em cima disso (gerar o plano exigido / mapear o sistema existente via domain-modeling ou grill-with-docs) em vez de uma recomendação genérica de pipeline do zero.",
+      "files": [
+        "evals/files/legado-cursor-rules/.cursor/rules/my-custom-rules.mdc",
+        "evals/files/legado-cursor-rules/.fixture-setup.sh",
+        "evals/files/legado-cursor-rules/ERPLegado.sln",
+        "evals/files/legado-cursor-rules/src/ERPLegado.csproj"
+      ]
     },
     {
       "id": 4,

@@ -46,15 +46,16 @@ conductor/
     └── evals.json         — casos de teste usados para validar o comportamento da skill
 ```
 
-## Validação
+## Qualidade
 
-Testada via o processo do `skill-creator` (subagentes com/sem a skill, comparando outputs) contra três perfis de projeto reais:
+Avaliada com o framework de eval do `skill-creator`: 16 casos, cada um rodado com e sem a skill em projetos sintéticos isolados. O baseline já tem **todas as skills de SDD instaladas** — a pergunta é se o `conductor` agrega em cima delas.
 
-- **Projeto novo do zero** — reconhece ausência de convenção/spec e recomenda descoberta (`wayfinder`/`grilling`).
-- **Projeto maduro com pipeline formalizado** — reconhece planejamento já feito e pula para implementação, sem repetir etapas de spec desnecessariamente.
-- **Projeto legado maduro sem pipeline formalizado** — encontra convenção em formato de outra ferramenta, reconhece requisito de artefato já prescrito mas ausente, e deriva o padrão real de arquivos minerando commits anteriores parecidos.
+| | Com o `conductor` | Sem (só o pipeline) |
+|---|---|---|
+| Acerto das assertions (v1.4) | **100%** | 77,9% |
+| Casos com acerto total | 16 de 16 | 7 de 16 |
 
-Histórico de correções encontradas nesse processo (e o porquê de cada uma) está no histórico de commits deste repositório.
+A diferença aparece em encaminhar projeto novo para a descoberta certa, apontar gates de qualidade esperados e ausentes, e avisar sem travar quando um gate está vermelho. Em 7 casos o pipeline sozinho já acerta tudo. Uma run por configuração e grading pelo mesmo modelo que desenvolve a skill — metodologia, resultado por caso e limites em [`docs/avaliacao.md`](docs/avaliacao.md).
 
 ## Licença
 

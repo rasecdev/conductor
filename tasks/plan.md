@@ -144,7 +144,7 @@ Tarefas no GitHub Issues; aqui só o índice.
 - [x] [Tarefa 4a: Fixtures dos casos de eval que dependem de estado real (0, 1, 3)](https://github.com/rasecdev/conductor/issues/40)
 - [x] [Tarefa 4b: Fixtures dos casos de eval descritivos (4, 5, 6, 8, 9)](https://github.com/rasecdev/conductor/issues/41)
 - [x] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
-- [ ] [Tarefa 5: Documentar a avaliação da skill](https://github.com/rasecdev/conductor/issues/42)
+- [x] [Tarefa 5: Documentar a avaliação da skill](https://github.com/rasecdev/conductor/issues/42)
 
 Replanejado pela `planning-and-task-breakdown` (2026-09-25): os casos antigos
 citavam projetos em `C:\Projetos\...` inexistentes; viraram fixtures (T4a,

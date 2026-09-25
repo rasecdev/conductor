@@ -61,3 +61,23 @@ conductor) pra nunca mais perguntar ali.
 ### Checkpoint: Fase 1
 - [x] SKILL.md não cita mais Notion como obrigatório nem descarta Miro
 - [x] evals/evals.json cobre os três cenários da spec (ferramenta alternativa detectada, nenhuma disponível, recusa já registrada) — resultado em `evals/results-v1.1-passo6-agnostico.md`
+
+# Rodada v1.2 — Desatualização generalizada pra qualquer artefato vivo
+
+Spec: [issue #9](https://github.com/rasecdev/conductor/issues/9). Decidido em
+conversa com o usuário: ao expandir o pipeline com skills de artefato visual
+(arquitetura, fluxo de tela, QA/teste), cada uma vira mais uma coisa que pode
+ficar desatualizada silenciosamente. A checagem de desatualização que hoje só
+existe pro board (Passo 6) precisa generalizar pra qualquer artefato vivo
+registrado do projeto.
+
+## Task List
+
+### Fase 1: Generalizar detecção de desatualização
+
+- [ ] [Tarefa 1: Generalizar Passo 6 para registro e checagem de qualquer artefato vivo](https://github.com/rasecdev/conductor/issues/10)
+- [ ] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo artefato não-board desatualizado](https://github.com/rasecdev/conductor/issues/11)
+
+### Checkpoint: Fase 1
+- [ ] SKILL.md cobre desatualização de qualquer artefato vivo registrado, não só board
+- [ ] evals/evals.json cobre pelo menos um cenário de artefato não-board desatualizado

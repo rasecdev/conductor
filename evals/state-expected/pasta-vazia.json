@@ -1,0 +1,7 @@
+{
+  "convencao": [],
+  "maturidade": {"historico": {"indisponivel": "sem repositório git"}, "manifestos": [], "arquivos_de_codigo": 0},
+  "tipo_projeto": {"sinais_ui": [], "sinais_headless": []},
+  "pipeline": {"spec": [], "planejamento": [], "tarefas": [], "glossario": [], "adrs": 0},
+  "git": {"indisponivel": "sem repositório git"}
+}

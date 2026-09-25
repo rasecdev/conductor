@@ -9,7 +9,7 @@
       "files": []
     },
     {
-      "id": 0,
+      "id": 1,
       "name": "mature-feature",
       "prompt": "Quero adicionar um canal de WhatsApp no FinanceBot, além do Telegram que já existe. Por onde eu começo?",
       "expected_output": "Lê o CLAUDE.md do repo FinanceBot (C:\\Projetos\\FinanceBot) e checa tasks/plan.md, tasks/todo.md e o tracker de verdade — não presume que falta spec. Se o planejamento já existir (como de fato existe: fase/milestone real), reconhece isso e recomenda pular direto pra implementação seguindo a convenção do projeto; só recomendaria to-spec/grill-with-docs se checagem real mostrasse que essa etapa realmente falta.",

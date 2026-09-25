@@ -129,7 +129,7 @@ referência fixa da skill (`references/gate-types.md`), não algo por projeto.
 
 # Rodada v1.5 — Gates de transição declarativos
 
-Spec: [issue #19](https://github.com/rasecdev/conductor/issues/19). Decidido
+Spec: [issue #25](https://github.com/rasecdev/conductor/issues/25) (refeita via `/to-spec`, substitui a #19). Decidido
 em conversa com o usuário: além dos gates de qualidade (v1.4, do projeto), o
 conductor tem portões próprios de transição — quando uma skill/fluxo do
 pipeline pode começar, e quando um evento (ex: mudança de arquitetura com
@@ -137,7 +137,9 @@ fluxograma registrado) exige revisitar um artefato. Hoje implícitos em prosa
 nos Passos 2/4/6; esta rodada os torna uma tabela declarativa (uma linha por
 gatilho → consequência) com sinais mecânicos avaliados por script. O conductor
 avisa e deixa de recomendar avanço; nunca bloqueia mecanicamente (hook/CI é
-decisão do usuário). Depende da v1.4.
+decisão do usuário). Inclui gates de rastreabilidade de SDD: spec sem user
+stories não segue para quebra em tarefas; cada story precisa de pelo menos um
+caso de verificação antes de a rodada fechar. Depende da v1.4.
 
 ## Task List
 
@@ -150,5 +152,6 @@ decisão do usuário). Depende da v1.4.
 
 ### Checkpoint: Fase 1
 - [ ] references/transition-gates.md cobre todo portão hoje implícito nos Passos 2/4/6
-- [ ] scripts/check-gates.sh avalia sinais mecânicos de forma determinística
-- [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências e etapa pulada rumo a skill manual
+- [ ] scripts/check-gates.sh avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures
+- [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
+- [ ] Toda story da #25 coberta por caso de eval ou marcada como não verificável com justificativa

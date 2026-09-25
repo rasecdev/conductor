@@ -23,10 +23,17 @@ normalize() {
     -e 's/"bytes": [0-9]+/"bytes": "<n>"/g'
 }
 
+# Each case: "<fixture> [<sibling>...]" — every fixture alone, plus the ones
+# evals.json runs with siblings (cross-project precedent of Step 7).
+cases=()
+for src in "$repo_root"/evals/files/*/; do cases+=("$(basename "$src")"); done
+cases+=("ts-novo ts-irmao-com-eslint")
+
 failed=0
-for src in "$repo_root"/evals/files/*/; do
-  name="$(basename "$src")"
-  fixture="$(bash "$repo_root/scripts/prepare_fixture.sh" "$name")"
+for c in "${cases[@]}"; do
+  read -ra args <<<"$c"
+  name="${c// /--}"
+  fixture="$(bash "$repo_root/scripts/prepare_fixture.sh" "${args[@]}")"
   actual="$(cd "$fixture" && bash "$repo_root/scripts/state.sh" | normalize)"
   rm -rf "$(dirname "$fixture")"
 

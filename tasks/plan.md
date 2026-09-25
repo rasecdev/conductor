@@ -75,12 +75,12 @@ registrado do projeto.
 
 ### Fase 1: Generalizar detecção de desatualização
 
-- [ ] [Tarefa 1: Generalizar Passo 6 para registro e checagem de qualquer artefato vivo](https://github.com/rasecdev/conductor/issues/10)
-- [ ] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo artefato não-board desatualizado](https://github.com/rasecdev/conductor/issues/11)
+- [x] [Tarefa 1: Generalizar Passo 6 para registro e checagem de qualquer artefato vivo](https://github.com/rasecdev/conductor/issues/10)
+- [x] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo artefato não-board desatualizado](https://github.com/rasecdev/conductor/issues/11)
 
 ### Checkpoint: Fase 1
-- [ ] SKILL.md cobre desatualização de qualquer artefato vivo registrado, não só board
-- [ ] evals/evals.json cobre pelo menos um cenário de artefato não-board desatualizado
+- [x] SKILL.md cobre desatualização de qualquer artefato vivo registrado, não só board
+- [x] evals/evals.json cobre pelo menos um cenário de artefato não-board desatualizado — resultado em `evals/results-v1.2-v1.3.md`
 
 # Rodada v1.3 — Detectar tipo de projeto pra escalar artefatos recomendados
 
@@ -96,9 +96,9 @@ decisão do usuário (mesmo princípio do Passo 6), o conductor não decide isso
 
 ### Fase 1: Detecção de tipo de projeto
 
-- [ ] [Tarefa 1: Estender Passo 1 com detecção de tipo de projeto (UI vs headless)](https://github.com/rasecdev/conductor/issues/13)
-- [ ] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo projeto headless sem recomendação de UI](https://github.com/rasecdev/conductor/issues/14)
+- [x] [Tarefa 1: Estender Passo 1 com detecção de tipo de projeto (UI vs headless)](https://github.com/rasecdev/conductor/issues/13)
+- [x] [Tarefa 2: Adicionar caso em evals/evals.json cobrindo projeto headless sem recomendação de UI](https://github.com/rasecdev/conductor/issues/14)
 
 ### Checkpoint: Fase 1
-- [ ] Passo 1 documenta sinais de tipo de projeto e como filtram recomendação de artefato
-- [ ] evals/evals.json cobre o cenário de projeto headless não recebendo recomendação de UI
+- [x] Passo 1 documenta sinais de tipo de projeto e como filtram recomendação de artefato
+- [x] evals/evals.json cobre o cenário de projeto headless não recebendo recomendação de UI — resultado em `evals/results-v1.2-v1.3.md`

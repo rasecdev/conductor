@@ -56,6 +56,20 @@
       "prompt": "O projeto FinanceBot usa Miro pra acompanhar as fases do processo de spec, com o link do board registrado no PROGRESSO.md. Você tem um conector de Miro conectado, mas ao buscar não encontra nenhum board chamado 'FinanceBot' entre os que o conector enxerga. Quero saber em que fase estamos agora.",
       "expected_output": "Não trava só pedindo confirmação de identidade do projeto. Lista os boards que a busca real encontrou nesse conector e pergunta ao usuário se algum deles é o board certo (ou se nenhum é) — em vez de devolver uma pergunta genérica sem oferecer as opções encontradas.",
       "files": []
+    },
+    {
+      "id": 8,
+      "name": "non-board-artifact-staleness",
+      "prompt": "Projeto Vendas360 (C:\\Projetos\\Vendas360): o PROGRESSO.md registra um diagrama de arquitetura (arquivo docs/architecture/diagram.html, gerado em 2026-07-01) como artefato vivo do projeto. Em docs/adr/0007-mensageria-kafka.md, datado de 2026-09-20, foi registrada a troca da mensageria de RabbitMQ pra Kafka. Quero saber o estado atual do projeto.",
+      "expected_output": "Nota que o ADR de troca de mensageria (2026-09-20) é mais recente que o diagrama de arquitetura registrado (2026-07-01) e provavelmente não reflete mais essa decisão. Avisa o usuário sobre a possível desatualização e pergunta se quer regenerar o diagrama (apontando a skill de diagrama disponível), sem regenerar sozinho e sem tratar isso como algo exclusivo de board.",
+      "files": []
+    },
+    {
+      "id": 9,
+      "name": "headless-project-no-ui-recommendation",
+      "prompt": "Projeto ApiGateway (C:\\Projetos\\ApiGateway) é um microsserviço backend puro — só um servidor REST em Node.js/Express exposto como API, sem nenhum framework de frontend, sem app mobile, sem painel administrativo. Quero saber o estado atual do processo de spec.",
+      "expected_output": "Responde sobre o estágio do pipeline normalmente (spec, tarefas, etc.) sem oferecer, de forma não solicitada, recomendação de skill de fluxo de tela ou design de UI — reconhece que o projeto é headless e esses artefatos não se aplicam, a menos que o usuário peça explicitamente.",
+      "files": []
     }
   ]
 }

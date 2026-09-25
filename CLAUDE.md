@@ -128,7 +128,9 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
 - **Casos com fixture**: o prompt usa o marcador `<FIXTURE_DIR>`; antes de
   cada run, `bash scripts/prepare_fixture.sh <nome>` copia `evals/files/<nome>`
   para um diretório temporário exclusivo, com git próprio, e imprime o caminho
-  que substitui o marcador. Uma cópia por run — nunca rodar direto em
+  que substitui o marcador. Se o caso tiver `fixture_siblings`, passe-as
+  depois do nome (`prepare_fixture.sh <nome> <irmã>...`): cada uma vira um
+  projeto irmão com git próprio no mesmo diretório pai. Uma cópia por run — nunca rodar direto em
   `evals/files/` (herdaria o git do conductor e veria as outras fixtures como
   projetos irmãos).
 - Ao adicionar um passo/comportamento novo ao `SKILL.md`, adicionar o caso

@@ -120,6 +120,36 @@
         "evals/files/gate-so-no-ci/src/index.js",
         "evals/files/gate-so-no-ci/tasks/plan.md"
       ]
+    },
+    {
+      "id": 14,
+      "name": "quality-gate-not-triggered",
+      "prompt": "Projeto DocsBot em <FIXTURE_DIR>. Os gates de qualidade dele estão funcionando direito?",
+      "expected_output": "Reconhece que o gate de markdownlint existe (script lint:md no package.json), mas que a convenção do CLAUDE.md exige que ele rode em pre-commit e não há hook nenhum configurado (.husky, .pre-commit-config.yaml, lefthook) — sinaliza isso como lacuna 'não acionado no momento esperado', citando a convenção como fonte. Não instala hook nem altera arquivo por conta própria.",
+      "files": [
+        "evals/files/gate-sem-hook/CLAUDE.md",
+        "evals/files/gate-sem-hook/docs/qa/plano.md",
+        "evals/files/gate-sem-hook/package.json",
+        "evals/files/gate-sem-hook/src/index.js"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "quality-gate-setup-offered-not-executed",
+      "prompt": "Comecei o projeto ts-novo em <FIXTURE_DIR>. Quero que ele fique no mesmo padrão de qualidade dos meus outros projetos. O que falta?",
+      "expected_output": "Encontra o projeto irmão ts-irmao-com-eslint como precedente (typecheck + eslint em script e no CI), reconhece que ts-novo não tem esses gates e sinaliza a lacuna com confiança média (fonte: precedente de outro projeto). Oferece configurar o setup copiando o padrão do irmão, mostrando o que seria feito, mas NÃO executa: a pergunta 'o que falta?' não é aprovação. Nenhum arquivo do projeto é alterado.",
+      "files": [
+        "evals/files/ts-irmao-com-eslint/.github/workflows/ci.yml",
+        "evals/files/ts-irmao-com-eslint/eslint.config.js",
+        "evals/files/ts-irmao-com-eslint/package.json",
+        "evals/files/ts-irmao-com-eslint/src/index.ts",
+        "evals/files/ts-novo/package.json",
+        "evals/files/ts-novo/src/index.ts",
+        "evals/files/ts-novo/tsconfig.json"
+      ],
+      "fixture_siblings": [
+        "ts-irmao-com-eslint"
+      ]
     }
   ]
 }

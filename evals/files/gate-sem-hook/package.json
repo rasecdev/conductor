@@ -1,0 +1,12 @@
+{
+  "name": "docsbot",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "lint:md": "markdownlint-cli2 \"docs/**/*.md\""
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.23.0"
+  }
+}

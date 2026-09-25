@@ -135,12 +135,12 @@ Tarefas no GitHub Issues; aqui só o índice.
 
 ### Checkpoint: Fase 1
 
-- [ ] Casos (a)–(d) passam no formato oficial, sem regressão frente ao baseline
-- [ ] Revisão com o usuário antes de seguir
+- [x] Casos (a)–(d) passam no formato oficial, sem regressão frente ao baseline
+- [x] Revisão com o usuário antes de seguir
 
 ### Fase 2: Acionamento e fechamento
 
-- [ ] [Tarefa 3: Sinalizar gate não acionado e só oferecer setup inicial](https://github.com/rasecdev/conductor/issues/18) — stories 9, 10, 16
+- [x] [Tarefa 3: Sinalizar gate não acionado e só oferecer setup inicial](https://github.com/rasecdev/conductor/issues/18) — stories 9, 10, 16
 - [ ] [Tarefa 4: Regressão completa e fechamento da rodada v1.4](https://github.com/rasecdev/conductor/issues/26) — cobertura de todas as stories
 
 ### Checkpoint: Fase 2

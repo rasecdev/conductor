@@ -418,18 +418,33 @@ existe e sinaliza lacuna; nunca cria nem configura o gate.
      sem remote, sem acesso ao CI): reporte o gate como **"não verificado"**,
      dizendo o porquê — nunca como passando nem como falhando. Isso não trava
      o resto da orientação.
-5. **Como sinalizar.** Gate esperado ausente ou falhando é uma lacuna — diga
-   isso na mesma linguagem de "próximo passo" do Passo 4, **sempre citando a fonte da
-   expectativa e a confiança** (ex: "o diagrama `docs/arquitetura.mmd` está
-   registrado como artefato vivo, mas nada verifica que ele compila — gate
-   esperado com confiança alta, pela fonte 'artefato registrado'"). Sugestão de
-   baixa confiança vai separada, como sugestão, não como lacuna.
-6. **Ferramenta.** Se houver mais de uma ferramenta possível para o mesmo gate e
+5. **Acionamento.** Um gate que existe mas não roda no momento em que deveria
+   quase não protege nada. Compare onde ele está configurado com quando
+   deveria rodar — pela convenção do projeto, se ela disser, ou pela coluna
+   "Quando deveria rodar" de `references/gate-types.md`. Exemplos de lacuna:
+   a convenção exige o gate em pre-commit, mas ele só existe como script
+   manual e não há hook; o gate é de CI, mas a última run é bem mais antiga
+   que os últimos commits da branch.
+6. **Como sinalizar.** Gate esperado ausente, falhando ou **não acionado no
+   momento esperado** é uma lacuna — diga isso na mesma linguagem de "próximo
+   passo" do Passo 4, **sempre citando a fonte da expectativa e a confiança**
+   (ex: "o diagrama `docs/arquitetura.mmd` está registrado como artefato
+   vivo, mas nada verifica que ele compila — gate esperado com confiança alta,
+   pela fonte 'artefato registrado'"). Sugestão de baixa confiança vai
+   separada, como sugestão, não como lacuna.
+7. **Ferramenta.** Se houver mais de uma ferramenta possível para o mesmo gate e
    o projeto não tiver precedente, pergunte ao usuário qual prefere — mesmo
    princípio da escolha de ferramenta do Passo 6.
 
 Configurar o gate é trabalho do usuário (ou implementação normal que ele
-pedir), nunca iniciativa do `conductor`.
+pedir), nunca iniciativa do `conductor`. A única exceção é **oferecer** o setup
+inicial quando o projeto não tem o gate, o risco é baixo (ex: acrescentar um
+script e um job de CI; nada que apague ou reescreva o que existe) e há
+**precedente claro** — outro projeto do mesmo usuário já usa esse gate, ou a
+convenção diz qual ferramenta. Nesse caso, mostre exatamente o que seria
+configurado, copiando o padrão do precedente, e **só execute com aprovação
+explícita** do usuário. Uma pergunta ou um pedido de diagnóstico ("o que
+falta?") não é aprovação.
 
 ## O que o conductor nunca faz
 
@@ -453,7 +468,8 @@ pedir), nunca iniciativa do `conductor`.
 - Nunca dispara uma avaliação quantitativa (via `skill-creator`) sem pedido
   explícito ou aprovação — só oferece quando a comparação por leitura ficar
   ambígua.
-- Nunca cria nem configura um gate de qualidade por conta própria, e nunca
+- Nunca cria nem configura um gate de qualidade sem aprovação explícita do
+  usuário (setup de baixo risco com precedente só é oferecido), e nunca
   apresenta como obrigatório um gate que só tem expectativa de baixa confiança
   (Passo 7).
 - Nunca reporta um gate como passando ou falhando sem ter verificado de

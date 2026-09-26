@@ -3,6 +3,7 @@
   "maturidade": {"historico": {"commits": 1, "primeiro_commit": "<data>", "ultimo_commit": "<data>"}, "manifestos": [], "arquivos_de_codigo": 0},
   "tipo_projeto": {"sinais_ui": [], "sinais_headless": []},
   "pipeline": {"spec": [], "planejamento": [{"caminho": "PROGRESSO.md", "bytes": "<n>"}, {"caminho": "tasks/plan.md", "bytes": "<n>"}], "tarefas": [{"caminho": "tasks/plan.md", "abertas": 2, "marcadas": 1}], "glossario": [], "adrs": 0},
+  "artefatos": {"mencoes": ["PROGRESSO.md:5"], "arquivos_de_diagrama": []},
   "git": {"branch_atual": "<branch-padrao>", "branches_locais": ["<branch-padrao>"], "prs_abertos": {"indisponivel": "sem remote"}},
   "gates": {"ferramentas": {"configurados": [], "ausentes": ["mmdc", "svgo", "dependency-cruiser", "madge", "markdownlint", "tsc", "eslint"]}, "pontos_de_execucao": {"scripts": [], "ci": [], "hooks": []}, "ultima_run_ci": {"indisponivel": "sem remote"}, "irmaos": []}
 }

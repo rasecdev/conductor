@@ -11,7 +11,7 @@
 # The output is a map of what exists and where, never a conclusion: a plan
 # file existing does not mean the stage is done — the skill still reads it.
 #
-# Groups: convencao, maturidade, tipo_projeto, pipeline, git, gates.
+# Groups: convencao, maturidade, tipo_projeto, pipeline, artefatos, git, gates.
 #
 # Helpers write to R instead of printing, and file contents are matched in
 # bash, to keep subprocesses few: on Git Bash (Windows) every fork is slow and
@@ -159,6 +159,32 @@ for f in "${plan_files[@]}"; do
   [ $((open + marked)) -gt 0 ] || continue
   js "$f"
   tasks+="${tasks:+, }{\"caminho\": $R, \"abertas\": $open, \"marcadas\": $marked}"
+done
+
+# --- artefatos ---------------------------------------------------------------
+# "Artefato registrado" (Step 6): lines of the convention files, PROGRESSO.md
+# and PLANO.md that mention an artifact tool, an artifact type or a diagram
+# file (a registration, or a recorded refusal), plus diagram files in the repo.
+# Only where to look: whether it is a registration or a refusal is the model's
+# call.
+
+art_re='(^|[^[:alnum:]])(notion|miro|figma|clickup|excalidraw|draw\.io|drawio|pen\.dev|lucid|boards?|diagramas?|diagrams?|fluxo de tela|test plan|plano de teste|matriz de rastreabilidade|[^[:space:]]+\.(mmd|drawio|excalidraw|puml))([^[:alnum:]]|$)'
+art_mentions=()
+for f in "${conv[@]}" PROGRESSO.md PLANO.md; do
+  [ -f "$f" ] || continue
+  n=0
+  while IFS= read -r line || [ -n "$line" ]; do
+    n=$((n + 1))
+    shopt -s nocasematch
+    [[ "$line" =~ $art_re ]] && art_mentions+=("$f:$n")
+    shopt -u nocasematch
+  done <"$f"
+done
+art_files=()
+for f in "${all_files[@]}"; do
+  case "$f" in
+    *.mmd | *.drawio | *.excalidraw | *.puml) art_files+=("$f") ;;
+  esac
 done
 
 # --- git --------------------------------------------------------------------
@@ -356,6 +382,8 @@ arr "${headless[@]}"; o_head=$R
 files_json "${spec_files[@]}"; o_spec=$R
 files_json "${plan_files[@]}"; o_plan=$R
 files_json CONTEXT.md; o_glos=$R
+arr "${art_mentions[@]}"; o_art_m=$R
+arr "${art_files[@]}"; o_art_f=$R
 
 cat <<EOF
 {
@@ -363,6 +391,7 @@ cat <<EOF
   "maturidade": {"historico": $history, "manifestos": $o_man, "arquivos_de_codigo": $code_count},
   "tipo_projeto": {"sinais_ui": $o_ui, "sinais_headless": $o_head},
   "pipeline": {"spec": $o_spec, "planejamento": $o_plan, "tarefas": [$tasks], "glossario": $o_glos, "adrs": $adr_count},
+  "artefatos": {"mencoes": $o_art_m, "arquivos_de_diagrama": $o_art_f},
   "git": $git_json,
   "gates": $gates_json
 }

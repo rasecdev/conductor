@@ -203,7 +203,7 @@ de 1M de tokens.
 
 - [x] [Tarefa 3: Passos 1 e 2 usam o script; casos condicionais viram referências com gatilho](https://github.com/rasecdev/conductor/issues/53) — stories 11–15, 26, 27, 29–31
 - [x] [Tarefa 4: Passo 7 enxuto, com a parte mecânica vinda do script](https://github.com/rasecdev/conductor/issues/54) — stories 7–10, 16, 28
-- [ ] [Tarefa 5: Passo 6 vira referência de artefatos vivos com gatilho mecânico](https://github.com/rasecdev/conductor/issues/55) — stories 3–5, 31
+- [x] [Tarefa 5: Passo 6 vira referência de artefatos vivos com gatilho mecânico](https://github.com/rasecdev/conductor/issues/55) — stories 3–5, 31
 - [x] [Tarefa 6: Passo 5 vira referência de avaliação de skill](https://github.com/rasecdev/conductor/issues/56) — story 6
 - [ ] [Tarefa 7: Remover duplicações, consolidar regras de proteção e caso de eval combinado](https://github.com/rasecdev/conductor/issues/57) — stories 24, 28, 31
 

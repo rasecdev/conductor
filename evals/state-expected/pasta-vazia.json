@@ -3,6 +3,7 @@
   "maturidade": {"historico": {"indisponivel": "sem repositório git"}, "manifestos": [], "arquivos_de_codigo": 0},
   "tipo_projeto": {"sinais_ui": [], "sinais_headless": []},
   "pipeline": {"spec": [], "planejamento": [], "tarefas": [], "glossario": [], "adrs": 0},
+  "artefatos": {"mencoes": [], "arquivos_de_diagrama": []},
   "git": {"indisponivel": "sem repositório git"},
   "gates": {"ferramentas": {"configurados": [], "ausentes": ["mmdc", "svgo", "dependency-cruiser", "madge", "markdownlint", "tsc", "eslint"]}, "pontos_de_execucao": {"scripts": [], "ci": [], "hooks": []}, "ultima_run_ci": {"indisponivel": "sem repositório git"}, "irmaos": []}
 }

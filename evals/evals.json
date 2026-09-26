@@ -206,6 +206,21 @@
         "evals/files/tarefas-sem-criterio/tasks/issues/18.md",
         "evals/files/tarefas-sem-criterio/tasks/plan.md"
       ]
+    },
+    {
+      "id": 17,
+      "name": "combined-legacy-with-live-artifact",
+      "prompt": "Quero adicionar uma tela nova de Contrato no ERPFiscal (em <FIXTURE_DIR>). Por onde eu começo?",
+      "expected_output": "Combina vários casos condicionais na mesma resposta. (1) Reconhece o ERPFiscal como legado maduro sem convenção formalizada (milhares de commits, solução .NET, nenhum CLAUDE.md/AGENTS.md): não trata como ideia nova nem recomenda wayfinder/grilling como descoberta do zero; aponta mapear o sistema existente (domain-modeling/grill-with-docs) e/ou formalizar uma convenção. (2) Para orientar a tela nova, minera o histórico: encontra commits anteriores de 'nova tela' e mostra o padrão de fato (Telas/, Services/, Repos/), sem inventar um padrão. (3) Nota que o diagrama de arquitetura registrado no PROGRESSO.md (docs/arquitetura.drawio, atualizado em 2026-05-04) é mais antigo que o ADR 0004 (2026-09-12, integração fiscal assíncrona) e provavelmente não reflete a mudança; avisa e pergunta se quer regenerar, sem regenerar sozinho. Não pergunta de novo qual ferramenta usar pro diagrama, que já está registrado.",
+      "files": [
+        "evals/files/legado-diagrama-desatualizado/.fixture-setup.sh",
+        "evals/files/legado-diagrama-desatualizado/ERPFiscal.sln",
+        "evals/files/legado-diagrama-desatualizado/src/ERPFiscal.csproj",
+        "evals/files/legado-diagrama-desatualizado/PROGRESSO.md",
+        "evals/files/legado-diagrama-desatualizado/docs/adr/0003-banco-unico.md",
+        "evals/files/legado-diagrama-desatualizado/docs/adr/0004-integracao-fiscal-assincrona.md",
+        "evals/files/legado-diagrama-desatualizado/docs/arquitetura.drawio"
+      ]
     }
   ]
 }

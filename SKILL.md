@@ -6,73 +6,44 @@ description: Orients any project through a spec-development pipeline (discovery/
 # Conductor
 
 Um regente não toca instrumento nenhum — ele organiza a ordem em que cada
-seção entra, e sabe a partitura inteira de cor. É esse o papel desta skill no
-processo de spec development: não escreve a spec, não interroga o usuário,
-não implementa nada — ela sabe em que ponto do processo cada projeto está, diz
-qual é o próximo instrumento a entrar, e mantém os artefatos vivos do processo
-(board, diagramas, QA) em dia com o que o projeto de fato decidiu.
+seção entra. É esse o papel desta skill no spec development: não escreve a
+spec, não interroga o usuário, não implementa nada. Ela lê o estado real do
+projeto, diz em que estágio ele está e qual skill entra agora (nomes variam
+por pipeline instalado — ver `references/pipeline-stages.md`), e aponta o que
+falta ou ficou pra trás na pipeline de spec, de artefato e de qualidade, em
+qualquer momento do projeto (do zero, no meio, legado maduro). Criar, manter
+ou melhorar essa pipeline é sempre trabalho da skill/ferramenta que ela
+aponta; uma feature nova só pertence ao `conductor` se for da categoria
+"identificar e conduzir" (ver `ROADMAP.md`).
 
-**Definição operacional:** o foco do `conductor` é conduzir o usuário a criar,
-manter e melhorar a sua pipeline — de spec, de artefato, de qualidade — para
-qualquer projeto e em qualquer momento dele (do zero, no meio, legado maduro).
-Ele identifica o que falta ou ficou pra trás; nunca é ele quem cria, mantém ou
-melhora a pipeline por conta própria — isso é sempre trabalho da
-skill/ferramenta certa que ele aponta. Qualquer feature nova só pertence ao
-`conductor` se for da categoria "identificar e conduzir"; se for da categoria
-"criar/implementar", pertence a outra skill (ver `ROADMAP.md`).
+Não é um roteador estático: a recomendação vem da leitura de estado do
+repositório atual, não de prosa genérica — um roteador em prosa instalado
+(ex: `ask-matt`) é só referência de vocabulário (ver
+`references/pipeline-stages.md` → "Sobre roteadores estáticos").
 
-Ela existe porque um pipeline de skills de spec (descoberta → sharpen/modelo
-de domínio → spec formal → quebra em tarefas → implementação → revisão —
-ver `references/pipeline-stages.md` pra nomes de skill de exemplo, que variam
-por pipeline instalado) é poderoso mas fragmentado: cada peça sabe fazer sua
-parte, nenhuma sabe dizer "você está aqui, o próximo passo é ali". É fácil
-esquecer uma etapa (ex: começar a escrever tarefas sem ter passado por spec
-formal) simplesmente porque ninguém lembrou que ela existia.
-
-**Isso não é um roteador estático.** Alguns pipelines já trazem o próprio
-roteador em prosa (ex: `ask-matt` no
-[mattpocock/skills](https://github.com/mattpocock/skills), que mapeia cenário
-→ sequência de skills). O `conductor` não substitui isso nem tenta recriar
-esse mapa — a diferença é que ele lê o estado real do repositório atual
-(`CLAUDE.md`, `tasks/plan.md`, git log, milestones/issues) antes de
-recomendar, em vez de descrever o fluxo genericamente. Se um roteador desses
-estiver instalado, trate-o como referência de vocabulário do pipeline; a
-recomendação final do `conductor` continua vindo da leitura de estado, não da
-prosa dele.
-
-## Por que várias dessas skills não podem ser chamadas automaticamente
+## Skills que só o usuário pode disparar
 
 `wayfinder`, `to-spec` e `grill-with-docs` têm `disable-model-invocation: true`
-no frontmatter delas — de propósito. Elas disparam ações caras e um tanto
-irreversíveis (interrogatório longo, publicação de spec, criação de tickets no
-tracker), e quem escreveu esses skills decidiu que só devem começar quando o
-usuário pede explicitamente, nunca por iniciativa do modelo. Essa flag também
-bloqueia mecanicamente a ferramenta de chamar skills — não é possível invocar
-uma skill com essa flag a não ser que o usuário tenha digitado o comando dela
-(`/wayfinder`, por exemplo) ele mesmo.
+de propósito: disparam ações caras e pouco reversíveis (interrogatório longo,
+publicação de spec, tickets no tracker), e a flag bloqueia mecanicamente a
+invocação pelo modelo — só começam quando o usuário digita o comando
+(`/wayfinder`, por exemplo). Nunca contorne isso nem edite o frontmatter de
+outra skill pra tirar a flag: tornar uma etapa automática é decisão explícita
+do usuário sobre aquela skill.
 
-Isso não é uma limitação desta skill — é a mesma regra que vale pra qualquer
-skill, incluindo o `conductor`. Nunca tente contornar isso, e nunca edite o
-frontmatter de outra skill pra remover essa flag: se o usuário achar que uma
-etapa deveria virar automática, isso é decisão dele, tomada explicitamente
-sobre aquela skill específica — não algo que o `conductor` decide por conta
-própria.
-
-As demais skills do pipeline (ex: `domain-modeling`, e o que fizer o papel de
-"quebra em tarefas"/"implementação"/"revisão" no pipeline instalado) em geral
-não têm essa flag — o `conductor` pode chamá-las diretamente quando fizer
-sentido, em vez de só recomendar. Confira sempre `scripts/catalog.sh` pra
-saber, na hora, quais skills instaladas têm `disable-model-invocation` — não
-assuma pela lista de exemplo.
+As demais skills do pipeline (ex: `domain-modeling`, quebra em tarefas,
+implementação, revisão) em geral podem ser chamadas diretamente. Confira
+sempre `scripts/catalog.sh` pra saber, na hora, quais têm
+`disable-model-invocation` — não assuma pela lista de exemplo.
 
 ## Passo 1 — Ler o estado do projeto
 
 Na raiz do projeto alvo, rode o script de estado desta skill
 (`bash <diretório desta skill>/scripts/state.sh`, sem argumentos). Ele devolve
 um JSON com os sinais mecânicos do projeto: `convencao`, `maturidade`,
-`tipo_projeto`, `pipeline`, `artefatos`, `git` e `gates`. **A saída é mapa do que abrir,
-nunca conclusão de que uma etapa está completa** — um arquivo listado ainda
-precisa ser lido. Se o script falhar (erro ou saída que não é JSON), siga
+`tipo_projeto`, `pipeline`, `artefatos`, `git` e `gates`. **A saída é mapa do
+que abrir, nunca conclusão de que uma etapa está completa** — um arquivo
+listado ainda precisa ser lido. Se o script falhar (erro ou saída que não é JSON), siga
 `references/manual-state.md`, a mesma leitura feita à mão.
 
 **Convenção.** Leia cada arquivo listado em `convencao`. Alguns projetos
@@ -193,8 +164,8 @@ QA) que precisam acompanhar uma fonte de verdade no repositório, numa
 ferramenta que é sempre escolha do usuário.
 
 - **`artefatos` com menção ou arquivo de diagrama** (há artefato ou recusa
-  registrados), **ou o usuário vai registrar um artefato ou escolher
-  ferramenta** → leia `references/live-artifacts.md`: qual ferramenta usar,
+  registrados), **ou a conversa cita um artefato ou ferramenta de artefato, ou
+  o usuário vai registrar um ou escolher ferramenta** → leia `references/live-artifacts.md`: qual ferramenta usar,
   estrutura do board, detecção de desatualização e degradação.
 - **`artefatos` vazio** (nada registrado, nem recusa) → pergunte ao usuário,
   uma única vez, se ele usa alguma ferramenta pra acompanhar o processo (board
@@ -237,10 +208,9 @@ abaixo:
 
 ## O que o conductor nunca faz
 
-- Nunca invoca `wayfinder`, `to-spec` ou `grill-with-docs` por conta própria —
-  mecanicamente não consegue, e não deveria mesmo se conseguisse.
-- Nunca edita o frontmatter de outra skill (ex: pra remover
-  `disable-model-invocation`).
+- Nunca invoca `wayfinder`, `to-spec` ou `grill-with-docs` por conta própria,
+  nem edita o frontmatter de outra skill pra remover
+  `disable-model-invocation`.
 - Nunca cria uma página/nó no board sem perguntar primeiro, fora da página de
   projeto e de fase que já são esperadas.
 - Nunca regenera ou atualiza um artefato vivo (board, diagrama de arquitetura,

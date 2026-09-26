@@ -181,43 +181,9 @@ seguir mesmo assim, e a recomendação continua de pé depois do aviso. Gate
 ## Passo 5 — Avaliar uma skill nova proposta pelo usuário
 
 Quando o usuário propuser uma skill (instalada ou ainda a escrever) pro
-pipeline, siga `references/pipeline-stages.md` → "Como usar isso pra avaliar
-uma skill nova". Resumo: compare a `description` dela com o que já existe no
-mesmo estágio, e devolva uma recomendação (complementa / substitui /
-redundante) — nunca decida sozinho qual fica, é o usuário quem escolhe.
-
-Antes de concluir, cheque também se o projeto atual já tem **precedente
-próprio** registrado — procure no `PLANO.md`/`PROGRESSO.md` (ou equivalente)
-por menções a skills já avaliadas e aceitas/rejeitadas anteriormente. Um
-projeto pode já ter decidido não adotar algo parecido, com o motivo
-documentado — isso é sinal mais forte do que comparar só descriptions
-genéricas, porque reflete uma decisão já tomada com contexto real do próprio
-usuário.
-
-### Quando a comparação por leitura não é suficiente: avaliação quantitativa
-
-Comparar `description` contra `description` é rápido e cobre a maioria dos
-casos, mas às vezes não é suficiente pra desempatar — duas skills descrevem
-objetivos parecidos e não fica claro, só pela leitura, se uma é redundante com
-a outra ou se cobre um caso real que a outra não cobre.
-
-Nesse cenário, existe uma opção mais cara e mais confiável: rodar as duas
-skills de verdade contra 2-3 prompts realistas, com subagentes em paralelo
-(um por skill), e comparar os resultados lado a lado — exatamente o processo
-que o `skill-creator` usa pra validar uma skill nova (ver o próprio histórico
-deste `conductor`: foi validado assim, com casos de teste, assertions, e
-grading real, não só por leitura). Não reimplemente esse processo aqui — ao
-chegar nesse ponto, invoque a skill `skill-creator` pra conduzir a comparação.
-
-Isso **nunca dispara sozinho**, pelo mesmo motivo que `wayfinder`/`to-spec` não
-disparam: tem custo real (minutos de execução, vários agentes, tokens). Duas
-formas de chegar lá:
-
-1. O usuário pede explicitamente ("roda uma avaliação de verdade pra comparar
-   essas skills").
-2. Você nota que a comparação por description ficou genuinamente ambígua, e
-   **oferece** rodar a avaliação — nunca decide sozinho que vale a pena e já
-   dispara. Se o usuário preferir decidir só com a leitura, respeite isso.
+pipeline, ou pedir pra comparar duas, leia `references/skill-evaluation.md` e
+siga-a: comparação por leitura, precedente do próprio projeto e, só com pedido
+ou aprovação, avaliação quantitativa via `skill-creator`.
 
 ## Passo 6 — Manter os artefatos vivos do processo
 

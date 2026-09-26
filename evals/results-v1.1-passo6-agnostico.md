@@ -72,7 +72,7 @@ Caso novo `board-tool-precedent-mismatch` (id 7) adicionado e rodado
 (`with_skill` vs baseline, ambos com Miro conectado de verdade nesta sessão):
 
 - **Com skill**: buscou no repo e no Miro reais, não encontrou "FinanceBot" em
-  nenhum dos dois, identificou "AutoFinance" como candidato mais próximo por
+  nenhum dos dois, identificou um board real como candidato mais próximo por
   descrição mas notou que o conteúdo do board não batia com tracking de fases
   de spec, listou os 5 boards reais encontrados e perguntou ao usuário qual (se
   algum) é o certo. Não travou em confirmação vazia.

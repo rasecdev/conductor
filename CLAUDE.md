@@ -159,6 +159,10 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
 - Ao adicionar um passo/comportamento novo ao `SKILL.md`, adicionar o caso
   correspondente em `evals/evals.json` antes de considerar o trabalho
   concluído, seguindo o mesmo formato dos existentes.
+- Ao fechar uma rodada com eval, gravar o resumo só com números em
+  `evals/benchmarks/<versão>.json` com `scripts/benchmark_summary.py` (lê as
+  iterações do workspace). Nunca versionar `response.md` nem evidência: citam
+  projetos e contas privadas.
 
 ## O que nunca mudar sem decisão explícita
 

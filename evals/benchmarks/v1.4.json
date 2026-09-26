@@ -1,0 +1,486 @@
+{
+  "version": "v1.4",
+  "model": null,
+  "date": "2026-09-25",
+  "note": "Regressão completa da v1.4 (iteração 8, casos 0-15) + caso 16 (iteração 9, sem timing). Modelo não registrado nas iterações.",
+  "iterations": [
+    "iteration-8",
+    "iteration-9"
+  ],
+  "median_tokens_per_run": {
+    "old_skill": null,
+    "with_skill": 69723.5,
+    "without_skill": 50055.0
+  },
+  "cases": [
+    {
+      "id": 0,
+      "name": "fresh-project",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 68954,
+            "duration_s": 77.438,
+            "tool_calls": 6
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 2,
+            "total": 4,
+            "tokens": 48995,
+            "duration_s": 41.92,
+            "tool_calls": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "name": "mature-feature",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 73286,
+            "duration_s": 77.85,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 51631,
+            "duration_s": 51.266,
+            "tool_calls": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "skill-evaluation",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 68100,
+            "duration_s": 62.517,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 4,
+            "tokens": 52507,
+            "duration_s": 52.256,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "legacy-project",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 79350,
+            "duration_s": 71.712,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 51424,
+            "duration_s": 49.577,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "board-tool-precedent-non-notion",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 72124,
+            "duration_s": 77.94,
+            "tool_calls": 11
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 49962,
+            "duration_s": 38.819,
+            "tool_calls": 6
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "board-tool-first-ask",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 71671,
+            "duration_s": 76.806,
+            "tool_calls": 11
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 49448,
+            "duration_s": 45.688,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "board-tool-refusal-remembered",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 68717,
+            "duration_s": 62.988,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 49012,
+            "duration_s": 36.329,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "board-tool-precedent-mismatch",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 68992,
+            "duration_s": 61.842,
+            "tool_calls": 10
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 2,
+            "total": 3,
+            "tokens": 48979,
+            "duration_s": 46.195,
+            "tool_calls": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "non-board-artifact-staleness",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 70918,
+            "duration_s": 74.684,
+            "tool_calls": 8
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 2,
+            "total": 3,
+            "tokens": 50197,
+            "duration_s": 42.843,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "headless-project-no-ui-recommendation",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 69263,
+            "duration_s": 69.67,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 49800,
+            "duration_s": 42.696,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "quality-gate-expected-missing",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 70001,
+            "duration_s": 69.591,
+            "tool_calls": 6
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 1,
+            "total": 4,
+            "tokens": 50530,
+            "duration_s": 48.559,
+            "tool_calls": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "quality-gate-low-confidence",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 3,
+            "tokens": 67129,
+            "duration_s": 60.287,
+            "tool_calls": 5
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 1,
+            "total": 3,
+            "tokens": 49906,
+            "duration_s": 44.882,
+            "tool_calls": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "quality-gate-failing",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 69446,
+            "duration_s": 61.544,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 4,
+            "tokens": 48952,
+            "duration_s": 32.958,
+            "tool_calls": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "name": "quality-gate-ci-unverifiable",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 5,
+            "total": 5,
+            "tokens": 69399,
+            "duration_s": 67.517,
+            "tool_calls": 6
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 5,
+            "tokens": 50148,
+            "duration_s": 46.012,
+            "tool_calls": 6
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "quality-gate-not-triggered",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 71019,
+            "duration_s": 82.519,
+            "tool_calls": 8
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 50200,
+            "duration_s": 42.958,
+            "tool_calls": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "quality-gate-setup-offered-not-executed",
+      "iteration": "iteration-8",
+      "configs": {
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 4,
+            "total": 4,
+            "tokens": 72632,
+            "duration_s": 79.129,
+            "tool_calls": 7
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 3,
+            "total": 4,
+            "tokens": 50809,
+            "duration_s": 45.32,
+            "tool_calls": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "name": "tasks-without-acceptance-criteria",
+      "iteration": "iteration-9",
+      "configs": {
+        "old_skill": [
+          {
+            "run": "run-1",
+            "passed": 5,
+            "total": 5,
+            "tokens": null,
+            "duration_s": null,
+            "tool_calls": null
+          }
+        ],
+        "with_skill": [
+          {
+            "run": "run-1",
+            "passed": 5,
+            "total": 5,
+            "tokens": null,
+            "duration_s": null,
+            "tool_calls": null
+          }
+        ],
+        "without_skill": [
+          {
+            "run": "run-1",
+            "passed": 5,
+            "total": 5,
+            "tokens": null,
+            "duration_s": null,
+            "tool_calls": null
+          }
+        ]
+      }
+    }
+  ]
+}

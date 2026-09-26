@@ -1,7 +1,7 @@
 # Artefatos vivos do processo
 
 Lida pelo Passo 6 do `SKILL.md` quando `artefatos` na saída do script de
-estado tem menção ou arquivo de diagrama (há artefato ou recusa registrados:
+estado tem menção ou arquivo de artefato (diagrama, documento de QA) (há artefato ou recusa registrados:
 checar desatualização e qual ferramenta usar), ou quando o usuário vai
 registrar um artefato ou escolher ferramenta para um.
 

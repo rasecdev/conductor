@@ -163,8 +163,8 @@ de fases, diagrama de arquitetura, fluxo de tela/design de UI, artefatos de
 QA) que precisam acompanhar uma fonte de verdade no repositório, numa
 ferramenta que é sempre escolha do usuário.
 
-- **`artefatos` com menção ou arquivo de diagrama** (há artefato ou recusa
-  registrados), **ou a conversa cita um artefato ou ferramenta de artefato, ou
+- **`artefatos` com menção ou arquivo de artefato** (diagrama, documento de
+  QA; há artefato ou recusa registrados), **ou a conversa cita um artefato ou ferramenta de artefato, ou
   o usuário vai registrar um ou escolher ferramenta** → leia `references/live-artifacts.md`: qual ferramenta usar,
   estrutura do board, detecção de desatualização e degradação.
 - **`artefatos` vazio** (nada registrado, nem recusa) → pergunte ao usuário,
@@ -185,8 +185,9 @@ O grupo `gates` da saída do script (Passo 1) já traz a parte mecânica: onde
 cada ferramenta está configurada (`configurados`, `ausentes`), os pontos de
 execução lidos, a última run de CI da branch e o precedente dos projetos
 irmãos. Cruze isso com o estágio atual e os artefatos vivos registrados usando
-`references/gate-types.md`, que tem a tabela de gates e o detalhe de cada ponto
-abaixo:
+a tabela de `references/gate-types.md`. **Com `configurados`, `irmaos` ou
+`artefatos` preenchidos, ou convenção que exija gate**, leia também
+`references/gate-details.md`, que detalha cada ponto abaixo:
 
 1. **Confiança.** A expectativa vem da fonte mais forte: convenção do projeto
    ou artefato registrado (alta), precedente de projeto irmão (média), nenhuma

@@ -196,12 +196,12 @@ de 1M de tokens.
 
 ### Checkpoint: Fase 1
 
-- [ ] Teste do script verde no CI contra as 16 fixtures, com teste negativo provando que falha quando deve
-- [ ] Revisão com o usuário antes de mexer no `SKILL.md`
+- [x] Teste do script verde no CI contra as 16 fixtures, com teste negativo provando que falha quando deve
+- [x] Revisão com o usuário antes de mexer no `SKILL.md`
 
 ### Fase 2: Carga sob demanda
 
-- [ ] [Tarefa 3: Passos 1 e 2 usam o script; casos condicionais viram referências com gatilho](https://github.com/rasecdev/conductor/issues/53) — stories 11–15, 26, 27, 29–31
+- [x] [Tarefa 3: Passos 1 e 2 usam o script; casos condicionais viram referências com gatilho](https://github.com/rasecdev/conductor/issues/53) — stories 11–15, 26, 27, 29–31
 - [ ] [Tarefa 4: Passo 7 enxuto, com a parte mecânica vinda do script](https://github.com/rasecdev/conductor/issues/54) — stories 7–10, 16, 28
 - [ ] [Tarefa 5: Passo 6 vira referência de artefatos vivos com gatilho mecânico](https://github.com/rasecdev/conductor/issues/55) — stories 3–5, 31
 - [ ] [Tarefa 6: Passo 5 vira referência de avaliação de skill](https://github.com/rasecdev/conductor/issues/56) — story 6

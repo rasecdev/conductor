@@ -82,7 +82,40 @@ gatilho valia.
 
 ## Medição de projeto real (dogfooding)
 
-Pendente de aprovação do usuário no momento da escrita. Ver a issue #58.
+"onde estamos?" neste repositório, as duas runs ao mesmo tempo e no mesmo
+estado (branch `docs/fecha-rodada-v1.5` com o commit de fechamento ainda
+local), com aprovação do usuário. Workspace: `conductor-workspace/dogfooding-v1.5`.
+
+| | v1.4 (instalação, `master`) | v1.5 (clone de trabalho) |
+|---|---|---|
+| Tokens | 86.268 | 98.891 |
+| Chamadas de ferramenta | 10 | 18 |
+| Duração | 94 s | 192 s |
+| Referências lidas | nenhuma | `pipeline-stages`, `gate-types`, `gate-details`, `live-artifacts` |
+| Gates verificados | nenhum rodado; tudo pela última run de CI | rodou `validate_evals.py` e `test_state.sh` |
+| Notion | citado pelo `CLAUDE.md` | página lida (board desatualizado confirmado) |
+
+Recomendação igual nas duas: terminar a T8 (push, PR, caixinhas), promoção
+para `master` só por decisão do usuário, board do Notion desatualizado, revisar
+as tarefas da v1.6 com `planning-and-task-breakdown` antes de implementar.
+
+**Neste projeto real a v1.5 custou mais (+15%), não menos.** O repositório tem
+tudo que dispara gatilho (artefato registrado, gates configurados, convenção
+que exige gate), então as quatro referências foram lidas; e a run seguiu o
+Passo 7 à risca, rodando os gates locais em vez de só citar o CI. A economia da
+carga fixa aparece no caso comum (fixtures, −5% por run, −20% no custo próprio
+da skill), mas num projeto onde tudo se aplica a leitura sob demanda devolve
+o texto cortado, mais o custo de verificar de verdade. É uma medição, não
+critério (a spec já previa que o estado muda entre runs).
+
+A verificação extra teve retorno: a run da v1.5 achou um defeito real da
+própria rodada, o teste do script falhando no Windows por CRLF nas saídas
+esperadas ([#70](https://github.com/rasecdev/conductor/issues/70), corrigido na
+#71), que o CI verde (Ubuntu) escondia.
+
+Candidatos para a próxima otimização: `live-artifacts.md` (8k caracteres,
+lida sempre que há artefato registrado) e `gate-details.md` (4k) — separar o
+caminho "checar desatualização" do caminho "escolher ferramenta".
 
 ## Observações
 
@@ -121,7 +154,7 @@ Pendente de aprovação do usuário no momento da escrita. Ver a issue #58.
 | 19 | Cada fonte que falha vira `indisponivel`; exit 0 |
 | 20 | Ferramentas lidas da tabela de `gate-types.md` (linha `ruff` testada na T2) |
 | 21 | Tokens antes/depois nesta página e em `evals/benchmarks/` |
-| 22 | Dogfooding: ver seção acima |
+| 22 | Dogfooding medido (86,3k × 98,9k neste repo; ver seção acima) |
 | 23 | Job `state-script` no CI, 18 casos de fixture + teste negativo |
 | 24 | Duplicações removidas (T7): roteador estático, precedência da convenção, avaliação de skill |
 | 25 | ADR 0002 → "Consequences": rodadas seguintes nascem no formato enxuto |

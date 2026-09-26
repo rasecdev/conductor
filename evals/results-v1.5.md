@@ -110,8 +110,8 @@ critério (a spec já previa que o estado muda entre runs).
 
 A verificação extra teve retorno: a run da v1.5 achou um defeito real da
 própria rodada, o teste do script falhando no Windows por CRLF nas saídas
-esperadas ([#70](https://github.com/rasecdev/conductor/issues/70), corrigido na
-#71), que o CI verde (Ubuntu) escondia.
+esperadas ([#70](https://github.com/rasecdev/conductor/issues/70), corrigido
+na PR #71), que o CI verde (Ubuntu) escondia.
 
 Candidatos para a próxima otimização: `live-artifacts.md` (8k caracteres,
 lida sempre que há artefato registrado) e `gate-details.md` (4k) — separar o

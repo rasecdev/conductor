@@ -1,0 +1,9 @@
+{
+  "convencao": [],
+  "maturidade": {"historico": {"commits": 2001, "primeiro_commit": "<data>", "ultimo_commit": "<data>"}, "manifestos": ["ERPFiscal.sln", "src/ERPFiscal.csproj"], "arquivos_de_codigo": 14},
+  "tipo_projeto": {"sinais_ui": ["src/ERPFiscal.csproj: desktop/mobile .NET"], "sinais_headless": []},
+  "pipeline": {"spec": [], "planejamento": [{"caminho": "PROGRESSO.md", "bytes": "<n>"}], "tarefas": [], "glossario": [], "adrs": 2},
+  "artefatos": {"mencoes": ["PROGRESSO.md:7"], "arquivos_de_artefato": ["docs/arquitetura.drawio"]},
+  "git": {"branch_atual": "<branch-padrao>", "branches_locais": ["<branch-padrao>"], "prs_abertos": {"indisponivel": "sem remote"}},
+  "gates": {"ferramentas": {"configurados": [], "ausentes": ["mmdc", "svgo", "dependency-cruiser", "madge", "markdownlint", "tsc", "eslint"]}, "pontos_de_execucao": {"scripts": [], "ci": [], "hooks": []}, "ultima_run_ci": {"indisponivel": "sem remote"}, "irmaos": []}
+}

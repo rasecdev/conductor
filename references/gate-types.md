@@ -31,3 +31,9 @@ em algum ponto que o projeto de fato executa:
 
 Ferramenta só instalada como dependência, sem nenhum desses pontos chamando,
 **não** conta como gate existente.
+
+O script de estado faz essa busca: `gates.ferramentas.configurados` lista cada
+ferramenta da tabela com o ponto onde está configurada, e
+`gates.pontos_de_execucao` lista os scripts, workflows e hooks que ele leu.
+Menção em comentário também conta pro script — confira o trecho antes de
+afirmar que o gate existe.

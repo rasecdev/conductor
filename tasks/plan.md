@@ -170,9 +170,75 @@ só quando a skill estiver pronta.
 
 - A `planning-and-task-breakdown` referencia uma Definition of Done (`references/definition-of-done.md`) que não existe nesta instalação. DoD efetiva deste repo: a do `CLAUDE.md` (caso de eval para comportamento novo, conferência requisito por requisito, incorporação ao `SPEC.md`).
 
-# Rodada v1.5 — Gates de transição declarativos
+# Rodada v1.5 — Enxugar o contexto (carga sob demanda + script de estado)
 
-Spec: [issue #25](https://github.com/rasecdev/conductor/issues/25) (refeita via `/to-spec`, substitui a #19). Decidido
+Spec: [issue #50](https://github.com/rasecdev/conductor/issues/50) (via `/to-spec`). Decidido
+em conversa com o usuário (2026-09-25), antes de começar o uso real da skill:
+uma execução do conductor custa ≈ 20k tokens a mais que sem skill (70,7k × 50,2k
+por run na iteração 8 da v1.4). Rodada de refatoração, sem comportamento novo:
+o `SKILL.md` fica só com o fluxo que roda sempre, as regras de proteção e os
+gatilhos (princípio registrado em `docs/adr/0002-carga-sob-demanda.md`); casos
+condicionais viram referências; fatos mecânicos do projeto alvo vêm de um
+script de estado com teste determinístico no CI. Passa na frente da antiga
+v1.5 (gates de transição), renumerada para v1.6.
+
+Tarefas geradas pela `planning-and-task-breakdown`. O script vem primeiro
+(maior risco, e os gatilhos dependem da saída dele). **Toda execução de eval
+(smoke ou regressão) só com aprovação explícita do usuário** — custo na casa
+de 1M de tokens.
+
+## Task List
+
+### Fase 1: Script de estado
+
+- [x] [Tarefa 1: Script de estado com teste determinístico no CI](https://github.com/rasecdev/conductor/issues/51) — stories 11–14, 17–19, 23
+- [x] [Tarefa 2: Script de estado detecta gates e precedente de irmãos](https://github.com/rasecdev/conductor/issues/52) — stories 8–10, 16, 20
+
+### Checkpoint: Fase 1
+
+- [x] Teste do script verde no CI contra as 16 fixtures, com teste negativo provando que falha quando deve
+- [x] Revisão com o usuário antes de mexer no `SKILL.md`
+
+### Fase 2: Carga sob demanda
+
+- [x] [Tarefa 3: Passos 1 e 2 usam o script; casos condicionais viram referências com gatilho](https://github.com/rasecdev/conductor/issues/53) — stories 11–15, 26, 27, 29–31
+- [x] [Tarefa 4: Passo 7 enxuto, com a parte mecânica vinda do script](https://github.com/rasecdev/conductor/issues/54) — stories 7–10, 16, 28
+- [x] [Tarefa 5: Passo 6 vira referência de artefatos vivos com gatilho mecânico](https://github.com/rasecdev/conductor/issues/55) — stories 3–5, 31
+- [x] [Tarefa 6: Passo 5 vira referência de avaliação de skill](https://github.com/rasecdev/conductor/issues/56) — story 6
+- [x] [Tarefa 7: Remover duplicações, consolidar regras de proteção e caso de eval combinado](https://github.com/rasecdev/conductor/issues/57) — stories 24, 28, 31
+- [x] [Tarefa 7b: Detalhe do Passo 7 atrás de gatilho e artefato de QA no sinal de artefatos](https://github.com/rasecdev/conductor/issues/67) — ajustes do smoke test; stories 7–10, 3–5
+
+### Checkpoint: Fase 2
+
+- [x] `SKILL.md` com pelo menos 50% menos caracteres que os 30,3k da v1.4
+- [x] Conferência manual de migração em cada PR: nenhuma regra da v1.4 perdida
+- [x] Smoke test (≈ 250k tokens: `legacy-project`, `board-tool-precedent-non-notion`, `skill-evaluation`, `quality-gate-failing`) **só se o usuário liberar** — rodado com liberação: 4/4 em todos, iteration-10
+
+### Fase 3: Fechamento
+
+- [x] [Tarefa 8: Regressão, medição e fechamento da rodada v1.5](https://github.com/rasecdev/conductor/issues/58) — stories 1, 2, 21, 22, 25, 32, 33
+
+### Checkpoint: Fase 3
+
+- [x] Nenhum caso piora frente às iterações 8/9 da v1.4; mediana de tokens abaixo de 70,7k
+- [x] Requisitos da #50 conferidos contra o `SKILL.md`; toda story com caso, teste do script ou justificativa
+- [x] `SPEC.md` incorpora o delta da v1.5
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Gatilho que não dispara: o modelo pula uma referência e responde pior, sem erro visível | Alto | Gatilhos por sinal mecânico da saída do script; cada gatilho coberto por caso de eval; 3 runs no único gatilho por interpretação |
+| Modelo trata a saída do script como conclusão ("plano existe = etapa feita") | Alto | Regra explícita no `SKILL.md`; caso `tasks-without-acceptance-criteria` na regressão |
+| Script falha numa máquina (Git Bash no Windows, sem `gh`, sem git) | Médio | Campos indisponíveis com motivo; referência de reserva com a leitura manual |
+| Referência lida sem a dependência dela (ex: filtro de tipo de projeto) | Médio | Referências autossuficientes ou com ponteiro explícito; caso de eval combinado |
+| Custo da validação | Médio | Linha de base reaproveitada, sem baseline sem skill, eval só com aprovação |
+| Rodada entra no meio do período de avaliação de uso real (2026-09-25 a 2026-10-09) | Baixo | Anotar no registro de uso real qual versão estava instalada em cada tarefa |
+
+# Rodada v1.6 — Gates de transição declarativos
+
+Spec: [issue #25](https://github.com/rasecdev/conductor/issues/25) (refeita via `/to-spec`, substitui a #19; renumerada de v1.5 para v1.6 em
+2026-09-25, quando a v1.5 passou a ser a rodada de enxugar o contexto, #50). Decidido
 em conversa com o usuário: além dos gates de qualidade (v1.4, do projeto), o
 conductor tem portões próprios de transição — quando uma skill/fluxo do
 pipeline pode começar, e quando um evento (ex: mudança de arquitetura com

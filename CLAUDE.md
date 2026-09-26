@@ -13,6 +13,14 @@ identidade git global da máquina.
   development conhecido (`wayfinder` → `grilling`/`domain-modeling` → `to-spec`
   → `planning-and-task-breakdown` → `implement-specs` →
   `check-impl-against-spec`) e como avaliar uma skill nova proposta pra ele.
+- `references/project-without-convention.md`, `references/project-type.md`,
+  `references/manual-state.md`, `references/skill-evaluation.md`,
+  `references/live-artifacts.md`, `references/gate-details.md` — casos
+  condicionais (Passos 1, 5, 6 e 7) e plano B da
+  leitura de estado, lidos só quando o gatilho no `SKILL.md` dispara
+  (`docs/adr/0002-carga-sob-demanda.md`).
+- `scripts/state.sh` — sinais mecânicos do projeto alvo em JSON (Passos 1, 2
+  e 7); testado por `scripts/test_state.sh` contra `evals/state-expected/`.
 - `scripts/catalog.sh` — lista name/description/`disable-model-invocation` de
   toda skill instalada, lido dinamicamente (nunca uma lista fixa mantida à mão).
 - `evals/evals.json` — casos de teste do seam de eval (ver "Como validar").
@@ -67,6 +75,19 @@ duplicar critério de aceite.
 - Ao concluir uma tarefa: marcar a caixinha em `tasks/plan.md` e fechar a
   issue correspondente (via `Closes #N` no commit, ou manualmente quando o
   commit não referencia a issue).
+
+## Artefatos vivos
+
+Decidido em 2026-09-25:
+
+- **Notion** para board de fases, fluxo das tarefas (grafo de dependência),
+  fluxo dos testes e casos de uso: página
+  [Conductor](https://app.notion.com/p/3e5990f6aabc81678649ea13edbc889e)
+  (HomeWork → Conductor), fonte de verdade `tasks/plan.md`, `SPEC.md` e as
+  issues. Última atualização: 2026-09-24 (só fases da v1.0).
+- **Repositório** para gráficos públicos de custo × ganho (README): gerados
+  de `evals/benchmarks/*.json`, nunca mantidos à mão nem só no Notion.
+- Sem design de UI (pen.dev ou equivalente): a skill não tem interface.
 
 ## Clone de trabalho × instalação
 
@@ -138,6 +159,10 @@ Validação é via framework de eval do `skill-creator`, não teste unitário:
 - Ao adicionar um passo/comportamento novo ao `SKILL.md`, adicionar o caso
   correspondente em `evals/evals.json` antes de considerar o trabalho
   concluído, seguindo o mesmo formato dos existentes.
+- Ao fechar uma rodada com eval, gravar o resumo só com números em
+  `evals/benchmarks/<versão>.json` com `scripts/benchmark_summary.py` (lê as
+  iterações do workspace). Nunca versionar `response.md` nem evidência: citam
+  projetos e contas privadas.
 
 ## O que nunca mudar sem decisão explícita
 

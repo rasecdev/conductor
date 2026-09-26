@@ -1,3 +1,5 @@
 # Scripts run under bash/python on Linux CI and in Git Bash; CRLF breaks them.
 *.sh text eol=lf
 *.py text eol=lf
+# Expected outputs of scripts/test_state.sh are compared byte for byte.
+evals/state-expected/*.json text eol=lf

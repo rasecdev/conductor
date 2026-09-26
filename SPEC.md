@@ -10,7 +10,7 @@ do que a skill faz; o `SKILL.md` é a implementação dela.
 - Visão de longo prazo e o princípio que não muda ficam em `ROADMAP.md`; plano
   de tarefas em `tasks/plan.md`.
 
-Estado consolidado: v1.0 → v1.4.
+Estado consolidado: v1.0 → v1.5.
 
 ## Problem Statement
 
@@ -60,6 +60,7 @@ sozinha entre alternativas: recomenda, o usuário decide.
 | Estado de gate nunca é presumido | Roda o gate ou reporta "não verificado" (`quality-gate-failing`, `quality-gate-ci-unverifiable`) |
 | Aviso, não trava | Gate vermelho é avisado antes de recomendar avançar, e a decisão continua do usuário (`quality-gate-failing`) |
 | Skill agrega sobre o baseline | `with_skill` ≥ baseline em todos os casos de `evals/evals.json` |
+| Custo de contexto proporcional ao caso | Instrução condicional só é lida quando o gatilho dispara; tokens por run caem sem nenhum caso piorar (regressão da v1.5) |
 
 Estado atual desse último critério (regressão completa da v1.4, 16 casos em
 fixtures isoladas, formato oficial): `with_skill` 100%, baseline 77,9%; nenhuma
@@ -68,6 +69,11 @@ regressão. Empate com o baseline em `mature-feature`, `legacy-project`,
 `board-tool-refusal-remembered`, `headless-project-no-ui-recommendation` e
 `quality-gate-not-triggered` — o modelo com as skills de SDD instaladas já faz
 isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
+
+Custo (regressão da v1.5, 18 casos, só `with_skill`): nenhum caso piorou;
+média por run 70,7k → 66,7k tokens; o custo próprio da skill (run com skill
+− run sem skill) caiu ≈ 20%. Detalhes em `evals/results-v1.5.md`; números por
+run em `evals/benchmarks/`.
 
 ## User Stories
 
@@ -185,16 +191,44 @@ isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
     com precedente claro e risco baixo, que só ofereça o setup, e pergunte
     quando houver mais de uma ferramenta possível.
 
+### Custo de contexto
+
+35. Como desenvolvedor que usa a skill em toda tarefa, quero que cada execução
+    ocupe pouco da janela de contexto, carregando instrução condicional só
+    quando o caso se aplica.
+36. Como desenvolvedor, quero que os fatos mecânicos do projeto (convenção,
+    maturidade, tipo, artefatos do pipeline, git, onde cada gate roda, última
+    run de CI, precedente dos irmãos) venham de um script só leitura, com
+    resultado igual para o mesmo estado e "indisponível" com motivo quando uma
+    fonte falha.
+37. Como desenvolvedor, quero que a saída do script seja mapa do que abrir,
+    nunca conclusão de que uma etapa está completa.
+38. Como desenvolvedor, quero que a orientação continue se o script falhar,
+    com a mesma leitura feita à mão.
+
 ## Implementation Decisions
 
 - **Skill global**, não por projeto: funciona em qualquer repositório sem
   configuração.
-- **Módulos**: `SKILL.md` (frontmatter + processo em 7 passos), referência de
-  estágios do pipeline (tabela estágio → o que resolve → skills de exemplo, e
-  como avaliar skill nova), referência de tipos de gate (artefato/estágio →
-  gate → ferramenta → comando → quando deveria rodar, e o que conta como gate
-  existente), script de catálogo (name / description / manual de cada skill
-  instalada, lido do frontmatter na hora).
+- **Módulos**: `SKILL.md` (frontmatter + processo em 7 passos + gatilhos),
+  script de estado (sinais mecânicos do projeto alvo em JSON), script de
+  catálogo (name / description / manual de cada skill instalada, lido do
+  frontmatter na hora) e referências. Sempre lidas: estágios do pipeline e
+  tabela de tipos de gate (artefato/estágio → gate → ferramenta → comando →
+  quando deveria rodar, e o que conta como gate existente). Lidas só por
+  gatilho: projeto sem convenção, tipo de projeto, avaliação de skill nova,
+  artefatos vivos, detalhe dos gates e leitura de estado manual (plano B).
+- **Carga sob demanda** ([ADR 0002](docs/adr/0002-carga-sob-demanda.md)): o
+  `SKILL.md` tem só o fluxo que roda sempre, as regras de proteção e os
+  gatilhos; o corte é por caso, não por passo. Gatilhos são condições sobre
+  campos da saída do script, exceto "o usuário propôs uma skill" (julgamento).
+  Regras de proteção nunca ficam atrás de gatilho.
+- **Script de estado** (bash, sem dependência nova, JSON sem `jq`): grupos
+  `convencao`, `maturidade`, `tipo_projeto`, `pipeline`, `artefatos`, `git` e
+  `gates` (ferramentas da tabela de gates, pontos de execução, última run de
+  CI, irmãos). Só lê: nunca roda comando do projeto nem escreve. Fonte que
+  falha vira `indisponivel` com motivo. A lista de ferramentas vem da tabela de
+  tipos de gate (fonte única).
 - **Auto-invocável** (sem `disable-model-invocation`): só informa/recomenda,
   sem efeito colateral irreversível. Reabrir isso exige decisão explícita.
 - **Skills manuais nunca invocadas**: bloqueio mecânico da ferramenta de
@@ -203,9 +237,11 @@ isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
 - **Nomes de skill são exemplo**: a referência de estágios não hardcoda nomes
   como universais; o catálogo é a fonte de verdade do que está instalado.
 - **Processo em 7 passos**:
-  1. Convenção do projeto (`CLAUDE.md`/`AGENTS.md`/equivalentes de outras
-     ferramentas), sinais de maturidade, mineração de ~3 commits em legado, e
-     detecção de tipo de projeto (UI / headless / ambíguo).
+  1. Script de estado como mapa; convenção do projeto
+     (`CLAUDE.md`/`AGENTS.md`); por gatilho: convenção de outra ferramenta,
+     legado (maturidade sem convenção, mineração de ~3 commits), projeto novo
+     e detalhe do tipo de projeto (UI / headless / ambíguo). Script falhou →
+     leitura manual.
   2. Estado do projeto em ordem (modelo de domínio/ADR → spec formal →
      tarefas com critério de aceite → implementação em andamento → PR em
      revisão); o primeiro "não" indica o próximo passo; ler conteúdo e
@@ -214,16 +250,20 @@ isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
      tabela vira candidata a entrar nela (pergunta ao usuário o estágio).
   4. Recomendação no formato "Você está em X. O próximo passo é Y — motivo";
      manual → devolve comando e para; não manual → oferece invocar.
-  5. Avaliação de skill nova por leitura + precedente do projeto, com
-     escalada opt-in para avaliação quantitativa via `skill-creator`.
-  6. Artefatos vivos: escolha de ferramenta (precedente → disponível →
-     pergunta única), estrutura do board, detecção de desatualização por
-     artefato, degradação.
+  5. Por gatilho (usuário propõe skill): avaliação por leitura + precedente
+     do projeto, com escalada opt-in para avaliação quantitativa via
+     `skill-creator`.
+  6. Artefatos vivos: sem nada registrado, pergunta única; com artefato ou
+     recusa registrados (ou ao registrar), por gatilho: escolha de ferramenta
+     (precedente → disponível → pergunta única), estrutura do board, detecção
+     de desatualização por artefato, degradação.
   7. Gates de qualidade: esperados pela referência (filtrados por tipo e
      stack), confiança pela fonte, existência (script, CI ou hook), estado
      real ou "não verificado", acionamento no momento esperado; lacuna sempre
-     com fonte e confiança. O Passo 4 avisa gate vermelho antes de recomendar
-     avançar. Setup só oferecido, executado com aprovação.
+     com fonte e confiança. Parte mecânica vem do script; o detalhe, por
+     gatilho (há gate configurado, irmão, artefato ou convenção que exige
+     gate). O Passo 4 avisa gate vermelho antes de recomendar avançar. Setup só
+     oferecido, executado com aprovação.
 - **Decisões persistidas no projeto alvo**, nunca no `conductor` (recusa de
   artefato, registro de artefato: onde vive + fonte de verdade que acompanha).
 - **Tipo de projeto é filtro de recomendação**, nunca trava.
@@ -232,7 +272,7 @@ isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
 
 ## Testing Decisions
 
-- **Seam único**: framework de eval do `skill-creator` — subagente com a skill
+- **Seam 1, eval**: framework de eval do `skill-creator` — subagente com a skill
   (`with_skill`) vs. subagente baseline, mesmos prompts, sempre em paralelo;
   avaliação por comparação contra `expected_output` em prosa, não assertion
   determinística de string.
@@ -245,14 +285,27 @@ isso sozinho. Detalhes e limites em `evals/results-v1.4.md`.
   `headless-project-no-ui-recommendation`, `quality-gate-expected-missing`,
   `quality-gate-low-confidence`, `quality-gate-failing`,
   `quality-gate-ci-unverifiable`, `quality-gate-not-triggered`,
-  `quality-gate-setup-offered-not-executed`. Resultados em
-  `evals/results-*.md`.
+  `quality-gate-setup-offered-not-executed`, `tasks-without-acceptance-criteria`
+  (#27; não reproduziu o bug, fica como proteção da regra do Passo 2),
+  `combined-legacy-with-live-artifact` (vários gatilhos juntos: legado sem
+  convenção + diagrama registrado desatualizado + sinal de UI).
+  Resultados em `evals/results-*.md`.
 - **Fixtures isoladas**: todo caso com estado roda numa cópia de
   `evals/files/<fixture>` com git próprio, uma por run
   (`scripts/prepare_fixture.sh`); estado que não cabe em arquivo (histórico
   longo, pasta sem git) vem de um gancho de setup. A comparação com o baseline
   só é válida a partir da v1.4: antes disso os casos citavam projetos reais e
   descreviam o estado no próprio prompt.
+- **Seam 2, teste do script de estado**: `scripts/test_state.sh` roda o
+  script contra cada fixture (preparada como no eval) e compara com
+  `evals/state-expected/`, com datas, branch padrão e tamanhos normalizados;
+  job `state-script` no CI.
+- **Custo controlado**: toda execução de eval só com aprovação explícita do
+  usuário. Rodada de refatoração compara `with_skill` contra a rodada anterior
+  (sem refazer baseline sem skill); 1 run por caso, 3 no gatilho de
+  julgamento; smoke test de poucos casos durante o desenvolvimento. Números
+  por run versionados em `evals/benchmarks/<versão>.json`
+  (`scripts/benchmark_summary.py`), nunca as respostas brutas.
 - **Formato oficial** do `skill-creator` (`run-N` + `grading.json`), com
   assertions tiradas do `expected_output` e fixadas antes das runs.
 - **Validações em execução real** (fora do eval): Passo 6 com Notion num
@@ -289,5 +342,6 @@ foi incorporada acima.
 | v1.2 | [#9](https://github.com/rasecdev/conductor/issues/9) | Desatualização checada para qualquer artefato vivo, não só board | `evals/results-v1.2-v1.3.md` |
 | v1.3 | [#12](https://github.com/rasecdev/conductor/issues/12) | Detecção de tipo de projeto filtra recomendação de artefato de UI | `evals/results-v1.2-v1.3.md` |
 | v1.4 | [#24](https://github.com/rasecdev/conductor/issues/24) | Gates de qualidade: esperados, fonte e confiança, estado real, acionamento, aviso sem trava; casos antigos migrados para fixtures | `evals/results-v1.4.md` |
+| v1.5 | [#50](https://github.com/rasecdev/conductor/issues/50) | Enxugar o contexto: script de estado, carga sob demanda (ADR 0002), `SKILL.md` −52%; nenhum comportamento novo | `evals/results-v1.5.md` |
 
-Em andamento (não incorporada): v1.5 gates de transição — ver `tasks/plan.md`.
+Em andamento (não incorporada): v1.6 gates de transição ([#25](https://github.com/rasecdev/conductor/issues/25)) — ver `tasks/plan.md`.

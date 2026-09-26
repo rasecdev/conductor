@@ -31,6 +31,12 @@ jobs:
           python-version: "3.12"
       - run: python scripts/validate_evals.py
 
+  state-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/test_state.sh
+
   markdownlint:
     runs-on: ubuntu-latest
     steps:

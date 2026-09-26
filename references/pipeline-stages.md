@@ -40,25 +40,10 @@ prosa dela.
 
 ## Como usar isso pra avaliar uma skill nova
 
-Quando o usuário propuser uma skill nova pra entrar no pipeline:
-
-1. Leia a `description` dela (via `scripts/catalog.sh` se já estiver instalada,
-   ou o que o usuário descrever se ainda não estiver).
-2. Compare com a coluna "O que resolve" de cada linha desta tabela — qual
-   estágio ela mais se parece com o objetivo dela?
-3. Se um estágio já tem uma skill cobrindo o mesmo objetivo, a pergunta pro
-   usuário é: ela complementa (cobre um caso que a existente não cobre),
-   substitui (faz a mesma coisa melhor/diferente) ou é redundante (mesma
-   coisa, sem ganho)? Não decida sozinho qual delas "vence" — é uma
-   recomendação, a escolha final é do usuário.
-4. Se não encaixa em nenhum estágio existente, diga isso explicitamente — pode
-   ser um estágio novo que ainda não existia neste pipeline (ex: algo entre
-   "revisão" e "deploy"), e essa tabela deveria crescer pra registrar isso.
+Ver `references/skill-evaluation.md` (lida só quando o usuário propõe uma
+skill pro pipeline).
 
 ## Convenção por projeto pode mudar a ordem
 
-Um projeto específico pode ter seu próprio fluxo documentado no `CLAUDE.md` do
-repo (ex: formalizar branch → PR → milestone → checkpoint em cima deste
-pipeline genérico). Quando existir, a convenção do projeto tem
-precedência sobre esta tabela genérica — leia o `CLAUDE.md` do repo atual
-antes de recomendar o próximo passo.
+A convenção do projeto alvo tem precedência sobre esta tabela genérica — ver
+o Passo 1 do `SKILL.md`.

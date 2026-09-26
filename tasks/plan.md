@@ -210,19 +210,19 @@ de 1M de tokens.
 
 ### Checkpoint: Fase 2
 
-- [ ] `SKILL.md` com pelo menos 50% menos caracteres que os 30,3k da v1.4
-- [ ] Conferência manual de migração em cada PR: nenhuma regra da v1.4 perdida
-- [ ] Smoke test (≈ 250k tokens: `legacy-project`, `board-tool-precedent-non-notion`, `skill-evaluation`, `quality-gate-failing`) **só se o usuário liberar**
+- [x] `SKILL.md` com pelo menos 50% menos caracteres que os 30,3k da v1.4
+- [x] Conferência manual de migração em cada PR: nenhuma regra da v1.4 perdida
+- [x] Smoke test (≈ 250k tokens: `legacy-project`, `board-tool-precedent-non-notion`, `skill-evaluation`, `quality-gate-failing`) **só se o usuário liberar** — rodado com liberação: 4/4 em todos, iteration-10
 
 ### Fase 3: Fechamento
 
-- [ ] [Tarefa 8: Regressão, medição e fechamento da rodada v1.5](https://github.com/rasecdev/conductor/issues/58) — stories 1, 2, 21, 22, 25, 32, 33
+- [x] [Tarefa 8: Regressão, medição e fechamento da rodada v1.5](https://github.com/rasecdev/conductor/issues/58) — stories 1, 2, 21, 22, 25, 32, 33
 
 ### Checkpoint: Fase 3
 
-- [ ] Nenhum caso piora frente às iterações 8/9 da v1.4; mediana de tokens abaixo de 70,7k
-- [ ] Requisitos da #50 conferidos contra o `SKILL.md`; toda story com caso, teste do script ou justificativa
-- [ ] `SPEC.md` incorpora o delta da v1.5
+- [x] Nenhum caso piora frente às iterações 8/9 da v1.4; mediana de tokens abaixo de 70,7k
+- [x] Requisitos da #50 conferidos contra o `SKILL.md`; toda story com caso, teste do script ou justificativa
+- [x] `SPEC.md` incorpora o delta da v1.5
 
 ## Risks and Mitigations
 

@@ -311,62 +311,30 @@ qualidade** é uma checagem do projeto alvo (lint, teste, build, conformidade de
 arquitetura, validação de artefato) — o `conductor` reconhece se o esperado
 existe e sinaliza lacuna; nunca cria nem configura o gate.
 
-1. **Quais gates são esperados.** Cruze o estágio atual e os artefatos vivos
-   registrados (Passos 2 e 6) com `references/gate-types.md`. Aplique o mesmo
-   filtro de tipo de projeto do Passo 1 (projeto headless não espera gate de
-   artefato de UI) e de stack (não espere `tsc` num projeto que não é TS/JS).
-2. **Com que confiança.** Para cada gate candidato, a expectativa vem da fonte
-   mais forte disponível, nesta ordem:
-   1. **Convenção do projeto** exige o gate explicitamente — confiança alta.
-   2. **Artefato registrado** que implica o gate (ex: diagrama Mermaid
-      registrado → gate de compilação Mermaid) — confiança alta.
-   3. **Precedente de outro projeto do mesmo usuário** (repositórios irmãos do
-      projeto alvo, ou os que o usuário indicar) que usa esse gate — confiança
-      média.
-   4. **Nenhuma das anteriores** — só sugestão de baixa confiança, nunca
-      apresentada como obrigatória.
-3. **Se ele existe.** Veja em `references/gate-types.md` → "Como saber se um
-   gate existe": o comando precisa estar configurado em script, CI ou hook que
-   o projeto executa. Dependência instalada sem ninguém chamando não conta.
-4. **Estado real.** Para cada gate que existe, verifique de verdade — nunca
-   presuma nem simule o resultado:
-   - **Roda localmente** (script, `Makefile`, hook): execute o comando
-     configurado no projeto e leia a saída. É só leitura de estado: não
-     corrija nada do que ele acusar.
-   - **Só roda no CI** (ex: usa uma action que não existe fora dele): consulte
-     a última run da branch atual (`gh run list --branch <branch> --limit 1`,
-     ou `gh api`) e informe o resultado **com a data** da run.
-   - **Não dá pra verificar nesta sessão** (ferramenta não instalada, projeto
-     sem remote, sem acesso ao CI): reporte o gate como **"não verificado"**,
-     dizendo o porquê — nunca como passando nem como falhando. Isso não trava
-     o resto da orientação.
-5. **Acionamento.** Um gate que existe mas não roda no momento em que deveria
-   quase não protege nada. Compare onde ele está configurado com quando
-   deveria rodar — pela convenção do projeto, se ela disser, ou pela coluna
-   "Quando deveria rodar" de `references/gate-types.md`. Exemplos de lacuna:
-   a convenção exige o gate em pre-commit, mas ele só existe como script
-   manual e não há hook; o gate é de CI, mas a última run é bem mais antiga
-   que os últimos commits da branch.
-6. **Como sinalizar.** Gate esperado ausente, falhando ou **não acionado no
-   momento esperado** é uma lacuna — diga isso na mesma linguagem de "próximo
-   passo" do Passo 4, **sempre citando a fonte da expectativa e a confiança**
-   (ex: "o diagrama `docs/arquitetura.mmd` está registrado como artefato
-   vivo, mas nada verifica que ele compila — gate esperado com confiança alta,
-   pela fonte 'artefato registrado'"). Sugestão de baixa confiança vai
-   separada, como sugestão, não como lacuna.
-7. **Ferramenta.** Se houver mais de uma ferramenta possível para o mesmo gate e
-   o projeto não tiver precedente, pergunte ao usuário qual prefere — mesmo
-   princípio da escolha de ferramenta do Passo 6.
+O grupo `gates` da saída do script (Passo 1) já traz a parte mecânica: onde
+cada ferramenta está configurada (`configurados`, `ausentes`), os pontos de
+execução lidos, a última run de CI da branch e o precedente dos projetos
+irmãos. Cruze isso com o estágio atual e os artefatos vivos registrados usando
+`references/gate-types.md`, que tem a tabela de gates e o detalhe de cada ponto
+abaixo:
 
-Configurar o gate é trabalho do usuário (ou implementação normal que ele
-pedir), nunca iniciativa do `conductor`. A única exceção é **oferecer** o setup
-inicial quando o projeto não tem o gate, o risco é baixo (ex: acrescentar um
-script e um job de CI; nada que apague ou reescreva o que existe) e há
-**precedente claro** — outro projeto do mesmo usuário já usa esse gate, ou a
-convenção diz qual ferramenta. Nesse caso, mostre exatamente o que seria
-configurado, copiando o padrão do precedente, e **só execute com aprovação
-explícita** do usuário. Uma pergunta ou um pedido de diagnóstico ("o que
-falta?") não é aprovação.
+1. **Confiança.** A expectativa vem da fonte mais forte: convenção do projeto
+   ou artefato registrado (alta), precedente de projeto irmão (média), nenhuma
+   (só sugestão de baixa confiança, nunca apresentada como obrigatória).
+2. **Estado real.** Gate que roda localmente: execute o comando configurado e
+   leia a saída, sem corrigir nada. Gate só de CI: informe a última run com a
+   data. O que não dá pra checar nesta sessão é **"não verificado"**, com o
+   motivo — nunca passando nem falhando.
+3. **Acionamento.** Gate que existe mas não roda quando deveria (pela
+   convenção ou pela tabela) também é lacuna.
+4. **Sinalizar.** Gate esperado ausente, falhando ou não acionado é lacuna,
+   dita como "próximo passo", **sempre com a fonte da expectativa e a
+   confiança**. Gate falhando no estágio atual é avisado antes de recomendar
+   avançar (Passo 4).
+5. **Setup.** Só **oferecido** quando o risco é baixo e há precedente claro
+   (projeto irmão ou convenção), mostrando exatamente o que seria configurado;
+   executa só com aprovação explícita. Pergunta ou pedido de diagnóstico não é
+   aprovação.
 
 ## O que o conductor nunca faz
 

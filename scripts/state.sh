@@ -164,7 +164,8 @@ done
 # --- artefatos ---------------------------------------------------------------
 # "Artefato registrado" (Step 6): lines of the convention files, PROGRESSO.md
 # and PLANO.md that mention an artifact tool, an artifact type or a diagram
-# file (a registration, or a recorded refusal), plus diagram files in the repo.
+# file (a registration, or a recorded refusal), plus diagram and QA document
+# files in the repo.
 # Only where to look: whether it is a registration or a refusal is the model's
 # call.
 
@@ -183,7 +184,8 @@ done
 art_files=()
 for f in "${all_files[@]}"; do
   case "$f" in
-    *.mmd | *.drawio | *.excalidraw | *.puml) art_files+=("$f") ;;
+    *.mmd | *.drawio | *.excalidraw | *.puml | docs/qa/*.md | qa/*.md | *test-plan*.md | \
+      *plano-de-teste*.md | *casos-de-teste*.md) art_files+=("$f") ;;
   esac
 done
 
@@ -391,7 +393,7 @@ cat <<EOF
   "maturidade": {"historico": $history, "manifestos": $o_man, "arquivos_de_codigo": $code_count},
   "tipo_projeto": {"sinais_ui": $o_ui, "sinais_headless": $o_head},
   "pipeline": {"spec": $o_spec, "planejamento": $o_plan, "tarefas": [$tasks], "glossario": $o_glos, "adrs": $adr_count},
-  "artefatos": {"mencoes": $o_art_m, "arquivos_de_diagrama": $o_art_f},
+  "artefatos": {"mencoes": $o_art_m, "arquivos_de_artefato": $o_art_f},
   "git": $git_json,
   "gates": $gates_json
 }

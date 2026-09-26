@@ -15,8 +15,8 @@ identidade git global da máquina.
   `check-impl-against-spec`) e como avaliar uma skill nova proposta pra ele.
 - `references/project-without-convention.md`, `references/project-type.md`,
   `references/manual-state.md`, `references/skill-evaluation.md`,
-  `references/live-artifacts.md` — casos
-  condicionais (Passos 1, 5 e 6) e plano B da
+  `references/live-artifacts.md`, `references/gate-details.md` — casos
+  condicionais (Passos 1, 5, 6 e 7) e plano B da
   leitura de estado, lidos só quando o gatilho no `SKILL.md` dispara
   (`docs/adr/0002-carga-sob-demanda.md`).
 - `scripts/state.sh` — sinais mecânicos do projeto alvo em JSON (Passos 1, 2

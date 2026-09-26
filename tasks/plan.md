@@ -206,6 +206,7 @@ de 1M de tokens.
 - [x] [Tarefa 5: Passo 6 vira referência de artefatos vivos com gatilho mecânico](https://github.com/rasecdev/conductor/issues/55) — stories 3–5, 31
 - [x] [Tarefa 6: Passo 5 vira referência de avaliação de skill](https://github.com/rasecdev/conductor/issues/56) — story 6
 - [x] [Tarefa 7: Remover duplicações, consolidar regras de proteção e caso de eval combinado](https://github.com/rasecdev/conductor/issues/57) — stories 24, 28, 31
+- [x] [Tarefa 7b: Detalhe do Passo 7 atrás de gatilho e artefato de QA no sinal de artefatos](https://github.com/rasecdev/conductor/issues/67) — ajustes do smoke test; stories 7–10, 3–5
 
 ### Checkpoint: Fase 2
 

@@ -65,93 +65,49 @@ sentido, em vez de só recomendar. Confira sempre `scripts/catalog.sh` pra
 saber, na hora, quais skills instaladas têm `disable-model-invocation` — não
 assuma pela lista de exemplo.
 
-## Passo 1 — Ler a convenção do projeto atual
+## Passo 1 — Ler o estado do projeto
 
-Antes de recomendar qualquer coisa, leia o `CLAUDE.md` (ou `AGENTS.md`) do
-repositório atual, se existir. Alguns projetos formalizam um fluxo próprio em
-cima deste pipeline genérico (ex: amarrar cada tarefa a uma branch, PR contra
-uma branch de homologação, milestone e issue no tracker). Quando essa
-convenção existir, ela tem precedência sobre a ordem genérica — o trabalho do
-`conductor` aqui é encaixar o pipeline de spec dentro dela, não substituí-la.
+Na raiz do projeto alvo, rode o script de estado desta skill
+(`bash <diretório desta skill>/scripts/state.sh`, sem argumentos). Ele devolve
+um JSON com os sinais mecânicos do projeto: `convencao`, `maturidade`,
+`tipo_projeto`, `pipeline`, `git` e `gates`. **A saída é mapa do que abrir,
+nunca conclusão de que uma etapa está completa** — um arquivo listado ainda
+precisa ser lido. Se o script falhar (erro ou saída que não é JSON), siga
+`references/manual-state.md`, a mesma leitura feita à mão.
 
-**Convenção pode estar num formato de outra ferramenta.** Nem todo projeto usa
-Claude Code como ferramenta principal — procure também por regras equivalentes
-de outros assistentes: `.cursor/rules/*.mdc` (Cursor), `.github/copilot-instructions.md`
-(Copilot), `.windsurfrules`, etc. Um projeto sem `CLAUDE.md` pode ainda assim
-ter convenção formalizada, só que noutro lugar — trate isso como convenção do
-projeto igualmente, mesmo que precise "traduzir" a terminologia de uma
-ferramenta pra outra. Preste atenção especial a qualquer instrução dessas
-regras que já prescreva um artefato de planejamento obrigatório (ex: "criar
-`development_plan.md` pra todo projeto", "gerar plano pra projeto existente
-que não tiver um") — se essa exigência já existe e o arquivo não foi criado
-ainda, isso É o próximo passo, não uma escolha entre skills do pipeline
-genérico.
+**Convenção.** Leia cada arquivo listado em `convencao`. Alguns projetos
+formalizam um fluxo próprio em cima deste pipeline genérico (ex: amarrar cada
+tarefa a uma branch, PR contra uma branch de homologação, milestone e issue no
+tracker). Quando essa convenção existir, ela tem precedência sobre a ordem
+genérica — o trabalho do `conductor` é encaixar o pipeline de spec dentro
+dela, não substituí-la. Se a convenção prescreve um artefato de planejamento
+obrigatório que ainda não existe, criá-lo É o próximo passo.
 
-**Ausência de convenção não significa projeto novo.** Antes de tratar a falta
-de `CLAUDE.md`/regras equivalentes como "projeto do zero", cheque sinais de
-maturidade do próprio código: `git log` com histórico longo, volume de código
-real, estrutura de solução/projeto já estabelecida (`.sln`, `package.json`
-com dependências reais, etc.). Um projeto com milhares de commits e código em
-produção que simplesmente nunca formalizou processo de IA/spec é um caso
-**diferente** de uma pasta genuinamente vazia — nunca recomende `wayfinder`
-ou `grilling` como se fosse descoberta de ideia nova nesse caso. O que falta
-ali não é decidir o que construir (isso já existe e funciona), é mapear o
-sistema existente antes de mexer nele — o passo certo tende a ser
-`domain-modeling`/`grill-with-docs` com foco em entender a arquitetura atual,
-não interrogar sobre uma ideia nova.
+Gatilhos (condições sobre a saída do script):
 
-**Em projeto legado, minere o histórico real, não só a regra escrita.** Regra
-documentada (`CLAUDE.md`, `.cursor/rules`, etc.) costuma ser genérica ou
-incompleta em projetos antigos — o padrão realmente seguido está no que as
-pessoas de fato fizeram. Quando for orientar uma mudança nesse tipo de
-projeto, procure no `git log` **uns 3 commits** de tarefas parecidas com o que
-o usuário quer fazer agora (mesmo tipo de mudança — ex: "nova tela", "novo
-endpoint", "correção de X") e compare os arquivos tocados entre eles. Um
-commit só pode ser um conserto pontual e simples, não representativo do
-padrão real; três dá triangulação — se os três tocam o mesmo conjunto de
-camadas/arquivos na mesma ordem, isso é convenção de fato, mais confiável do
-que qualquer regra escrita desatualizada. Se os três divergirem entre si, diga
-isso ao usuário em vez de inventar um padrão que não existe.
+- **`convencao` sem `CLAUDE.md`, `AGENTS.md` nem `.claude/CLAUDE.md`** → leia
+  `references/project-without-convention.md` antes de recomendar: ela separa
+  convenção de outra ferramenta, projeto legado (maduro sem convenção, com a
+  mineração do histórico) e projeto novo de verdade. Ausência de convenção
+  nunca significa, sozinha, projeto novo.
+- **`tipo_projeto`** filtra artefato visual: `sinais_ui` vazio → não ofereça
+  fluxo de tela nem design de UI sem o usuário pedir. Antes de recomendar
+  artefato visual (Passo 6) ou gate de artefato de UI (Passo 7) com
+  `sinais_ui` preenchido, ou com os dois grupos de sinal preenchidos, leia
+  `references/project-type.md`.
 
-Se de fato não existir `CLAUDE.md`/`AGENTS.md`/equivalente **e** os sinais de
-maturidade também estiverem ausentes (poucos commits, pouco código, ou
-nenhum), é um projeto novo de verdade — trate a ausência de convenção como um
-sinal, não como um vazio a ignorar: pode valer perguntar ao usuário se ele
-quer formalizar uma antes de avançar muito, mas isso não bloqueia recomendar
-o primeiro passo.
+## Passo 2 — Determinar em que estágio o projeto está
 
-### Detectar tipo de projeto (pra filtrar recomendação de artefato)
-
-Além de convenção e maturidade, note sinais de **tipo de projeto** — isso não
-muda o pipeline de spec em si (Passos 2-5 valem igual), mas filtra quais
-artefatos visuais do Passo 6 fazem sentido recomendar:
-
-- **Tem UI própria** (web: `package.json` com framework de frontend; mobile:
-  `pubspec.yaml`/Flutter, projeto React Native, projeto nativo iOS/Android;
-  desktop: Electron ou equivalente) → fluxo de tela e design de UI são
-  artefatos relevantes de recomendar.
-- **Headless/backend puro** (API, worker, bot, microserviço sem camada de
-  apresentação própria — ex: um bot de Telegram como back-end puro) → não
-  recomende fluxo de tela nem design de UI de forma não solicitada.
-- **Sinal ambíguo ou misto** (ex: backend com painel administrativo web,
-  monorepo com API e app): pergunte ao usuário em vez de presumir.
-
-Isso é só filtro de **recomendação**, nunca uma trava: se o usuário pedir um
-desses artefatos mesmo fora do perfil detectado, atenda normalmente — a
-detecção só evita *oferecer* algo que não se aplica, não impede pedir.
-
-## Passo 2 — Determinar o estado atual do projeto
-
-Verifique, nesta ordem, o que já existe no repositório (adapte os nomes de
-arquivo se a convenção do projeto for diferente):
+Com o grupo `pipeline` e o `git` do Passo 1 como mapa (adapte os nomes de
+arquivo se a convenção do projeto for diferente), responda nesta ordem:
 
 1. Existe `CONTEXT.md` (glossário/modelo de domínio) ou algum ADR registrado?
-2. Existe uma spec formal (`PRODUCT.md`, `TECH.md`, ou equivalente) já
-   publicada?
-3. Existe `tasks/plan.md` / `tasks/todo.md`, ou itens abertos no issue
-   tracker do projeto, com critério de aceite definido?
-4. Há tarefas em implementação agora (branch aberta, PR em andamento)?
-5. Há PR aberta aguardando revisão contra a spec?
+   (`glossario`, `adrs`)
+2. Existe uma spec formal já publicada? (`spec`, ou issue de spec no tracker)
+3. Existe plano/lista de tarefas, ou itens abertos no issue tracker, com
+   critério de aceite definido? (`planejamento`, `tarefas`)
+4. Há tarefas em implementação agora? (`branches_locais`, `prs_abertos`)
+5. Há PR aberta aguardando revisão contra a spec? (`prs_abertos`)
 
 O primeiro "não" nessa sequência costuma indicar o próximo passo. Mas leia o
 conteúdo, não só a existência do arquivo — um `tasks/todo.md` com uma linha

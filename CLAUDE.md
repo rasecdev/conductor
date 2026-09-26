@@ -13,6 +13,12 @@ identidade git global da máquina.
   development conhecido (`wayfinder` → `grilling`/`domain-modeling` → `to-spec`
   → `planning-and-task-breakdown` → `implement-specs` →
   `check-impl-against-spec`) e como avaliar uma skill nova proposta pra ele.
+- `references/project-without-convention.md`, `references/project-type.md`,
+  `references/manual-state.md` — casos condicionais do Passo 1 e plano B da
+  leitura de estado, lidos só quando o gatilho no `SKILL.md` dispara
+  (`docs/adr/0002-carga-sob-demanda.md`).
+- `scripts/state.sh` — sinais mecânicos do projeto alvo em JSON (Passos 1, 2
+  e 7); testado por `scripts/test_state.sh` contra `evals/state-expected/`.
 - `scripts/catalog.sh` — lista name/description/`disable-model-invocation` de
   toda skill instalada, lido dinamicamente (nunca uma lista fixa mantida à mão).
 - `evals/evals.json` — casos de teste do seam de eval (ver "Como validar").

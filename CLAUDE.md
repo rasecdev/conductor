@@ -76,6 +76,19 @@ duplicar critério de aceite.
   issue correspondente (via `Closes #N` no commit, ou manualmente quando o
   commit não referencia a issue).
 
+## Artefatos vivos
+
+Decidido em 2026-09-25:
+
+- **Notion** para board de fases, fluxo das tarefas (grafo de dependência),
+  fluxo dos testes e casos de uso: página
+  [Conductor](https://app.notion.com/p/3e5990f6aabc81678649ea13edbc889e)
+  (HomeWork → Conductor), fonte de verdade `tasks/plan.md`, `SPEC.md` e as
+  issues. Última atualização: 2026-09-24 (só fases da v1.0).
+- **Repositório** para gráficos públicos de custo × ganho (README): gerados
+  de `evals/benchmarks/*.json`, nunca mantidos à mão nem só no Notion.
+- Sem design de UI (pen.dev ou equivalente): a skill não tem interface.
+
 ## Clone de trabalho × instalação
 
 - **Instalação**: `~/.claude/skills/conductor/` — é a skill que roda em todos

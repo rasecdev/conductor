@@ -270,7 +270,7 @@ caso de verificação antes de a rodada fechar. Depende da v1.4.
 
 Sem spec de rodada: mudança de processo do repositório, não de comportamento
 da skill. Decidido em conversa com o usuário (2026-09-25), seguindo o
-precedente do AutoFinance. Executa **antes** da Tarefa 1 da v1.4, que já roda
+precedente de outro projeto do usuário. Executa **antes** da Tarefa 1 da v1.4, que já roda
 no fluxo novo. Tarefas geradas pela `planning-and-task-breakdown`, no GitHub
 Issues.
 

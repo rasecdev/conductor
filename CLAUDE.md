@@ -104,7 +104,7 @@ Decidido em 2026-09-25:
 ## Fluxo de branch e PR
 
 Formalizado em 2026-09-25 na rodada infra (seguindo o precedente do
-AutoFinance). Branches: `master` = versão instalada; `development` =
+outro projeto do usuário). Branches: `master` = versão instalada; `development` =
 integração.
 
 Por tarefa:

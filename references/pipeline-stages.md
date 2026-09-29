@@ -43,6 +43,31 @@ prosa dela.
 Ver `references/skill-evaluation.md` (lida só quando o usuário propõe uma
 skill pro pipeline).
 
+## Registrar um estágio novo sem skill ainda
+
+Às vezes a lacuna não é "falta uma skill pra um estágio conhecido" — é "o
+estágio nem está nesta tabela, e ainda não existe skill pra ele" (ex:
+verificar um fato que só uma consulta ao banco/schema do projeto responde).
+Isso não é motivo pra esperar uma rodada de feature no `conductor`: registre
+a etapa direto nesta tabela, como as demais, com uma coluna extra:
+
+| # | Estágio | O que resolve | Exemplos de skill | Gate |
+|---|---|---|---|---|
+| ... | (nome do estágio novo) | (o que ele decide) | nenhuma ainda | sim / não / não verificado |
+
+- **Gate = sim**: aponte qual (mesma lógica do Passo 7 e de
+  `references/gate-types.md`) — a etapa sem skill não fica também sem
+  checagem de qualidade sinalizada.
+- **Gate = não**: dito explicitamente, não como lacuna silenciosa — é uma
+  etapa nova, o usuário decide depois se vale configurar um.
+- **Gate = não verificado**: quando não deu pra checar nesta sessão (mesmo
+  critério do Passo 7).
+
+Isso só documenta a posição do estágio no fluxo e se ele tem gate — nunca cria
+a skill nem o gate. Quando uma skill pra esse estágio existir (instalada ou
+escrita), volte aqui e preencha a coluna "Exemplos de skill" no lugar de
+"nenhuma ainda".
+
 ## Convenção por projeto pode mudar a ordem
 
 A convenção do projeto alvo tem precedência sobre esta tabela genérica — ver

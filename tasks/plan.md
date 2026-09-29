@@ -293,3 +293,23 @@ Issues.
 |------|--------|------------|
 | markdownlint acusa muitos erros nos docs atuais | Médio | Isolado na Infra 3, com config justificada |
 | Evals rodarem contra a instalação (versão antiga) em vez do clone | Médio | Regra explícita no `CLAUDE.md` (Infra 4) |
+
+# Rodada uso real — reconsulta, estágio sem skill, catálogo cego a plugin
+
+Sem spec formal via `/to-spec`: decisão explícita do usuário (2026-09-29) de
+implementar direto a partir dos três achados da avaliação de uso real em
+andamento (`conductor-workspace/uso-real.md`), sem abrir rodada de spec
+própria — mesmo tipo de exceção documentado na "Rodada infra" acima.
+
+## Task List
+
+- [x] [Tarefa: catalog.sh não enxerga skills de plugin](https://github.com/rasecdev/conductor/issues/81) — `scripts/catalog.sh` passa a ler `~/.claude/plugins/installed_plugins.json` e varrer `<installPath>/skills` de cada plugin registrado; documentado o limite que resta (skill embutida no host, sem caminho em disco, continua invisível ao script)
+- [x] [Tarefa: sem comportamento definido quando o estágio não tem skill instalada](https://github.com/rasecdev/conductor/issues/80) — Passo 3 do `SKILL.md` instrui somar o catálogo do script com a lista de skills da própria sessão antes de concluir que uma skill não existe, e a dizer isso explicitamente (apontando `find-skills` quando instalada) em vez de inventar um passo
+- [x] [Tarefa: pipeline extensível por etapa customizada, com gate informado](https://github.com/rasecdev/conductor/issues/79) — nova seção em `references/pipeline-stages.md` ("Registrar um estágio novo sem skill ainda") permite registrar uma etapa fora da tabela fixa, com coluna de gate (sim/não/não verificado)
+- [x] Passo 4 do `SKILL.md` ganha "Quando voltar a ser consultado": reconsultar o `conductor` a cada checkpoint (fim da skill recomendada, antes do próximo estágio, PR aberta/mergeada, mudança de foco), não só no início da tarefa
+
+### Checkpoint
+
+- [ ] `scripts/catalog.sh` testado com registro de plugin vazio/ausente (fresh install) sem quebrar
+- [ ] Caso correspondente em `evals/evals.json` pra cada comportamento novo
+- [ ] CI verde (gitleaks, shellcheck, evals, markdownlint) antes do merge em `development`

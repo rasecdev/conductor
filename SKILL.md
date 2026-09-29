@@ -97,14 +97,34 @@ trabalho que já está pronto.
 ## Passo 3 — Montar o catálogo de skills disponíveis
 
 Rode `scripts/catalog.sh` (sem argumentos) pra listar toda skill instalada
-(nome, description, se exige invocação manual). Não mantenha uma lista fixa
+(nome, description, se exige invocação manual) — inclui skills globais, do
+projeto e as instaladas via plugin de marketplace. Não mantenha uma lista fixa
 de cabeça — o catálogo é sempre derivado na hora, porque uma skill nova pode
 ter sido instalada desde a última vez que o `conductor` rodou.
 
-Cruze esse catálogo com `references/pipeline-stages.md` pra saber a posição de
-cada skill conhecida no fluxo. Uma skill que aparecer no catálogo mas não
-estiver na tabela de referência é candidata a ser adicionada nela (pergunte ao
-usuário em que estágio ela se encaixa, e atualize a tabela).
+**Ponto cego do script.** Skills que vêm embutidas no próprio host/harness
+(injetadas na sessão, sem caminho estável em disco) não aparecem no catálogo
+de `scripts/catalog.sh` — ele só enxerga o que está em arquivo. Complete o
+catálogo com a lista de "skills disponíveis" que a própria sessão te informou
+(system reminder de skills disponíveis) antes de concluir que uma skill não
+existe: uma pode estar de fora do script e ainda assim disponível pra você
+chamar agora.
+
+Cruze o catálogo (script + sessão) com `references/pipeline-stages.md` pra
+saber a posição de cada skill conhecida no fluxo. Uma skill que aparecer no
+catálogo mas não estiver na tabela de referência é candidata a ser adicionada
+nela (pergunte ao usuário em que estágio ela se encaixa, e atualize a
+tabela).
+
+**Estágio sem skill nenhuma.** Se, somando as duas fontes, nenhuma skill
+cobrir o estágio que você ia recomendar, diga isso explicitamente — nunca
+invente um passo nem prossiga como se a skill existisse. Se `find-skills`
+estiver no catálogo, aponte-a como próxima ação (buscar/instalar a skill que
+falta); se não estiver, diga que a lacuna precisa ser resolvida manualmente.
+Isso vale tanto pra um estágio já conhecido (`pipeline-stages.md`) quanto pra
+um artefato sem skill de geração. Ver `references/pipeline-stages.md` →
+"Registrar um estágio novo sem skill ainda" pra deixar isso registrado em vez
+de repetir o aviso do zero a cada consulta.
 
 Quando o usuário pedir pra "ver as skills"/"mostrar o pipeline", devolva a
 lista ordenada pelo estágio, junto com uma frase curta do que cada uma faz —
@@ -131,6 +151,17 @@ Isso vale tanto pra um projeto do zero (primeiro estágio vazio → recomenda
 num projeto maduro (estado já avançado → pula direto pro estágio que
 realmente falta, ex: `to-spec` se a conversa já cobriu decisão suficiente mas
 nunca virou spec escrita).
+
+### Quando voltar a ser consultado
+
+O `conductor` não é "roda uma vez, recebe a recomendação, acabou". Volte a
+consultá-lo (chamando a skill de novo, não só lembrando da resposta anterior)
+em cada checkpoint da pipeline: quando a skill recomendada terminar, antes de
+decidir o próximo passo depois disso, a cada PR aberta ou mergeada, e sempre
+que o foco da tarefa mudar no meio do caminho. Uma recomendação vale pro
+estado do projeto no momento em que foi lida — carregá-la mentalmente pelo
+resto da tarefa, sem reler o estado, é o mesmo erro que recomendar sem ter
+lido nada.
 
 ### Sobre avisar proativamente
 

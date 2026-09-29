@@ -2,8 +2,16 @@
 # Lists every installed skill's name, description, and whether it requires
 # explicit user invocation (disable-model-invocation: true in frontmatter).
 #
-# Run with no arguments. Reads global skills (~/.claude/skills) and, if run
-# from inside a repo with a .claude/skills directory, project-scoped ones too.
+# Run with no arguments. Reads global skills (~/.claude/skills), if run from
+# inside a repo with a .claude/skills directory, project-scoped ones too, and
+# skills installed via a marketplace plugin (read from
+# ~/.claude/plugins/installed_plugins.json).
+#
+# Known blind spot: skills that ship bundled with the host/harness itself
+# (injected at session start, no stable path under the user's home
+# directory) are invisible to this script no matter what. The SKILL.md tells
+# the calling model to also cross-check its own session's "available skills"
+# listing for those — this script can only cover what's on disk.
 #
 # Output: one skill per block, tab-free plain text, easy to read and to parse:
 #   NAME: <name>
@@ -35,7 +43,21 @@ scan_dir() {
   done
 }
 
+scan_plugin_registry() {
+  # Marketplace-installed plugins keep their skills under
+  # <installPath>/skills/, with <installPath> recorded in this registry
+  # (one entry per installed version) instead of a fixed, guessable path.
+  local registry="$HOME/.claude/plugins/installed_plugins.json"
+  [ -f "$registry" ] || return 0
+  local path
+  while IFS= read -r path; do
+    [ -n "$path" ] || continue
+    scan_dir "$path/skills"
+  done < <(grep -o '"installPath": *"[^"]*"' "$registry" | sed -E 's/.*: *"(.*)"/\1/' | sed 's/[\][\]/\//g')
+}
+
 scan_dir "$HOME/.claude/skills"
 if [ -d "./.claude/skills" ]; then
   scan_dir "./.claude/skills"
 fi
+scan_plugin_registry

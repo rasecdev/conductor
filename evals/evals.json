@@ -221,6 +221,37 @@
         "evals/files/legado-diagrama-desatualizado/docs/adr/0004-integracao-fiscal-assincrona.md",
         "evals/files/legado-diagrama-desatualizado/docs/arquitetura.drawio"
       ]
+    },
+    {
+      "id": 18,
+      "name": "stage-without-any-skill",
+      "prompt": "Preciso confirmar, antes de decidir a próxima etapa, se uma coluna existe na tabela de um banco de dados do projeto (em <FIXTURE_DIR>) e o que ela guarda. Não achei nenhuma skill de consulta de banco instalada. O que eu faço?",
+      "expected_output": "Roda o catálogo e cruza com a tabela de referência de estágios; não encontrando skill nenhuma (nem no catálogo do script, nem citando alguma disponível na sessão) que cubra esse tipo de verificação, diz isso explicitamente em vez de inventar um passo ou seguir como se a etapa não existisse. Aponta `find-skills` como próxima ação se ela estiver instalada. Oferece registrar a etapa em `references/pipeline-stages.md` como estágio novo sem skill ainda, perguntando (não decidindo sozinho) se ela tem um gate correspondente configurado no projeto.",
+      "files": [
+        "evals/files/pasta-vazia/.fixture-setup.sh"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "checkpoint-reconsult",
+      "prompt": "No início desta tarefa você recomendou o `grill-with-docs` pra sharpen do plano. Terminei de rodar e acabei de abrir a PR com o resultado. O que eu faço agora?",
+      "expected_output": "Não trata a recomendação anterior como ainda válida sem reler o estado — volta a rodar o script de estado e o catálogo antes de recomendar o próximo passo, porque terminar a skill recomendada e abrir uma PR são, por si só, gatilho de reconsulta (não é 'rodou uma vez, análise entregue, acabou'). A recomendação nova reflete o estado atual (ex: síntese em spec formal via `to-spec`, ou quebra em tarefas, dependendo do que o sharpen produziu), não repete a mesma recomendação do início da tarefa.",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "catalog-includes-plugin-skills",
+      "prompt": "Quero ver as skills do meu pipeline, ordenadas por estágio.",
+      "expected_output": "Roda `scripts/catalog.sh` e lista as skills encontradas ordenadas por estágio com uma frase curta cada (não despeja a description inteira); a lista inclui qualquer skill instalada via plugin de marketplace (lida de `~/.claude/plugins/installed_plugins.json`), não só as globais/do projeto — e menciona, se for o caso, que skills embutidas no host (sem caminho em disco) podem estar disponíveis na sessão mesmo sem aparecer no script.",
+      "files": []
     }
   ]
 }

@@ -206,6 +206,23 @@ run em `evals/benchmarks/`.
 38. Como desenvolvedor, quero que a orientação continue se o script falhar,
     com a mesma leitura feita à mão.
 
+### Reconsulta e catálogo completo
+
+39. Como desenvolvedor, quero ser lembrado de voltar a consultar o
+    `conductor` a cada checkpoint da pipeline (fim da skill recomendada,
+    antes do próximo estágio, PR aberta/mergeada, mudança de foco) — não só
+    no início da tarefa.
+40. Como desenvolvedor, quero que o catálogo enxergue também as skills
+    instaladas via plugin de marketplace, não só as globais/do projeto.
+41. Como desenvolvedor, quero que a skill some ao catálogo do script as
+    skills que a própria sessão já sabe estarem disponíveis, pra cobrir o que
+    o script nunca vai conseguir ler em disco (skill embutida no host).
+42. Como desenvolvedor, quero que a skill diga explicitamente quando nenhuma
+    skill cobre o estágio recomendado (apontando `find-skills` quando
+    instalada), em vez de inventar um passo ou ficar em silêncio — e quero
+    poder registrar esse estágio na tabela de referência mesmo sem skill
+    ainda, informando se ele tem gate.
+
 ## Implementation Decisions
 
 - **Skill global**, não por projeto: funciona em qualquer repositório sem
@@ -246,10 +263,14 @@ run em `evals/benchmarks/`.
      tarefas com critério de aceite → implementação em andamento → PR em
      revisão); o primeiro "não" indica o próximo passo; ler conteúdo e
      índice, nunca concluir por `grep` solto.
-  3. Catálogo dinâmico cruzado com a referência de estágios; skill fora da
-     tabela vira candidata a entrar nela (pergunta ao usuário o estágio).
+  3. Catálogo dinâmico (script + plugins de marketplace + skills da própria
+     sessão) cruzado com a referência de estágios; skill fora da tabela vira
+     candidata a entrar nela (pergunta ao usuário o estágio); estágio sem
+     skill nenhuma é dito explicitamente (aponta `find-skills`) e pode ser
+     registrado na tabela com gate sim/não/não verificado.
   4. Recomendação no formato "Você está em X. O próximo passo é Y — motivo";
-     manual → devolve comando e para; não manual → oferece invocar.
+     manual → devolve comando e para; não manual → oferece invocar. Reconsulta
+     a cada checkpoint da pipeline, não só no início da tarefa.
   5. Por gatilho (usuário propõe skill): avaliação por leitura + precedente
      do projeto, com escalada opt-in para avaliação quantitativa via
      `skill-creator`.
@@ -343,5 +364,6 @@ foi incorporada acima.
 | v1.3 | [#12](https://github.com/rasecdev/conductor/issues/12) | Detecção de tipo de projeto filtra recomendação de artefato de UI | `evals/results-v1.2-v1.3.md` |
 | v1.4 | [#24](https://github.com/rasecdev/conductor/issues/24) | Gates de qualidade: esperados, fonte e confiança, estado real, acionamento, aviso sem trava; casos antigos migrados para fixtures | `evals/results-v1.4.md` |
 | v1.5 | [#50](https://github.com/rasecdev/conductor/issues/50) | Enxugar o contexto: script de estado, carga sob demanda (ADR 0002), `SKILL.md` −52%; nenhum comportamento novo | `evals/results-v1.5.md` |
+| v1.6.1 | sem spec formal — [#79](https://github.com/rasecdev/conductor/issues/79), [#80](https://github.com/rasecdev/conductor/issues/80), [#81](https://github.com/rasecdev/conductor/issues/81) (decisão explícita do usuário, 2026-09-29) | Reconsulta a cada checkpoint (Passo 4); catálogo soma plugins de marketplace e skills da sessão (Passo 3); estágio sem skill é dito explicitamente; estágio novo sem skill pode ser registrado com gate | pendente (ver `evals/evals.json`) |
 
 Em andamento (não incorporada): v1.6 gates de transição ([#25](https://github.com/rasecdev/conductor/issues/25)) — ver `tasks/plan.md`.

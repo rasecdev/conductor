@@ -69,6 +69,28 @@ o catálogo de skills/ferramentas disponíveis cresce. Direções já identifica
   próprio repo, como já faz hoje) pra inferir convenção real — com confiança
   menor que precedente explícito, mas maior que benchmark genérico de
   mercado.
+- **Verificação de fato em banco/schema** (identificada em uso real,
+  2026-09-29): parte das decisões de uma rodada depende de fatos que só o
+  banco do projeto responde (uma coluna/flag existe? há registros de um certo
+  tipo? quais valores correspondem a um conceito do domínio?). Falta uma
+  etapa entre o sharpen e a spec formal pra uma skill que consulta —
+  só leitura, limitada a schema/configuração, nunca dado de cliente. Precisa
+  prever: qual conexão responde (pode não ser a esperada — resposta vazia não
+  é o mesmo que "não existe", a etapa precisa dizer o que fazer em cada caso);
+  e degradação igual à dos gates — se a consulta não estiver disponível ou for
+  recusada, o resultado é "não verificado" com o motivo, nunca a skill decide
+  sozinha. O `conductor` recomenda essa etapa quando a lacuna aparecer; não é
+  ele quem consulta.
+- **Pipeline extensível por etapa customizada** (identificada em uso real,
+  2026-09-29, [#79](https://github.com/rasecdev/conductor/issues/79)): a
+  etapa de verificação de banco acima é o primeiro caso
+  concreto de um padrão maior — permitir adicionar uma etapa nova ao pipeline
+  conhecido (`references/pipeline-stages.md`) sem exigir uma rodada de
+  feature no próprio `conductor` pra cada categoria de etapa que aparecer.
+  Ao adicionar uma etapa customizada, informar se ela tem um gate
+  correspondente configurado no projeto (mesma lógica do item de "Gates de
+  qualidade" acima) — se não tiver, a etapa entra como lacuna sinalizada, não
+  como lacuna silenciosa.
 
 ## Princípio que não muda
 

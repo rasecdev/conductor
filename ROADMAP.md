@@ -81,6 +81,16 @@ o catálogo de skills/ferramentas disponíveis cresce. Direções já identifica
   recusada, o resultado é "não verificado" com o motivo, nunca a skill decide
   sozinha. O `conductor` recomenda essa etapa quando a lacuna aparecer; não é
   ele quem consulta.
+- **Pipeline extensível por etapa customizada** (identificada em uso real,
+  2026-09-29, [#79](https://github.com/rasecdev/conductor/issues/79)): a
+  etapa de verificação de banco acima é o primeiro caso
+  concreto de um padrão maior — permitir adicionar uma etapa nova ao pipeline
+  conhecido (`references/pipeline-stages.md`) sem exigir uma rodada de
+  feature no próprio `conductor` pra cada categoria de etapa que aparecer.
+  Ao adicionar uma etapa customizada, informar se ela tem um gate
+  correspondente configurado no projeto (mesma lógica do item de "Gates de
+  qualidade" acima) — se não tiver, a etapa entra como lacuna sinalizada, não
+  como lacuna silenciosa.
 
 ## Princípio que não muda
 

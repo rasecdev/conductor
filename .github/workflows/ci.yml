@@ -37,6 +37,12 @@ jobs:
       - uses: actions/checkout@v4
       - run: bash scripts/test_state.sh
 
+  check-gates-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/test_check_gates.sh
+
   markdownlint:
     runs-on: ubuntu-latest
     steps:

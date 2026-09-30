@@ -250,21 +250,50 @@ decisão do usuário). Inclui gates de rastreabilidade de SDD: spec sem user
 stories não segue para quebra em tarefas; cada story precisa de pelo menos um
 caso de verificação antes de a rodada fechar. Depende da v1.4.
 
+Motivada a entrar em produção agora por um achado do registro de uso real
+(2026-09-30, tarefa do fluxograma no Miro, Achado 5): a regra "reconsultar o
+`conductor` a cada checkpoint" existe só como prosa desde o PR #82 e não foi
+seguida mesmo já estando escrita. Esta rodada é a resposta estrutural — vira
+linha de tabela com sinal mecânico do script em vez de depender só do modelo
+lembrar. Tarefas replanejadas em fatias verticais pela `planning-and-task-breakdown`
+(2026-09-30): as 4 tarefas originais (#20-23) foram criadas antes do formato
+enxuto adotado na v1.5 e separavam por camada (referência / script / passo do
+SKILL.md / evals) em vez de por comportamento entregue; ficam 6 tarefas agora,
+cada uma amarrada às user stories da #25 que cobre.
+
 ## Task List
 
-### Fase 1: Gates de transição
+### Fase 1: Fundação (tabela + script determinístico)
 
-- [ ] [Tarefa 1: Criar references/transition-gates.md](https://github.com/rasecdev/conductor/issues/20)
-- [ ] [Tarefa 2: Criar scripts/check-gates.sh](https://github.com/rasecdev/conductor/issues/21)
-- [ ] [Tarefa 3: Adicionar passo de gates de transição ao SKILL.md](https://github.com/rasecdev/conductor/issues/22)
-- [ ] [Tarefa 4: Adicionar casos em evals/evals.json cobrindo gates de transição](https://github.com/rasecdev/conductor/issues/23)
+- [ ] [Tarefa 1: Criar references/transition-gates.md (tabela + linhas mínimas)](https://github.com/rasecdev/conductor/issues/20) — stories 1–4
+- [ ] [Tarefa 2: Criar scripts/check-gates.sh (sinais mecânicos determinísticos)](https://github.com/rasecdev/conductor/issues/21) — stories 5–7, 10, 11
 
 ### Checkpoint: Fase 1
 
-- [ ] references/transition-gates.md cobre todo portão hoje implícito nos Passos 2/4/6
-- [ ] scripts/check-gates.sh avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures
+- [ ] `references/transition-gates.md` cobre todo portão hoje implícito nos Passos 2/4/6, incluindo "skill recomendada termina" (o gatilho do Achado 5)
+- [ ] `scripts/check-gates.sh` avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures; binding ausente → "não avaliado"
+
+### Fase 2: Comportamento principal
+
+- [ ] [Tarefa 3: Passo novo de gates de transição no SKILL.md (wiring + filtros + portão manual)](https://github.com/rasecdev/conductor/issues/22) — stories 8, 9, 12, 13, 21–23, 25, 26
+- [ ] [Tarefa 4: Gates de rastreabilidade SDD (spec sem stories; story sem verificação)](https://github.com/rasecdev/conductor/issues/83) — stories 14–18, 20
+
+### Checkpoint: Fase 2
+
+- [ ] Passos 2, 4 e 6 do `SKILL.md` referenciam a tabela em vez de duplicar a regra
+- [ ] Reconsulta a cada checkpoint (Achado 5) passa a gerar aviso mecânico explícito quando o gatilho dispara, não só instrução em prosa
+- [ ] Gates de rastreabilidade SDD (spec sem stories; story sem verificação) funcionam de ponta a ponta
+
+### Fase 3: Evals e fechamento
+
+- [ ] [Tarefa 5: Casos de eval restantes (a, b, c) + campo de stories em evals.json](https://github.com/rasecdev/conductor/issues/23) — stories 19, 24
+- [ ] [Tarefa 6: Regressão completa e fechamento da rodada v1.6](https://github.com/rasecdev/conductor/issues/84) — fechamento
+
+### Checkpoint: Fase 3
+
 - [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
-- [ ] Toda story da #25 coberta por caso de eval ou marcada como não verificável com justificativa
+- [ ] Toda story da #25 coberta por caso de eval, teste do script, ou marcada como não verificável com justificativa
+- [ ] `SPEC.md` incorpora o delta da v1.6
 
 # Rodada infra — branch/PR, CI e separação clone × instalação
 

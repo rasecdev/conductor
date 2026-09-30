@@ -265,7 +265,7 @@ cada uma amarrada às user stories da #25 que cobre.
 
 ### Fase 1: Fundação (tabela + script determinístico)
 
-- [ ] [Tarefa 1: Criar references/transition-gates.md (tabela + linhas mínimas)](https://github.com/rasecdev/conductor/issues/20) — stories 1–4
+- [x] [Tarefa 1: Criar references/transition-gates.md (tabela + linhas mínimas)](https://github.com/rasecdev/conductor/issues/20) — stories 1–4
 - [ ] [Tarefa 2: Criar scripts/check-gates.sh (sinais mecânicos determinísticos)](https://github.com/rasecdev/conductor/issues/21) — stories 5–7, 10, 11
 
 ### Checkpoint: Fase 1

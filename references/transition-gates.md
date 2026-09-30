@@ -31,7 +31,7 @@ reportada separadamente, nunca resumida num único veredito.
 | G6 | Gate de qualidade esperado (Passo 7 / `gate-types.md`) está vermelho no estágio atual | Saída de `gates` do script de estado, cruzada com `gate-types.md` | mecânico | Avisa o que falhou e a saída, antes de recomendar avançar de estágio/fase | não recomendar avanço |
 | G7 | Código/arquivo da área que um artefato vivo registrado acompanha (ex: diagrama de arquitetura) mudou depois da última atualização do artefato | `git log` do caminho da área (binding do Passo 6) vs. data/commit do artefato | mecânico | Aponta a skill de regeneração do artefato; nunca regenera sozinho | avisar |
 | G8 | Spec publicada não tem seção de user stories, ou a seção está vazia | Conteúdo do arquivo/issue de spec (`pipeline.spec` do script de estado) | mecânico | Não recomenda `planning-and-task-breakdown`; aponta o que falta na spec | não recomendar avanço |
-| G9 | Ao considerar fechar uma rodada, existe user story da spec sem nenhum caso de verificação vinculado e sem justificativa de não-verificabilidade | Campo de stories cobertas em `evals/evals.json` (formato `"#<issue>:<nº>"`) cruzado com a contagem de stories da spec (G8) — sem essa convenção registrada no projeto, o script reporta "não avaliado" em vez de julgamento inventado | mecânico | Lista as stories descobertas; não recomenda fechar a rodada | não recomendar avanço |
+| G9 | Ao considerar fechar uma rodada, existe user story da spec sem nenhum caso de verificação vinculado e sem justificativa de não-verificabilidade | Campo de stories cobertas em `evals/evals.json` (formato `"#<issue>:<nº>"`, num caso ou no array `stories_nao_verificaveis` — ambos contam como cobertura) cruzado com a contagem de stories da spec (G8) — sem essa convenção registrada no projeto, o script reporta "não avaliado" em vez de julgamento inventado | mecânico | Lista as stories descobertas; não recomenda fechar a rodada | não recomendar avanço |
 | G10 | Catálogo (Passo 3) mostra uma skill instalada sem estágio/gate conhecido (nem nesta tabela/`gate-types.md`, nem no registro local do usuário) | Diff entre `scripts/catalog.sh` e as linhas existentes aqui + `references/gate-types.md` + o registro local (ver seção abaixo) | mecânico | Propõe o estágio/gate e pergunta ao usuário; com aprovação, grava no registro **local** do usuário — nunca edita esta tabela nem `gate-types.md` (são do repositório do `conductor`, compartilhados por todo mundo que instala a skill) | avisar |
 | G11 | Usuário quer um portão que feche de verdade (não só aviso) | Nenhum — pedido explícito do usuário | julgamento | Aponta o caminho (hook via `update-config`, ou check de CI); nunca instala/configura sozinho | avisar |
 
@@ -46,6 +46,13 @@ reportada separadamente, nunca resumida num único veredito.
   avaliado"`, nunca um binding inventado.
 - **Cobertura n:1** (G9): um caso de verificação pode cobrir várias stories;
   não precisa de um caso por story.
+- **Story não verificável** (G9): quando a story é decisão estrutural, não
+  comportamento (nada que um teste/eval observe), marque-a com uma
+  justificativa de uma linha em vez de forçar um caso artificial — array
+  `stories_nao_verificaveis` em `evals/evals.json`, cada item
+  `{"story": "#<issue>:<nº>", "motivo": "<justificativa>"}`. Conta como
+  coberta, e é conferida na checagem de fechamento de rodada (a
+  justificativa precisa fazer sentido, não só existir).
 - **Sem efeito retroativo** (G9): vale a partir da rodada em que o gate entrou
   em produção, nunca reprovando rodada já fechada.
 - **Nunca bloqueio mecânico**: a ação mais forte é "não recomendar avanço". Um

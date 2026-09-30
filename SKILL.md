@@ -236,8 +236,15 @@ um em prosa própria — sem duplicar a regra, só apontando pra cá:
   acabou"; uma recomendação vale pro estado do momento em que foi lida.
 - **G6**: gate de qualidade vermelho no estágio atual (Passo 7).
 - **G7**: artefato vivo desatualizado (Passo 6).
-- **G8/G9**: rastreabilidade SDD (spec sem user stories; story sem caso de
-  verificação).
+- **G8/G9**: rastreabilidade SDD. G8 disparado → não recomende a quebra em
+  tarefas (`planning-and-task-breakdown` ou a skill equivalente do pipeline
+  instalado), aponte que a seção de User Stories falta ou está vazia. G9
+  disparado, ao considerar fechar uma rodada → não recomende fechar, liste as
+  stories sem caso vinculado. Uma story marcada com justificativa de
+  não-verificabilidade (`references/transition-gates.md` → "Story não
+  verificável") conta como coberta. Sem efeito retroativo: só vale a partir
+  de quando esse gate entrar em produção no projeto, nunca reabra rodada já
+  fechada por causa dele.
 - **G10** (Passo 3): skill do catálogo sem estágio/gate conhecido.
 - **G11**: usuário pede um portão que feche de verdade.
 

@@ -252,6 +252,33 @@
       "prompt": "Quero ver as skills do meu pipeline, ordenadas por estágio.",
       "expected_output": "Roda `scripts/catalog.sh` e lista as skills encontradas ordenadas por estágio com uma frase curta cada (não despeja a description inteira); a lista inclui qualquer skill instalada via plugin de marketplace (lida de `~/.claude/plugins/installed_plugins.json`), não só as globais/do projeto — e menciona, se for o caso, que skills embutidas no host (sem caminho em disco) podem estar disponíveis na sessão mesmo sem aparecer no script.",
       "files": []
+    },
+    {
+      "id": 21,
+      "name": "spec-without-user-stories",
+      "prompt": "Projeto em <FIXTURE_DIR>. A spec ta pronta, bora quebrar em tarefas?",
+      "expected_output": "Le o SPEC.md e nota que ele nao tem uma secao 'User Stories' com itens (gatilho G8 de references/transition-gates.md). Nao recomenda planning-and-task-breakdown (nem invoca a skill); aponta explicitamente o que falta na spec (a secao de User Stories) antes de quebrar em tarefas, e nunca inventa stories por conta propria.",
+      "files": [
+        "evals/files/spec-sem-stories/SPEC.md"
+      ],
+      "stories": [
+        "#25:14"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "story-without-verification-case",
+      "prompt": "Projeto em <FIXTURE_DIR>. Acho que da pra fechar essa rodada, confere pra mim?",
+      "expected_output": "Cruza as User Stories do SPEC.md com o campo de stories cobertas de evals/evals.json (gatilho G9) e nota que a story 3 (alerta de falha) nao tem nenhum caso vinculado nem justificativa em stories_nao_verificaveis. Nao recomenda fechar a rodada; lista a story 3 como pendente. Nao inventa cobertura nem marca a story como nao-verificavel por conta propria.",
+      "files": [
+        "evals/files/story-sem-verificacao/SPEC.md",
+        "evals/files/story-sem-verificacao/evals/evals.json"
+      ],
+      "stories": [
+        "#25:15",
+        "#25:16",
+        "#25:17"
+      ]
     }
   ]
 }

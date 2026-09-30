@@ -270,8 +270,8 @@ cada uma amarrada às user stories da #25 que cobre.
 
 ### Checkpoint: Fase 1
 
-- [ ] `references/transition-gates.md` cobre todo portão hoje implícito nos Passos 2/4/6, incluindo "skill recomendada termina" (o gatilho do Achado 5)
-- [ ] `scripts/check-gates.sh` avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures; binding ausente → "não avaliado"
+- [x] `references/transition-gates.md` cobre todo portão hoje implícito nos Passos 2/4/6, incluindo "skill recomendada termina" (o gatilho do Achado 5)
+- [x] `scripts/check-gates.sh` avalia sinais mecânicos de forma determinística, com teste próprio contra fixtures; binding ausente → "não avaliado"
 
 ### Fase 2: Comportamento principal
 
@@ -280,18 +280,18 @@ cada uma amarrada às user stories da #25 que cobre.
 
 ### Checkpoint: Fase 2
 
-- [ ] Passos 2, 4 e 6 do `SKILL.md` referenciam a tabela em vez de duplicar a regra
-- [ ] Reconsulta a cada checkpoint (Achado 5) passa a gerar aviso mecânico explícito quando o gatilho dispara, não só instrução em prosa
-- [ ] Gates de rastreabilidade SDD (spec sem stories; story sem verificação) funcionam de ponta a ponta
+- [x] Passos 2, 4 e 6 do `SKILL.md` referenciam a tabela em vez de duplicar a regra
+- [x] Reconsulta a cada checkpoint (Achado 5) passa a gerar aviso mecânico explícito quando o gatilho dispara, não só instrução em prosa
+- [x] Gates de rastreabilidade SDD (spec sem stories; story sem verificação) funcionam de ponta a ponta
 
 ### Fase 3: Evals e fechamento
 
-- [ ] [Tarefa 5: Casos de eval restantes (a, b, c) + campo de stories em evals.json](https://github.com/rasecdev/conductor/issues/23) — stories 19, 24
+- [x] [Tarefa 5: Casos de eval restantes (a, b, c) + campo de stories em evals.json](https://github.com/rasecdev/conductor/issues/23) — stories 19, 24
 - [ ] [Tarefa 6: Regressão completa e fechamento da rodada v1.6](https://github.com/rasecdev/conductor/issues/84) — fechamento
 
 ### Checkpoint: Fase 3
 
-- [ ] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
+- [x] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
 - [ ] Toda story da #25 coberta por caso de eval, teste do script, ou marcada como não verificável com justificativa
 - [ ] `SPEC.md` incorpora o delta da v1.6
 

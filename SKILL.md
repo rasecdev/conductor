@@ -63,7 +63,7 @@ Gatilhos (condições sobre a saída do script):
   nunca significa, sozinha, projeto novo.
 - **`tipo_projeto`** filtra artefato visual: `sinais_ui` vazio → não ofereça
   fluxo de tela nem design de UI sem o usuário pedir. Antes de recomendar
-  artefato visual (Passo 6) ou gate de artefato de UI (Passo 7) com
+  artefato visual (Passo 6) ou gate de artefato de UI (Passo 7/8) com
   `sinais_ui` preenchido, ou com os dois grupos de sinal preenchidos, leia
   `references/project-type.md`.
 
@@ -111,10 +111,12 @@ existe: uma pode estar de fora do script e ainda assim disponível pra você
 chamar agora.
 
 Cruze o catálogo (script + sessão) com `references/pipeline-stages.md` pra
-saber a posição de cada skill conhecida no fluxo. Uma skill que aparecer no
-catálogo mas não estiver na tabela de referência é candidata a ser adicionada
-nela (pergunte ao usuário em que estágio ela se encaixa, e atualize a
-tabela).
+saber a posição de cada skill conhecida no fluxo, e com o registro local do
+usuário (`references/transition-gates.md` → "Registro local de skills fora
+da tabela embutida") pras demais. Uma skill sem estágio conhecido nas duas
+fontes é o gatilho G10 do Passo 8 — nunca edite `pipeline-stages.md` nem
+`gate-types.md` por causa disso: proponha o estágio/gate e, com aprovação do
+usuário, grave no registro local (nunca no repositório do `conductor`).
 
 **Estágio sem skill nenhuma.** Se, somando as duas fontes, nenhuma skill
 cobrir o estágio que você ia recomendar, diga isso explicitamente — nunca
@@ -140,9 +142,10 @@ Combine o estado do projeto (Passo 2) com o estágio correspondente
 
 Depois:
 
-- Se a skill recomendada tem `disable-model-invocation: true`: devolva o
-  comando exato pro usuário digitar (`/wayfinder`, `/to-spec`,
-  `/grill-with-docs`) e pare aí — não tente prosseguir sozinho.
+- Se a skill recomendada tem `disable-model-invocation: true` (etapa que
+  falta é skill manual, gatilho G2 do Passo 8): devolva o comando exato pro
+  usuário digitar (`/wayfinder`, `/to-spec`, `/grill-with-docs`) e pare aí —
+  não tente prosseguir sozinho.
 - Se não tem: pergunte se quer que você já chame agora, e se sim, invoque com
   a `Skill` tool diretamente.
 
@@ -150,35 +153,10 @@ Isso vale tanto pra um projeto do zero (primeiro estágio vazio → recomenda
 `wayfinder` ou `grilling`, dependendo do tamanho) quanto pra uma feature nova
 num projeto maduro (estado já avançado → pula direto pro estágio que
 realmente falta, ex: `to-spec` se a conversa já cobriu decisão suficiente mas
-nunca virou spec escrita).
-
-### Quando voltar a ser consultado
-
-O `conductor` não é "roda uma vez, recebe a recomendação, acabou". Volte a
-consultá-lo (chamando a skill de novo, não só lembrando da resposta anterior)
-em cada checkpoint da pipeline: quando a skill recomendada terminar, antes de
-decidir o próximo passo depois disso, a cada PR aberta ou mergeada, e sempre
-que o foco da tarefa mudar no meio do caminho. Uma recomendação vale pro
-estado do projeto no momento em que foi lida — carregá-la mentalmente pelo
-resto da tarefa, sem reler o estado, é o mesmo erro que recomendar sem ter
-lido nada.
-
-### Sobre avisar proativamente
-
-Quando notar, durante a conversa, que o usuário está pulando uma etapa (ex:
-já escrevendo tarefas sem uma spec formal por trás, ou implementando sem
-critério de aceite definido), fale isso — não espere ser perguntado. O aviso
-é só isso, um aviso com a recomendação de comando: nunca dispare a skill
-manual sozinho por causa disso.
-
-### Gate vermelho no estágio atual
-
-Se o Passo 7 encontrar um gate de qualidade **falhando** no estágio atual,
-avise isso **antes** de recomendar avançar para o próximo estágio ou fase —
-com o que falhou e a saída que mostra o erro. É um aviso, não uma trava (ver
-`docs/adr/0001-conductor-avisa-nunca-bloqueia.md`): o usuário pode decidir
-seguir mesmo assim, e a recomendação continua de pé depois do aviso. Gate
-"não verificado" é informado, mas não é tratado como vermelho.
+nunca virou spec escrita). Uma etapa sem a anterior completa (G1) e um gate de
+qualidade vermelho no estágio atual (G6) são avisados aqui antes de
+recomendar avançar — ver Passo 8, que soma esses e os demais gatilhos que
+antes viviam espalhados em prosa neste passo.
 
 ## Passo 5 — Avaliar uma skill nova proposta pelo usuário
 
@@ -238,6 +216,45 @@ a tabela de `references/gate-types.md`. **Com `configurados`, `irmaos` ou
    executa só com aprovação explícita. Pergunta ou pedido de diagnóstico não é
    aprovação.
 
+## Passo 8 — Gates de transição
+
+Antes de fechar a recomendação do Passo 4, rode `scripts/check-gates.sh`
+(sem argumentos, na raiz do projeto alvo). Ele avalia os sinais **mecânicos**
+de `references/transition-gates.md` e imprime cada linha com
+id/tipo/disparado/motivo — leia a tabela pra saber o que cada `id` significa.
+Some a isso as linhas de **julgamento** (o script as lista como
+`nao_avaliado`, nunca decide por você): interprete-as com o que já leu nos
+Passos 1–6 desta consulta.
+
+Isso substitui, numa única fonte, o que os Passos 2/3/4/6 antes tratavam cada
+um em prosa própria — sem duplicar a regra, só apontando pra cá:
+
+- **G1/G2** (Passo 2): etapa sem a anterior completa, e se a etapa que falta
+  é skill manual.
+- **G3–G5**: reconsultar o `conductor` (skill recomendada terminou, PR
+  aberta/mergeada, foco da tarefa mudou) — o `conductor` não é "roda uma vez,
+  acabou"; uma recomendação vale pro estado do momento em que foi lida.
+- **G6**: gate de qualidade vermelho no estágio atual (Passo 7).
+- **G7**: artefato vivo desatualizado (Passo 6).
+- **G8/G9**: rastreabilidade SDD (spec sem user stories; story sem caso de
+  verificação).
+- **G10** (Passo 3): skill do catálogo sem estágio/gate conhecido.
+- **G11**: usuário pede um portão que feche de verdade.
+
+**Reporte toda linha disparada** — mecânica com `DISPARADO: sim`, ou de
+julgamento que você concluiu que se aplica agora — com id, gatilho e
+consequência, antes de fechar a recomendação. Não espere ser perguntado:
+fale proativamente, do mesmo jeito que soaria estranho recomendar sem ter
+lido o estado. Ação `avisar` → menciona e segue. Ação `não recomendar
+avanço` → não recomenda a próxima etapa/skill até o usuário decidir seguir
+mesmo assim (nunca bloqueio mecânico, ver
+`docs/adr/0001-conductor-avisa-nunca-bloqueia.md`). Gate "não avaliado" é
+informado, nunca tratado como disparado.
+
+**Filtro de tipo de projeto** (Passo 1): gates ligados a artefato de UI (G7
+quando o artefato é fluxo de tela/design) não são avaliados em projeto
+headless (`sinais_ui` vazio) — mesmo filtro do Passo 6/7.
+
 ## O que o conductor nunca faz
 
 - Nunca invoca `wayfinder`, `to-spec` ou `grill-with-docs` por conta própria,
@@ -265,3 +282,13 @@ a tabela de `references/gate-types.md`. **Com `configurados`, `irmaos` ou
   (Passo 7).
 - Nunca reporta um gate como passando ou falhando sem ter verificado de
   verdade — o que não deu pra checar é "não verificado".
+- Nunca bloqueia mecanicamente nem instala hook por conta própria a partir de
+  um gate de transição (Passo 8) — a ação mais forte é "não recomendar
+  avanço"; um portão que impede de verdade é configuração que o usuário
+  decide e faz (G11, apontado via `update-config` ou check de CI).
+- Nunca inventa o binding de um artefato vivo (área de código que ele
+  acompanha) — sem registro, o gate correspondente (G7) é "não avaliado".
+- Nunca edita `references/transition-gates.md` nem `references/gate-types.md`
+  por conta própria — são do repositório do `conductor`, compartilhadas por
+  todo mundo que o instala. Uma skill sem estágio/gate conhecido (G10) vai
+  pro registro local do usuário, nunca pra essas tabelas.

@@ -276,7 +276,7 @@ cada uma amarrada às user stories da #25 que cobre.
 ### Fase 2: Comportamento principal
 
 - [x] [Tarefa 3: Passo novo de gates de transição no SKILL.md (wiring + filtros + portão manual)](https://github.com/rasecdev/conductor/issues/22) — stories 8, 9, 12, 13, 21–23, 25, 26
-- [ ] [Tarefa 4: Gates de rastreabilidade SDD (spec sem stories; story sem verificação)](https://github.com/rasecdev/conductor/issues/83) — stories 14–18, 20
+- [x] [Tarefa 4: Gates de rastreabilidade SDD (spec sem stories; story sem verificação)](https://github.com/rasecdev/conductor/issues/83) — stories 14–18, 20
 
 ### Checkpoint: Fase 2
 

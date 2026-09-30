@@ -8,6 +8,10 @@
       "expected_output": "Reconhece ausência total de CLAUDE.md/CONTEXT.md/spec no diretório e recomenda começar pelo wayfinder (ou grilling, se o escopo parecer pequeno) — devolvendo o comando exato (/wayfinder ou /grilling) em vez de tentar prosseguir sozinho.",
       "files": [
         "evals/files/pasta-vazia/.fixture-setup.sh"
+      ],
+      "stories": [
+        "#25:12",
+        "#25:13"
       ]
     },
     {
@@ -96,6 +100,9 @@
         "evals/files/diagrama-desatualizado/docs/adr/0007-mensageria-kafka.md",
         "evals/files/diagrama-desatualizado/docs/architecture/diagram.html",
         "evals/files/diagrama-desatualizado/tasks/plan.md"
+      ],
+      "stories": [
+        "#25:9"
       ]
     },
     {
@@ -278,6 +285,23 @@
         "#25:15",
         "#25:16",
         "#25:17"
+      ]
+    },
+    {
+      "id": 23,
+      "name": "two-gates-triggered-separately",
+      "prompt": "Projeto AgendaBot em <FIXTURE_DIR>. A spec ta pronta e terminei a Fase 1 -- posso quebrar em tarefas e seguir pra Fase 2?",
+      "expected_output": "Reporta os dois gates disparados separadamente, sem misturar num veredito so: (1) executa de verdade o gate da convencao (bash scripts/check.sh), ve que falha (secao 'Casos de teste' vazia em docs/qa/plano.md) e avisa isso antes de recomendar avancar pra Fase 2 -- deixa a decisao de seguir com o usuario, nao trava. (2) nota que SPEC.md nao tem secao de User Stories e por isso nao recomenda quebrar em tarefas (planning-and-task-breakdown), apontando o que falta na spec. Nao trata os dois como a mesma coisa nem omite um deles.",
+      "files": [
+        "evals/files/gatilho-duas-consequencias/CLAUDE.md",
+        "evals/files/gatilho-duas-consequencias/SPEC.md",
+        "evals/files/gatilho-duas-consequencias/docs/qa/plano.md",
+        "evals/files/gatilho-duas-consequencias/scripts/check.sh"
+      ],
+      "stories": [
+        "#25:4",
+        "#25:8",
+        "#25:14"
       ]
     }
   ]

@@ -1,0 +1,16 @@
+{
+  "skill_name": "projeto-exemplo",
+  "evals": [
+    {
+      "id": 0,
+      "name": "placeholder-para-registrar-a-convencao",
+      "prompt": "Existe algum teste pra story 1?",
+      "expected_output": "Nao ha caso de teste/eval para a story 1 -- ela e nao verificavel por decisao estrutural, nao comportamento (ver stories_nao_verificaveis abaixo).",
+      "files": [],
+      "stories": []
+    }
+  ],
+  "stories_nao_verificaveis": [
+    {"story": "#1:1", "motivo": "decisao estrutural de nomenclatura, sem comportamento observavel a testar"}
+  ]
+}

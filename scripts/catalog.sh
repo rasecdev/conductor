@@ -13,13 +13,32 @@
 # the calling model to also cross-check its own session's "available skills"
 # listing for those — this script can only cover what's on disk.
 #
+# Also reads the user's local pipeline registry (never the conductor's own
+# repo — see references/transition-gates.md, "Registro local de skills fora
+# da tabela embutida"): $CONDUCTOR_PIPELINE_REGISTRY, or
+# ~/.claude/conductor-pipeline.json if unset. When a skill has an entry
+# there, ESTAGIO/GATE are printed alongside it.
+#
 # Output: one skill per block, tab-free plain text, easy to read and to parse:
 #   NAME: <name>
 #   MANUAL: yes|no
 #   DESC: <description>
+#   ESTAGIO: <stage>       (only when the local registry has an entry)
+#   GATE: <gate>           (only when the local registry has an entry)
 #   ---
 
 set -euo pipefail
+
+registry="${CONDUCTOR_PIPELINE_REGISTRY:-$HOME/.claude/conductor-pipeline.json}"
+declare -A REG_ESTAGIO=() REG_GATE=()
+if [ -f "$registry" ]; then
+  while IFS= read -r line; do
+    [[ "$line" =~ \"skill\"[[:space:]]*:[[:space:]]*\"([^\"]*)\" ]] || continue
+    sk="${BASH_REMATCH[1]}"
+    [[ "$line" =~ \"estagio\"[[:space:]]*:[[:space:]]*\"([^\"]*)\" ]] && REG_ESTAGIO[$sk]="${BASH_REMATCH[1]}"
+    [[ "$line" =~ \"gate\"[[:space:]]*:[[:space:]]*\"([^\"]*)\" ]] && REG_GATE[$sk]="${BASH_REMATCH[1]}"
+  done <"$registry"
+fi
 
 scan_dir() {
   local base="$1"
@@ -39,6 +58,8 @@ scan_dir() {
     echo "NAME: $name"
     echo "MANUAL: $manual"
     echo "DESC: $desc"
+    [ -n "${REG_ESTAGIO[$name]+x}" ] && echo "ESTAGIO: ${REG_ESTAGIO[$name]}"
+    [ -n "${REG_GATE[$name]+x}" ] && echo "GATE: ${REG_GATE[$name]}"
     echo "---"
   done
 }

@@ -8,6 +8,10 @@
       "expected_output": "Reconhece ausência total de CLAUDE.md/CONTEXT.md/spec no diretório e recomenda começar pelo wayfinder (ou grilling, se o escopo parecer pequeno) — devolvendo o comando exato (/wayfinder ou /grilling) em vez de tentar prosseguir sozinho.",
       "files": [
         "evals/files/pasta-vazia/.fixture-setup.sh"
+      ],
+      "stories": [
+        "#25:12",
+        "#25:13"
       ]
     },
     {
@@ -96,6 +100,9 @@
         "evals/files/diagrama-desatualizado/docs/adr/0007-mensageria-kafka.md",
         "evals/files/diagrama-desatualizado/docs/architecture/diagram.html",
         "evals/files/diagrama-desatualizado/tasks/plan.md"
+      ],
+      "stories": [
+        "#25:9"
       ]
     },
     {
@@ -252,6 +259,50 @@
       "prompt": "Quero ver as skills do meu pipeline, ordenadas por estágio.",
       "expected_output": "Roda `scripts/catalog.sh` e lista as skills encontradas ordenadas por estágio com uma frase curta cada (não despeja a description inteira); a lista inclui qualquer skill instalada via plugin de marketplace (lida de `~/.claude/plugins/installed_plugins.json`), não só as globais/do projeto — e menciona, se for o caso, que skills embutidas no host (sem caminho em disco) podem estar disponíveis na sessão mesmo sem aparecer no script.",
       "files": []
+    },
+    {
+      "id": 21,
+      "name": "spec-without-user-stories",
+      "prompt": "Projeto em <FIXTURE_DIR>. A spec ta pronta, bora quebrar em tarefas?",
+      "expected_output": "Le o SPEC.md e nota que ele nao tem uma secao 'User Stories' com itens (gatilho G8 de references/transition-gates.md). Nao recomenda planning-and-task-breakdown (nem invoca a skill); aponta explicitamente o que falta na spec (a secao de User Stories) antes de quebrar em tarefas, e nunca inventa stories por conta propria.",
+      "files": [
+        "evals/files/spec-sem-stories/SPEC.md"
+      ],
+      "stories": [
+        "#25:14"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "story-without-verification-case",
+      "prompt": "Projeto em <FIXTURE_DIR>. Acho que da pra fechar essa rodada, confere pra mim?",
+      "expected_output": "Cruza as User Stories do SPEC.md com o campo de stories cobertas de evals/evals.json (gatilho G9) e nota que a story 3 (alerta de falha) nao tem nenhum caso vinculado nem justificativa em stories_nao_verificaveis. Nao recomenda fechar a rodada; lista a story 3 como pendente. Nao inventa cobertura nem marca a story como nao-verificavel por conta propria.",
+      "files": [
+        "evals/files/story-sem-verificacao/SPEC.md",
+        "evals/files/story-sem-verificacao/evals/evals.json"
+      ],
+      "stories": [
+        "#25:15",
+        "#25:16",
+        "#25:17"
+      ]
+    },
+    {
+      "id": 23,
+      "name": "two-gates-triggered-separately",
+      "prompt": "Projeto AgendaBot em <FIXTURE_DIR>. A spec ta pronta e terminei a Fase 1 -- posso quebrar em tarefas e seguir pra Fase 2?",
+      "expected_output": "Reporta os dois gates disparados separadamente, sem misturar num veredito so: (1) executa de verdade o gate da convencao (bash scripts/check.sh), ve que falha (secao 'Casos de teste' vazia em docs/qa/plano.md) e avisa isso antes de recomendar avancar pra Fase 2 -- deixa a decisao de seguir com o usuario, nao trava. (2) nota que SPEC.md nao tem secao de User Stories e por isso nao recomenda quebrar em tarefas (planning-and-task-breakdown), apontando o que falta na spec. Nao trata os dois como a mesma coisa nem omite um deles.",
+      "files": [
+        "evals/files/gatilho-duas-consequencias/CLAUDE.md",
+        "evals/files/gatilho-duas-consequencias/SPEC.md",
+        "evals/files/gatilho-duas-consequencias/docs/qa/plano.md",
+        "evals/files/gatilho-duas-consequencias/scripts/check.sh"
+      ],
+      "stories": [
+        "#25:4",
+        "#25:8",
+        "#25:14"
+      ]
     }
   ]
 }

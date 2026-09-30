@@ -1,0 +1,55 @@
+ID: G1
+TIPO: mecânico
+DISPARADO: nao_avaliado
+MOTIVO: requer saber qual etapa esta sendo perseguida agora (Passo 2 le conteudo, nao so existencia de arquivo)
+---
+ID: G2
+TIPO: mecânico
+DISPARADO: nao_avaliado
+MOTIVO: depende de G1 ter disparado
+---
+ID: G3
+TIPO: julgamento
+DISPARADO: nao_avaliado
+MOTIVO: sinal de julgamento, nao avaliado por script
+---
+ID: G4
+TIPO: julgamento
+DISPARADO: nao_avaliado
+MOTIVO: sinal de julgamento, nao avaliado por script
+---
+ID: G5
+TIPO: julgamento
+DISPARADO: nao_avaliado
+MOTIVO: sinal de julgamento, nao avaliado por script
+---
+ID: G6
+TIPO: mecânico
+DISPARADO: nao_avaliado
+MOTIVO: requer reexecutar o comando do gate configurado (Passo 7); nao reexecutado aqui para nao rodar comando do projeto alvo sem o contexto do Passo 7
+---
+ID: G7
+TIPO: mecânico
+DISPARADO: nao_avaliado
+MOTIVO: nenhum binding estruturado entre artefato e area de codigo neste projeto (Passo 6 registra isso em prosa, nao em campo lido por este script)
+---
+ID: G8
+TIPO: mecânico
+DISPARADO: nao_avaliado
+MOTIVO: nenhuma spec encontrada (SPEC.md, PRD.md, docs/spec*.md, specs/*.md)
+---
+ID: G9
+TIPO: mecânico
+DISPARADO: nao_avaliado
+MOTIVO: evals/evals.json nao existe
+---
+ID: G10
+TIPO: mecânico
+DISPARADO: <depende da maquina>
+MOTIVO: <depende da maquina>
+---
+ID: G11
+TIPO: julgamento
+DISPARADO: nao_avaliado
+MOTIVO: sinal de julgamento, nao avaliado por script
+---

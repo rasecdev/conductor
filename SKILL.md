@@ -38,6 +38,11 @@ sempre `scripts/catalog.sh` pra saber, na hora, quais têm
 
 ## Passo 1 — Ler o estado do projeto
 
+Antes de mais nada: se a lista de tarefas tiver um item pendente de
+"reconsultar o conductor" (criado pelo Passo 8 numa consulta anterior), marque
+esse item como concluído agora — rodar este Passo 1 de novo é a reconsulta
+que ele estava esperando.
+
 Na raiz do projeto alvo, rode o script de estado desta skill
 (`bash <diretório desta skill>/scripts/state.sh`, sem argumentos). Ele devolve
 um JSON com os sinais mecânicos do projeto: `convencao`, `maturidade`,
@@ -233,7 +238,13 @@ um em prosa própria — sem duplicar a regra, só apontando pra cá:
   é skill manual.
 - **G3–G5**: reconsultar o `conductor` (skill recomendada terminou, PR
   aberta/mergeada, foco da tarefa mudou) — o `conductor` não é "roda uma vez,
-  acabou"; uma recomendação vale pro estado do momento em que foi lida.
+  acabou"; uma recomendação vale pro estado do momento em que foi lida. Além
+  do aviso em prosa, registre isso com `TodoWrite`: um item pendente de
+  "reconsultar o conductor", citando o motivo do gatilho (skill terminou / PR
+  aberta-mergeada / foco mudou). **Dedup**: se já existir um item pendente de
+  "reconsultar o conductor" na lista, não crie outro — no máximo atualize o
+  texto com o motivo mais recente. O item fica pendente até este mesmo Passo
+  8 disparar de novo noutra consulta (ver Passo 1).
 - **G6**: gate de qualidade vermelho no estágio atual (Passo 7).
 - **G7**: artefato vivo desatualizado (Passo 6).
 - **G8/G9**: rastreabilidade SDD. G8 disparado → não recomende a quebra em

@@ -378,7 +378,7 @@ entra em cena se este mecanismo mais barato não for suficiente.
 
 ### Fase 1: Comportamento + teste
 
-- [ ] [Tarefa 1: Passo 8 chama TodoWrite em G3/G4/G5 (dedup + conclusão automática)](https://github.com/rasecdev/conductor/issues/95)
+- [x] [Tarefa 1: Passo 8 chama TodoWrite em G3/G4/G5 (dedup + conclusão automática)](https://github.com/rasecdev/conductor/issues/95)
 - [ ] [Tarefa 2: Caso de eval cobrindo TodoWrite nos gates G3/G4/G5](https://github.com/rasecdev/conductor/issues/96)
 
 ### Checkpoint: Fase 1

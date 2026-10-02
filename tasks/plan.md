@@ -342,3 +342,55 @@ própria — mesmo tipo de exceção documentado na "Rodada infra" acima.
 - [ ] `scripts/catalog.sh` testado com registro de plugin vazio/ausente (fresh install) sem quebrar
 - [ ] Caso correspondente em `evals/evals.json` pra cada comportamento novo
 - [ ] CI verde (gitleaks, shellcheck, evals, markdownlint) antes do merge em `development`
+
+# Rodada v1.7 — lembrete de reconsulta via TodoWrite nos gates G3/G4/G5
+
+Spec: [issue #93](https://github.com/rasecdev/conductor/issues/93), publicada
+via `/to-spec`. Origem: achados de uso real (`conductor-workspace/uso-real.md`,
+Achado 5 e caso de 2026-10-01) — a reconsulta a cada checkpoint (G3/G4/G5) já
+foi perdida de vista duas vezes porque o único reforço hoje é aviso em prosa
+na resposta daquela consulta, sem nada que persista entre turnos.
+
+## Overview
+
+Quando G3, G4 ou G5 dispara (sinal de julgamento: skill recomendada terminou,
+PR aberta/mergeada, foco da tarefa mudou), o `conductor` passa a registrar um
+item pendente via `TodoWrite`, além do aviso em prosa já existente (Passo 8).
+O item fica visível entre turnos até ser marcado concluído automaticamente na
+próxima vez que o Passo 1 rodar de fato. Não é bloqueio (ADR 0001 continua
+valendo) e não exige nenhuma configuração do usuário — ao contrário do hook
+`PreToolUse` opt-in registrado como plano futuro no `ROADMAP.md`, que só
+entra em cena se este mecanismo mais barato não for suficiente.
+
+## Architecture Decisions
+
+- Mudança só em `SKILL.md` (Passo 8) e `references/transition-gates.md`
+  (coluna "Consequência" de G3/G4/G5) — nenhum script novo, nenhuma mudança
+  em `scripts/check-gates.sh` (G3/G4/G5 continuam "não avaliado (julgamento)"
+  por ele; dedup e conclusão automática são instrução de prosa pro modelo, não
+  lógica de script).
+- Seam de teste: o de eval já existente (`evals/evals.json`), sem seam novo —
+  ver spec #93, Testing Decisions.
+- Fora de escopo (ver spec #93): hook `PreToolUse`, pipeline em tempo real,
+  ajuste de redação do G11, qualquer gate de sinal mecânico.
+
+## Task List
+
+### Fase 1: Comportamento + teste
+
+- [ ] [Tarefa 1: Passo 8 chama TodoWrite em G3/G4/G5 (dedup + conclusão automática)](https://github.com/rasecdev/conductor/issues/95)
+- [ ] [Tarefa 2: Caso de eval cobrindo TodoWrite nos gates G3/G4/G5](https://github.com/rasecdev/conductor/issues/96)
+
+### Checkpoint: Fase 1
+
+- [ ] `SKILL.md` (Passo 8) e `references/transition-gates.md` documentam o novo comportamento, sem alterar sinal/tipo/ação dos gates
+- [ ] `evals/evals.json` cobre o cenário (gate dispara → TodoWrite; reconsulta → item concluído), validado por `scripts/validate_evals.py`
+- [ ] Suíte de eval **não executada** nesta rodada — fica pro próximo lote acumulado, com aprovação explícita
+- [ ] CI verde (gitleaks, shellcheck, evals, markdownlint, state-script, check-gates-script) antes do merge em `development`
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| "Dedup" e "conclusão automática" são instrução em prosa pro modelo, não lógica determinística — podem falhar na prática como a própria reconsulta falhou antes | Médio | É exatamente o que a rodada testa; se o uso real mostrar que o `TodoWrite` também é ignorado, o hook (`ROADMAP.md`) é a próxima camada |
+| Caso de eval novo sem rodar a suíte pode esconder um prompt mal calibrado até o próximo lote | Baixo | `scripts/validate_evals.py` garante só o schema; calibração fica para quando o lote acumulado for rodado |

@@ -106,6 +106,16 @@ o catálogo de skills/ferramentas disponíveis cresce. Direções já identifica
   certo pra essa tarefa, nunca decide sozinho qual usar nem a aplica — e a
   recomendação deveria ser uma resposta daquela consulta, não um registro
   persistido que ele mantém por conta própria.
+- **Hook opt-in de reconsulta** (identificado em uso real, 2026-10-01): o
+  `TodoWrite` (v1.7) é a primeira tentativa pros gates G3/G4/G5 — mas é só
+  lembrete textual, visível ao modelo, nunca mecânico de verdade. Se o uso
+  real mostrar que o todo também é ignorado, a próxima camada é um hook
+  `PreToolUse` (em `git commit`/`gh pr create`/`gh pr merge`) que lê o `cwd`
+  da chamada, confere sinal de conductor no projeto e injeta um lembrete —
+  sem bloquear o comando. Mantém a ADR 0001 (o `conductor` nunca instala hook
+  sozinho): o script é um artefato do repositório, e quem configura em
+  `settings.json` é o usuário, via `update-config` — o `conductor` no máximo
+  aponta esse caminho (G11).
 
 ## Princípio que não muda
 

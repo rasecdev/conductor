@@ -3,3 +3,5 @@
 *.py text eol=lf
 # Expected outputs of scripts/test_state.sh are compared byte for byte.
 evals/state-expected/*.json text eol=lf
+# Same for scripts/test_check_gates.sh (v1.6).
+evals/check-gates-expected/*.txt text eol=lf

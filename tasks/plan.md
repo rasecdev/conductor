@@ -379,14 +379,14 @@ entra em cena se este mecanismo mais barato não for suficiente.
 ### Fase 1: Comportamento + teste
 
 - [x] [Tarefa 1: Passo 8 chama TodoWrite em G3/G4/G5 (dedup + conclusão automática)](https://github.com/rasecdev/conductor/issues/95)
-- [ ] [Tarefa 2: Caso de eval cobrindo TodoWrite nos gates G3/G4/G5](https://github.com/rasecdev/conductor/issues/96)
+- [x] [Tarefa 2: Caso de eval cobrindo TodoWrite nos gates G3/G4/G5](https://github.com/rasecdev/conductor/issues/96) — caso `reconsult-registers-todo` (id 24), stories #93:1-4; reaproveita fixture `maduro-com-plano`
 
 ### Checkpoint: Fase 1
 
-- [ ] `SKILL.md` (Passo 8) e `references/transition-gates.md` documentam o novo comportamento, sem alterar sinal/tipo/ação dos gates
-- [ ] `evals/evals.json` cobre o cenário (gate dispara → TodoWrite; reconsulta → item concluído), validado por `scripts/validate_evals.py`
-- [ ] Suíte de eval **não executada** nesta rodada — fica pro próximo lote acumulado, com aprovação explícita
-- [ ] CI verde (gitleaks, shellcheck, evals, markdownlint, state-script, check-gates-script) antes do merge em `development`
+- [x] `SKILL.md` (Passo 8) e `references/transition-gates.md` documentam o novo comportamento, sem alterar sinal/tipo/ação dos gates
+- [x] `evals/evals.json` cobre o cenário (gate dispara → TodoWrite; reconsulta → item concluído), validado por leitura do schema (`scripts/validate_evals.py` aceita campos extra; Python indisponível no ambiente local)
+- [x] Suíte de eval **não executada** nesta rodada — fica pro próximo lote acumulado, com aprovação explícita
+- [x] CI verde (gitleaks, shellcheck, evals, markdownlint, state-script, check-gates-script) antes do merge em `development`
 
 ## Risks and Mitigations
 

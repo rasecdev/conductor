@@ -313,6 +313,27 @@
         "#25:8",
         "#25:14"
       ]
+    },
+    {
+      "id": 24,
+      "name": "reconsult-registers-todo",
+      "prompt": "No inicio desta tarefa voce recomendou o `to-spec` pra formalizar a spec, no projeto em <FIXTURE_DIR>. Terminei de rodar e abri a PR com o resultado -- registrando o pendente de reconsulta. Antes de eu voltar a te chamar, outra PR desse mesmo projeto foi mergeada tambem. Agora estou te chamando de novo pra decidir o proximo passo. O que voce faz com os pendentes, e o que recomenda?",
+      "expected_output": "Nao trata a recomendacao anterior como ainda valida sem reler o estado -- roda o Passo 1 de novo (reconsulta de fato). Ao fazer isso, marca como concluido o item pendente de 'reconsultar o conductor' que estava aberto (TodoWrite), porque rodar o Passo 1 agora E a reconsulta que ele esperava. Nao cria um segundo item pendente so porque uma segunda PR foi mergeada antes da reconsulta -- um unico pendente cobre os dois gatilhos (PR aberta e PR mergeada), sem duplicar. A recomendacao nova reflete o estado atual do projeto (nao repete a recomendacao do inicio da tarefa).",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ],
+      "stories": [
+        "#93:1",
+        "#93:2",
+        "#93:3",
+        "#93:4"
+      ]
     }
   ],
   "stories_nao_verificaveis": [

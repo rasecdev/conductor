@@ -287,13 +287,13 @@ cada uma amarrada às user stories da #25 que cobre.
 ### Fase 3: Evals e fechamento
 
 - [x] [Tarefa 5: Casos de eval restantes (a, b, c) + campo de stories em evals.json](https://github.com/rasecdev/conductor/issues/23) — stories 19, 24
-- [ ] [Tarefa 6: Regressão completa e fechamento da rodada v1.6](https://github.com/rasecdev/conductor/issues/84) — fechamento
+- [x] [Tarefa 6: Regressão completa e fechamento da rodada v1.6](https://github.com/rasecdev/conductor/issues/84) — fechamento
 
 ### Checkpoint: Fase 3
 
 - [x] evals/evals.json cobre aviso por mudança de arquitetura, gatilho com múltiplas consequências, etapa pulada rumo a skill manual, spec sem user stories e story sem caso de verificação
-- [ ] Toda story da #25 coberta por caso de eval, teste do script, ou marcada como não verificável com justificativa
-- [ ] `SPEC.md` incorpora o delta da v1.6
+- [x] Toda story da #25 coberta por caso de eval, teste do script, ou marcada como não verificável com justificativa — 13 por caso (3 por retag retroativo: `non-board-artifact-staleness`→#25:10, `quality-gate-failing`→#25:21, `stage-without-any-skill`→#25:25, `headless-project-no-ui-recommendation`→#25:26) + 13 em `stories_nao_verificaveis`
+- [x] `SPEC.md` incorpora o delta da v1.6 (seção "Gates de transição" nas User Stories, Implementation/Testing Decisions, linha na tabela de rodadas)
 
 # Rodada infra — branch/PR, CI e separação clone × instalação
 

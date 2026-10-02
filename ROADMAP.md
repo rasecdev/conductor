@@ -116,6 +116,16 @@ o catálogo de skills/ferramentas disponíveis cresce. Direções já identifica
   sozinho): o script é um artefato do repositório, e quem configura em
   `settings.json` é o usuário, via `update-config` — o `conductor` no máximo
   aponta esse caminho (G11).
+- **`TodoWrite` pode não existir no host** (identificado em uso real,
+  2026-10-02): o Passo 8 (G3/G4/G5) assume a tool `TodoWrite` do Claude Code
+  CLI, mas o `conductor` também roda em outros hosts (ex: extensão VSCode)
+  onde essa tool não está disponível — confirmado via busca de tool nesta
+  sessão, sem resultado. Hoje a instrução simplesmente não tem onde pousar
+  nesses hosts, sem fallback nem aviso disso. A ideia é o Passo 8 detectar a
+  ausência da tool (ela não aparece entre as disponíveis) e degradar pro
+  aviso em prosa já existente, deixando explícito que o reforço daquela
+  consulta é mais fraco que o normal — mesmo princípio de degradação já usado
+  pra gate "não verificado" e artefato "não avaliado".
 
 ## Princípio que não muda
 

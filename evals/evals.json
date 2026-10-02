@@ -102,7 +102,8 @@
         "evals/files/diagrama-desatualizado/tasks/plan.md"
       ],
       "stories": [
-        "#25:9"
+        "#25:9",
+        "#25:10"
       ]
     },
     {
@@ -116,6 +117,9 @@
         "evals/files/api-headless/package.json",
         "evals/files/api-headless/src/server.js",
         "evals/files/api-headless/tasks/plan.md"
+      ],
+      "stories": [
+        "#25:26"
       ]
     },
     {
@@ -154,6 +158,9 @@
         "evals/files/lint-falhando/docs/qa/plano.md",
         "evals/files/lint-falhando/scripts/check.sh",
         "evals/files/lint-falhando/tasks/plan.md"
+      ],
+      "stories": [
+        "#25:21"
       ]
     },
     {
@@ -236,6 +243,9 @@
       "expected_output": "Roda o catálogo e cruza com a tabela de referência de estágios; não encontrando skill nenhuma (nem no catálogo do script, nem citando alguma disponível na sessão) que cubra esse tipo de verificação, diz isso explicitamente em vez de inventar um passo ou seguir como se a etapa não existisse. Aponta `find-skills` como próxima ação se ela estiver instalada. Oferece registrar a etapa em `references/pipeline-stages.md` como estágio novo sem skill ainda, perguntando (não decidindo sozinho) se ela tem um gate correspondente configurado no projeto.",
       "files": [
         "evals/files/pasta-vazia/.fixture-setup.sh"
+      ],
+      "stories": [
+        "#25:25"
       ]
     },
     {
@@ -303,6 +313,42 @@
         "#25:8",
         "#25:14"
       ]
+    },
+    {
+      "id": 24,
+      "name": "reconsult-registers-todo",
+      "prompt": "No inicio desta tarefa voce recomendou o `to-spec` pra formalizar a spec, no projeto em <FIXTURE_DIR>. Terminei de rodar e abri a PR com o resultado -- registrando o pendente de reconsulta. Antes de eu voltar a te chamar, outra PR desse mesmo projeto foi mergeada tambem. Agora estou te chamando de novo pra decidir o proximo passo. O que voce faz com os pendentes, e o que recomenda?",
+      "expected_output": "Nao trata a recomendacao anterior como ainda valida sem reler o estado -- roda o Passo 1 de novo (reconsulta de fato). Ao fazer isso, marca como concluido o item pendente de 'reconsultar o conductor' que estava aberto (TodoWrite), porque rodar o Passo 1 agora E a reconsulta que ele esperava. Nao cria um segundo item pendente so porque uma segunda PR foi mergeada antes da reconsulta -- um unico pendente cobre os dois gatilhos (PR aberta e PR mergeada), sem duplicar. A recomendacao nova reflete o estado atual do projeto (nao repete a recomendacao do inicio da tarefa).",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ],
+      "stories": [
+        "#93:1",
+        "#93:2",
+        "#93:3",
+        "#93:4"
+      ]
     }
+  ],
+  "stories_nao_verificaveis": [
+    {"story": "#25:1", "motivo": "existencia e completude da tabela e conferida por leitura direta de references/transition-gates.md, nao e comportamento observavel em eval."},
+    {"story": "#25:2", "motivo": "schema de colunas da tabela (gatilho/sinal/tipo/consequencia/acao) e decisao estrutural, conferida por leitura de references/transition-gates.md."},
+    {"story": "#25:3", "motivo": "consolidacao dos portoes implicitos dos Passos 2/4/6 numa unica fonte e refatoracao estrutural do SKILL.md, conferida por leitura (nao duplica a regra), nao por comportamento em eval."},
+    {"story": "#25:5", "motivo": "verificado por scripts/test_check_gates.sh (seam de teste deterministico do script, casos spec-sem-stories/spec-com-stories), nao pelo mecanismo de evals.json."},
+    {"story": "#25:6", "motivo": "sinais de julgamento (G3/G4/G5) marcados como tal e conferido por leitura direta de references/transition-gates.md."},
+    {"story": "#25:7", "motivo": "estilo de saida do script (texto simples, parseavel) e conferido por leitura/code review comparando com scripts/catalog.sh, nao e comportamento observavel em eval."},
+    {"story": "#25:11", "motivo": "verificado por scripts/test_check_gates.sh (fixture pasta-vazia: G7 sempre 'nao avaliado' sem binding registrado)."},
+    {"story": "#25:18", "motivo": "regra de nao-retroatividade e decisao de politica aplicada ao nunca reabrir rodada ja fechada; nao ha comportamento observavel a testar sem simular historico retroativo."},
+    {"story": "#25:19", "motivo": "verificado pela propria existencia do campo stories nos casos deste arquivo (uso real do schema, nao eval dedicado)."},
+    {"story": "#25:20", "motivo": "verificado por scripts/test_check_gates.sh (fixture pasta-vazia: G9 'nao avaliado' quando o projeto nao registra convencao de rastreabilidade)."},
+    {"story": "#25:22", "motivo": "comportamento de 'aponta o caminho, nunca instala sozinho' coberto conceitualmente pela ADR 0001 e pelo padrao 'avisa, nunca bloqueia' ja exercido nos casos de gate de qualidade (ids 10-15); nao fazia parte dos casos minimos (a-e) definidos no Testing Decisions da spec #25."},
+    {"story": "#25:23", "motivo": "disable-model-invocation e bloqueio mecanico do harness, nao do conductor; o nao-contorno e reforcado implicitamente em qualquer caso que recomenda skill manual sem invoca-la, nao exige caso dedicado."},
+    {"story": "#25:24", "motivo": "regra de processo de desenvolvimento do proprio conductor (fluxo de rodada do CLAUDE.md deste repositorio), nao comportamento do conductor num projeto alvo."}
   ]
 }

@@ -10,7 +10,7 @@ do que a skill faz; o `SKILL.md` é a implementação dela.
 - Visão de longo prazo e o princípio que não muda ficam em `ROADMAP.md`; plano
   de tarefas em `tasks/plan.md`.
 
-Estado consolidado: v1.0 → v1.5.
+Estado consolidado: v1.0 → v1.6.
 
 ## Problem Statement
 
@@ -223,6 +223,46 @@ run em `evals/benchmarks/`.
     poder registrar esse estágio na tabela de referência mesmo sem skill
     ainda, informando se ele tem gate.
 
+### Gates de transição
+
+43. Como desenvolvedor, quero ver numa tabela única todos os portões que o
+    `conductor` aplica entre etapas do pipeline (gatilho, sinal, tipo do
+    sinal, consequência, ação), em vez de ter que ler o `SKILL.md` inteiro
+    pra saber o que ele vai exigir.
+44. Como desenvolvedor, quero que os portões hoje implícitos nos Passos 2, 4
+    e 6 (etapa sem a anterior completa, skill manual, reconsulta a cada
+    checkpoint, artefato vivo desatualizado) e o aviso de gate de qualidade
+    vermelho (v1.4) virem linhas dessa tabela, numa única fonte da regra.
+45. Como desenvolvedor, quero que um sinal checável por comando seja avaliado
+    por um script determinístico (mesmo estado → mesmo resultado), e que um
+    sinal de julgamento nunca seja apresentado como se fosse mecânico.
+46. Como desenvolvedor, quando um gatilho afeta mais de uma consequência,
+    quero cada uma reportada separadamente, nunca resumida num único
+    veredito.
+47. Como desenvolvedor com um artefato vivo registrado, quero ser avisado
+    quando a área que ele acompanha muda depois da última atualização dele,
+    com o vínculo vindo sempre do registro do Passo 6 — nunca inventado; sem
+    registro, o gate é "não avaliado", nunca presumido.
+48. Como desenvolvedor, quero que uma spec sem user stories não siga para a
+    quebra em tarefas, e que uma rodada não feche com story sem nenhum caso
+    de verificação vinculado — um caso pode cobrir várias stories, e uma
+    story estrutural (não comportamento) pode ser marcada não-verificável
+    com justificativa, conferida ao fechar a rodada. Esses gates valem a
+    partir de quando entram em produção, sem reabrir rodada já fechada.
+49. Como desenvolvedor, quero que um gate disparado resulte em aviso e em não
+    recomendar avanço, nunca em bloqueio mecânico — a decisão de seguir
+    mesmo assim é minha; se eu quiser um portão que feche de verdade, quero
+    que o `conductor` aponte o caminho (hook via `update-config`, ou check de
+    CI) sem instalar nada sozinho, e sem nunca sobrepor o
+    `disable-model-invocation` de skill de terceiro.
+50. Como desenvolvedor de projeto headless, quero que gates ligados a
+    artefato de UI não sejam avaliados, coerente com o filtro de tipo de
+    projeto.
+51. Como mantenedor do `conductor`, quero que a tabela de gates só mude por
+    rodada neste repositório (spec + eval); em runtime, uma skill nova sem
+    gate conhecido só gera proposta e pergunta, nunca edição direta da
+    tabela.
+
 ## Implementation Decisions
 
 - **Skill global**, não por projeto: funciona em qualquer repositório sem
@@ -290,6 +330,20 @@ run em `evals/benchmarks/`.
 - **Tipo de projeto é filtro de recomendação**, nunca trava.
 - **Avisa, nunca bloqueia** ([ADR 0001](docs/adr/0001-conductor-avisa-nunca-bloqueia.md)):
   a ação mais forte diante de um gate é avisar e deixar de recomendar avanço.
+- **Gates de transição** (`references/transition-gates.md`): tabela
+  declarativa gatilho → consequência (id, sinal verificável, tipo —
+  `mecânico` | `julgamento` —, consequência, ação). Consolida os portões que
+  antes viviam em prosa nos Passos 2/4/6 e o aviso de gate de qualidade
+  vermelho (v1.4), mais os gates de rastreabilidade SDD (spec sem stories;
+  story sem caso de verificação, com cobertura n:1 e marcação de
+  não-verificável). **Passo 8** do `SKILL.md` roda `scripts/check-gates.sh`
+  (sinais mecânicos, saída determinística) e soma a interpretação dos sinais
+  de julgamento, reportando toda linha disparada antes de fechar a
+  recomendação do Passo 4. Binding de artefato vivo vem só do registro do
+  Passo 6; sem registro, "não avaliado", nunca inventado. Evolução da tabela
+  só por rodada neste repositório — em runtime, skill sem gate conhecido
+  (G10) só gera proposta + pergunta, gravada no registro local do usuário
+  (nunca nas tabelas embutidas da skill).
 
 ## Testing Decisions
 
@@ -321,6 +375,21 @@ run em `evals/benchmarks/`.
   script contra cada fixture (preparada como no eval) e compara com
   `evals/state-expected/`, com datas, branch padrão e tamanhos normalizados;
   job `state-script` no CI.
+- **Seam 3, teste do script de gates**: `scripts/test_check_gates.sh` roda
+  `scripts/check-gates.sh` contra fixtures (`spec-sem-stories`,
+  `spec-com-stories`, `pasta-vazia`, `story-sem-verificacao`,
+  `story-justificada`) e compara com `evals/check-gates-expected/`; campo
+  `DISPARADO`/`MOTIVO` de G10 normalizado (depende do catálogo da máquina que
+  roda); inclui caso de saída estável entre execuções. Casos de eval novos
+  desta rodada: `two-gates-triggered-separately`, `spec-without-user-stories`
+  (nome interno `spec-sem-stories` no fixture), `story-without-verification-case`.
+  Cobertura das 26 user stories da spec #25 registrada no campo `stories` de
+  cada caso de `evals/evals.json` (incluindo retag retroativo de casos
+  anteriores à #25 que já exercitavam o mesmo comportamento, ex.:
+  `non-board-artifact-staleness` → stories 9 e 10) e no array
+  `stories_nao_verificaveis` para as estruturais/de processo (ex: existência
+  e schema da própria tabela, estilo de saída do script, regra de não
+  retroatividade) — conferido ao fechar a rodada.
 - **Custo controlado**: toda execução de eval só com aprovação explícita do
   usuário. Rodada de refatoração compara `with_skill` contra a rodada anterior
   (sem refazer baseline sem skill); 1 run por caso, 3 no gatilho de
@@ -365,5 +434,4 @@ foi incorporada acima.
 | v1.4 | [#24](https://github.com/rasecdev/conductor/issues/24) | Gates de qualidade: esperados, fonte e confiança, estado real, acionamento, aviso sem trava; casos antigos migrados para fixtures | `evals/results-v1.4.md` |
 | v1.5 | [#50](https://github.com/rasecdev/conductor/issues/50) | Enxugar o contexto: script de estado, carga sob demanda (ADR 0002), `SKILL.md` −52%; nenhum comportamento novo | `evals/results-v1.5.md` |
 | v1.6.1 | sem spec formal — [#79](https://github.com/rasecdev/conductor/issues/79), [#80](https://github.com/rasecdev/conductor/issues/80), [#81](https://github.com/rasecdev/conductor/issues/81) (decisão explícita do usuário, 2026-09-29) | Reconsulta a cada checkpoint (Passo 4); catálogo soma plugins de marketplace e skills da sessão (Passo 3); estágio sem skill é dito explicitamente; estágio novo sem skill pode ser registrado com gate | pendente (ver `evals/evals.json`) |
-
-Em andamento (não incorporada): v1.6 gates de transição ([#25](https://github.com/rasecdev/conductor/issues/25)) — ver `tasks/plan.md`.
+| v1.6 | [#25](https://github.com/rasecdev/conductor/issues/25) | Gates de transição como tabela declarativa (`references/transition-gates.md` + `scripts/check-gates.sh`, Passo 8), consolidando os portões implícitos dos Passos 2/4/6 e o gate de qualidade vermelho (v1.4); gates de rastreabilidade SDD (spec sem user stories; story sem caso de verificação) | `evals/evals.json` (26 stories da #25: 13 por caso de eval/retag, 13 por `stories_nao_verificaveis`) + `scripts/test_check_gates.sh` |

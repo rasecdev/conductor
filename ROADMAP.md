@@ -91,6 +91,21 @@ o catálogo de skills/ferramentas disponíveis cresce. Direções já identifica
   correspondente configurado no projeto (mesma lógica do item de "Gates de
   qualidade" acima) — se não tiver, a etapa entra como lacuna sinalizada, não
   como lacuna silenciosa.
+- **Montagem da pipeline de uma tarefa em tempo real** (identificada em uso
+  real, 2026-10-01, Achado 10 de `conductor-workspace/uso-real.md`): hoje o
+  catálogo (Passo 3) enxerga as skills de projeto/globais/plugin, mas o G10
+  só as lista como "sem estágio" — visto não é o mesmo que indicado. A ideia é
+  o `conductor`, ao ler a tarefa e o escopo que ela toca (não só o estágio do
+  pipeline de spec), apontar diretamente quais skills do catálogo e quais
+  gates se aplicam a *essa* tarefa (ex: "antes de editar a tela X, consulte a
+  skill de padrões Y"), em vez de só devolver a lista completa sem filtro.
+  Diferente da "pipeline extensível por etapa customizada" acima (que
+  adiciona uma etapa nova e conhecida à sequência genérica), aqui o próprio
+  recorte de quais skills/gates valem é decidido por tarefa, não por projeto.
+  Continua valendo o princípio abaixo: o `conductor` recomenda a skill/gate
+  certo pra essa tarefa, nunca decide sozinho qual usar nem a aplica — e a
+  recomendação deveria ser uma resposta daquela consulta, não um registro
+  persistido que ele mantém por conta própria.
 
 ## Princípio que não muda
 

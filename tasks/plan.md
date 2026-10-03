@@ -314,7 +314,7 @@ Issues.
 
 - [x] CI verde em `development`, com teste negativo provando que o gate falha quando deve
 - [x] `master` promovida e instalação atualizada via `git pull`
-- [ ] Revisão com o usuário antes de voltar à v1.4
+- [x] Revisão com o usuário antes de voltar à v1.4 — caixinha esquecida; confirmado retroativamente em 2026-10-02 (v1.4–v1.7 já aconteceram normalmente depois desta rodada, sem bloqueio)
 
 ## Risks and Mitigations
 

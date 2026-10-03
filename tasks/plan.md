@@ -233,7 +233,7 @@ de 1M de tokens.
 | Script falha numa máquina (Git Bash no Windows, sem `gh`, sem git) | Médio | Campos indisponíveis com motivo; referência de reserva com a leitura manual |
 | Referência lida sem a dependência dela (ex: filtro de tipo de projeto) | Médio | Referências autossuficientes ou com ponteiro explícito; caso de eval combinado |
 | Custo da validação | Médio | Linha de base reaproveitada, sem baseline sem skill, eval só com aprovação |
-| Rodada entra no meio do período de avaliação de uso real (2026-09-25 a 2026-10-09) | Baixo | Anotar no registro de uso real qual versão estava instalada em cada tarefa |
+| Rodada entra no meio do período de avaliação de uso real (2026-09-25 a 2026-10-09) | Baixo | Anotar no registro de uso real (`conductor-workspace/uso-real.md`, fora deste repositório — ver `CLAUDE.md` → "Dogfooding ≠ uso real") qual versão estava instalada em cada tarefa — mitigação executável desde que o arquivo passou a existir (#77) |
 
 # Rodada v1.6 — Gates de transição declarativos
 

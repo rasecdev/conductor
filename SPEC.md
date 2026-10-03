@@ -10,7 +10,7 @@ do que a skill faz; o `SKILL.md` é a implementação dela.
 - Visão de longo prazo e o princípio que não muda ficam em `ROADMAP.md`; plano
   de tarefas em `tasks/plan.md`.
 
-Estado consolidado: v1.0 → v1.6.
+Estado consolidado: v1.0 → v1.7.
 
 ## Problem Statement
 
@@ -263,6 +263,33 @@ run em `evals/benchmarks/`.
     gate conhecido só gera proposta e pergunta, nunca edição direta da
     tabela.
 
+### Lembrete de reconsulta via TodoWrite
+
+52. Como usuário, quero que o lembrete de reconsulta (G3/G4/G5) fique visível
+    entre turnos, para não perder de vista a recomendação porque a conversa
+    seguiu para outro assunto.
+53. Como usuário, quero que esse lembrete seja marcado como concluído
+    automaticamente quando eu de fato reconsultar a skill, para não acumular
+    item obsoleto na minha lista de tarefas.
+54. Como usuário, quero que o mesmo gatilho não crie um lembrete duplicado se
+    eu ainda não resolvi o anterior.
+55. Como usuário, quero que o texto do lembrete diga qual gatilho o disparou
+    (skill terminou, PR aberta/mergeada, ou foco mudou).
+56. Como usuário, quero que esse mecanismo nunca bloqueie nem falhe nenhuma
+    ação, continuando consistente com "avisa, nunca trava" (ADR 0001), e que
+    funcione sem nenhuma configuração extra.
+57. Como usuário que trabalha em mais de um projeto ao mesmo tempo, quero que
+    o lembrete não se confunda entre sessões/projetos diferentes.
+58. Como mantenedor, quero que a distinção sinal mecânico/julgamento de
+    G3/G4/G5 continue intacta (`TodoWrite` é consequência adicional, não gate
+    novo), sem exigir mudança em `scripts/check-gates.sh`.
+59. Como mantenedor, quero documentação explícita no `SKILL.md` e um caso de
+    eval cobrindo o comportamento, para que mudanças futuras no Passo 8 não
+    regridam essa regra silenciosamente.
+60. Como mantenedor, quero que os gates de sinal mecânico (G1, G2, G6-G10)
+    continuem sem esse comportamento, restrito ao problema real (reconsulta
+    esquecida).
+
 ## Implementation Decisions
 
 - **Skill global**, não por projeto: funciona em qualquer repositório sem
@@ -344,6 +371,15 @@ run em `evals/benchmarks/`.
   só por rodada neste repositório — em runtime, skill sem gate conhecido
   (G10) só gera proposta + pergunta, gravada no registro local do usuário
   (nunca nas tabelas embutidas da skill).
+- **Lembrete de reconsulta via `TodoWrite`**: quando G3, G4 ou G5 dispara, o
+  Passo 8 chama `TodoWrite` registrando um item pendente de "reconsultar o
+  conductor", citando o motivo do gatilho, além do aviso em prosa já
+  existente. Dedup: não duplica item pendente — só atualiza o motivo. O
+  Passo 1 marca esse item como concluído ao rodar de fato numa consulta
+  nova. Não muda `scripts/check-gates.sh` nem a classificação de sinal/ação
+  de G3/G4/G5 (continuam julgamento/avisar). Hosts sem a tool `TodoWrite`
+  (ex: extensões fora do Claude Code CLI) não têm onde executar essa
+  instrução hoje — lacuna registrada no `ROADMAP.md`.
 
 ## Testing Decisions
 
@@ -435,3 +471,4 @@ foi incorporada acima.
 | v1.5 | [#50](https://github.com/rasecdev/conductor/issues/50) | Enxugar o contexto: script de estado, carga sob demanda (ADR 0002), `SKILL.md` −52%; nenhum comportamento novo | `evals/results-v1.5.md` |
 | v1.6.1 | sem spec formal — [#79](https://github.com/rasecdev/conductor/issues/79), [#80](https://github.com/rasecdev/conductor/issues/80), [#81](https://github.com/rasecdev/conductor/issues/81) (decisão explícita do usuário, 2026-09-29) | Reconsulta a cada checkpoint (Passo 4); catálogo soma plugins de marketplace e skills da sessão (Passo 3); estágio sem skill é dito explicitamente; estágio novo sem skill pode ser registrado com gate | pendente (ver `evals/evals.json`) |
 | v1.6 | [#25](https://github.com/rasecdev/conductor/issues/25) | Gates de transição como tabela declarativa (`references/transition-gates.md` + `scripts/check-gates.sh`, Passo 8), consolidando os portões implícitos dos Passos 2/4/6 e o gate de qualidade vermelho (v1.4); gates de rastreabilidade SDD (spec sem user stories; story sem caso de verificação) | `evals/evals.json` (26 stories da #25: 13 por caso de eval/retag, 13 por `stories_nao_verificaveis`) + `scripts/test_check_gates.sh` |
+| v1.7 | [#93](https://github.com/rasecdev/conductor/issues/93) | Lembrete de reconsulta via `TodoWrite` nos gates G3/G4/G5 (dedup + conclusão automática no Passo 1); achado em dogfooding real: `TodoWrite` pode não existir no host (registrado no `ROADMAP.md`) | `evals/evals.json` (12 stories da #93: 5 por caso de eval, 7 por `stories_nao_verificaveis`) |

@@ -439,13 +439,13 @@ comportamento do `SKILL.md`.
 
 ### Fase 1: Script + teste
 
-- [ ] [Tarefa 1: scripts/generate_benchmark_charts.py (custo e ganho a partir de evals/benchmarks)](https://github.com/rasecdev/conductor/issues/110)
-- [ ] [Tarefa 2: teste determinístico do gerador de gráficos + CI](https://github.com/rasecdev/conductor/issues/111)
+- [x] [Tarefa 1: scripts/generate_benchmark_charts.py (custo e ganho a partir de evals/benchmarks)](https://github.com/rasecdev/conductor/issues/110)
+- [x] [Tarefa 2: teste determinístico do gerador de gráficos + CI](https://github.com/rasecdev/conductor/issues/111)
 
 ### Checkpoint: Fase 1
 
-- [ ] `scripts/generate_benchmark_charts.py` gera `docs/benchmarks/custo.svg` e `docs/benchmarks/ganho.svg` a partir dos `evals/benchmarks/*.json` já versionados (v1.4, v1.5), com modelo/data anotados
-- [ ] `scripts/test_generate_benchmark_charts.sh` comprova saída determinística; job `benchmark-chart-script` verde no CI
+- [x] `scripts/generate_benchmark_charts.py` gera `docs/benchmarks/custo.svg` e `docs/benchmarks/ganho.svg` a partir dos `evals/benchmarks/*.json` já versionados (v1.4, v1.5), com modelo/data anotados
+- [x] `scripts/test_generate_benchmark_charts.sh` comprova saída determinística; job `benchmark-chart-script` verde no CI
 
 ### Fase 2: README e fechamento
 

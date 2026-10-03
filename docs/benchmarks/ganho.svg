@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 268" width="560" height="268" font-family="sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g transform="translate(0,0)">
+<text x="280" y="18" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">Taxa de acerto por versão</text>
+<line x1="56" y1="186" x2="540" y2="186" stroke="#888" stroke-width="1"/>
+<text x="177.0" y="202" text-anchor="middle" font-size="11" fill="#333">v1.4</text>
+<rect x="61.0" y="55.6" width="116.0" height="130.4" fill="#2f6f4f"/>
+<text x="119.0" y="51.6" text-anchor="middle" font-size="10" fill="#1a1a1a">100%</text>
+<rect x="177.0" y="82.1" width="116.0" height="103.9" fill="#9a9a9a"/>
+<text x="235.0" y="78.1" text-anchor="middle" font-size="10" fill="#1a1a1a">80%</text>
+<text x="419.0" y="202" text-anchor="middle" font-size="11" fill="#333">v1.5</text>
+<rect x="303.0" y="55.6" width="116.0" height="130.4" fill="#2f6f4f"/>
+<text x="361.0" y="51.6" text-anchor="middle" font-size="10" fill="#1a1a1a">100%</text>
+<rect x="56" y="2" width="10" height="10" fill="#2f6f4f"/>
+<text x="70" y="11" font-size="10" fill="#333">com a skill</text>
+<rect x="186" y="2" width="10" height="10" fill="#9a9a9a"/>
+<text x="200" y="11" font-size="10" fill="#333">sem a skill</text>
+</g>
+<text x="56" y="236" font-size="10" fill="#555">v1.4: modelo não registrado, 2026-09-25</text>
+<text x="56" y="251" font-size="10" fill="#555">v1.5: claude-opus-5-5, 2026-09-25</text>
+</svg>

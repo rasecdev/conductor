@@ -15,6 +15,7 @@ catalog="$repo_root/scripts/catalog.sh"
 
 fresh_home="$(mktemp -d)"
 work_dir="$(mktemp -d)"
+# shellcheck disable=SC2317 # invoked indirectly via trap, not unreachable
 cleanup() { rm -rf "$fresh_home" "$work_dir"; }
 trap cleanup EXIT
 

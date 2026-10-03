@@ -99,6 +99,24 @@ check_G9() {
     return
   fi
 
+  # A numeracao de user stories em G8_SPEC so mapeia 1:1 com as tags
+  # "#<issue>:<no>" de evals.json enquanto existir uma unica rodada ainda nao
+  # incorporada. Um "Historico de rodadas" com 2+ linhas (ex: "| v1.6 | ...")
+  # significa que G8_SPEC e a spec CONSOLIDADA (numeracao continua atraves de
+  # rodadas), enquanto as tags sao escopadas por issue da rodada onde a story
+  # nasceu -- os numeros nao tem relacao entre si a partir da segunda rodada.
+  # Sem jeito mecanico de saber quais numeros de G8_SPEC pertencem a qual
+  # rodada sem ler o tracker (fora do que estes scripts fazem), "nao
+  # avaliado" em vez de comparar numeros que nao correspondem (achado via
+  # dogfooding, issue #102).
+  local hist_rows
+  hist_rows=$(grep -cE '^\| v[0-9]' "$G8_SPEC" 2>/dev/null || true)
+  if [ -n "$hist_rows" ] && [ "$hist_rows" -ge 2 ]; then
+    DISPARADO=nao_avaliado
+    MOTIVO="$G8_SPEC consolida $hist_rows rodadas incorporadas (Historico de rodadas); numeracao de stories nao corresponde as tags por issue de evals.json a partir da segunda rodada -- sem spec de rodada isolada pra comparar"
+    return
+  fi
+
   local nums missing=() i covered
   nums=$(grep -oE '#[0-9]+:[0-9]+' "$f" | sed -E 's/.*://' | LC_ALL=C sort -nu)
   for ((i = 1; i <= G8_COUNT; i++)); do

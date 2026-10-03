@@ -1,0 +1,21 @@
+{
+  "skill_name": "projeto-exemplo",
+  "evals": [
+    {
+      "id": 0,
+      "name": "tarefa-roda-sozinha",
+      "prompt": "A tarefa agendada rodou sozinha ontem?",
+      "expected_output": "Confirma que o cron executou e mostra o log.",
+      "files": [],
+      "stories": ["#1:1", "#1:2", "#1:3"]
+    },
+    {
+      "id": 1,
+      "name": "pausa-e-historico",
+      "prompt": "Dá pra pausar a tarefa e ver o que já rodou?",
+      "expected_output": "Confirma o comando de pausa e mostra o histórico de execuções.",
+      "files": [],
+      "stories": ["#2:1", "#2:2"]
+    }
+  ]
+}

@@ -233,7 +233,7 @@ de 1M de tokens.
 | Script falha numa máquina (Git Bash no Windows, sem `gh`, sem git) | Médio | Campos indisponíveis com motivo; referência de reserva com a leitura manual |
 | Referência lida sem a dependência dela (ex: filtro de tipo de projeto) | Médio | Referências autossuficientes ou com ponteiro explícito; caso de eval combinado |
 | Custo da validação | Médio | Linha de base reaproveitada, sem baseline sem skill, eval só com aprovação |
-| Rodada entra no meio do período de avaliação de uso real (2026-09-25 a 2026-10-09) | Baixo | Anotar no registro de uso real qual versão estava instalada em cada tarefa |
+| Rodada entra no meio do período de avaliação de uso real (2026-09-25 a 2026-10-09) | Baixo | Anotar no registro de uso real (`conductor-workspace/uso-real.md`, fora deste repositório — ver `CLAUDE.md` → "Dogfooding ≠ uso real") qual versão estava instalada em cada tarefa — mitigação executável desde que o arquivo passou a existir (#77) |
 
 # Rodada v1.6 — Gates de transição declarativos
 
@@ -314,7 +314,7 @@ Issues.
 
 - [x] CI verde em `development`, com teste negativo provando que o gate falha quando deve
 - [x] `master` promovida e instalação atualizada via `git pull`
-- [ ] Revisão com o usuário antes de voltar à v1.4
+- [x] Revisão com o usuário antes de voltar à v1.4 — caixinha esquecida; confirmado retroativamente em 2026-10-02 (v1.4–v1.7 já aconteceram normalmente depois desta rodada, sem bloqueio)
 
 ## Risks and Mitigations
 
@@ -404,3 +404,63 @@ entra em cena se este mecanismo mais barato não for suficiente.
 |------|--------|------------|
 | "Dedup" e "conclusão automática" são instrução em prosa pro modelo, não lógica determinística — podem falhar na prática como a própria reconsulta falhou antes | Médio | É exatamente o que a rodada testa; se o uso real mostrar que o `TodoWrite` também é ignorado, o hook (`ROADMAP.md`) é a próxima camada |
 | Caso de eval novo sem rodar a suíte pode esconder um prompt mal calibrado até o próximo lote | Baixo | `scripts/validate_evals.py` garante só o schema; calibração fica para quando o lote acumulado for rodado |
+
+# Rodada v1.8 — gráficos de custo × ganho no README
+
+Spec: [issue #109](https://github.com/rasecdev/conductor/issues/109), publicada
+via `/to-spec`. Origem: decisão já registrada em `CLAUDE.md` → "Artefatos
+vivos" (2026-09-25) — "Repositório para gráficos públicos de custo × ganho
+(README): gerados de `evals/benchmarks/*.json`, nunca mantidos à mão" — que
+ficou pendente até esta rodada.
+
+## Overview
+
+Novo script gera, a partir de `evals/benchmarks/*.json`, um gráfico de custo
+(tokens e duração medianos por execução, por versão) e um de ganho (taxa de
+acerto `with_skill` vs. `without_skill`, por versão, quando ambos existirem).
+Os arquivos gerados substituem, no README, a tabela fixa que só cobre a v1.4;
+a linha desatualizada sobre a estrutura do Notion também é corrigida. Rodada
+de infraestrutura de documentação do próprio repositório — não muda o
+comportamento do `SKILL.md`.
+
+## Architecture Decisions
+
+- Script novo (`scripts/generate_benchmark_charts.py`), mesma família de
+  `state.sh`/`check-gates.sh`/`benchmark_summary.py`: lê todos os
+  `evals/benchmarks/*.json`, nunca argumento de versão único.
+- Seam de teste: script determinístico (`scripts/test_generate_benchmark_charts.sh`),
+  não eval — ver spec #109, Testing Decisions. Nenhum caso novo em
+  `evals/evals.json`; todas as stories da #109 são não verificáveis por eval.
+- Fora de escopo (ver spec #109): gerar `evals/benchmarks/v1.6.json`/`v1.7.json`;
+  qualquer mudança de comportamento do `SKILL.md`/pipeline; geração do
+  gráfico em tempo real a cada PR no CI.
+
+## Task List
+
+### Fase 1: Script + teste
+
+- [x] [Tarefa 1: scripts/generate_benchmark_charts.py (custo e ganho a partir de evals/benchmarks)](https://github.com/rasecdev/conductor/issues/110)
+- [x] [Tarefa 2: teste determinístico do gerador de gráficos + CI](https://github.com/rasecdev/conductor/issues/111)
+
+### Checkpoint: Fase 1
+
+- [x] `scripts/generate_benchmark_charts.py` gera `docs/benchmarks/custo.svg` e `docs/benchmarks/ganho.svg` a partir dos `evals/benchmarks/*.json` já versionados (v1.4, v1.5), com modelo/data anotados
+- [x] `scripts/test_generate_benchmark_charts.sh` comprova saída determinística; job `benchmark-chart-script` verde no CI
+
+### Fase 2: README e fechamento
+
+- [x] [Tarefa 3: README embute os gráficos e corrige a linha do Notion](https://github.com/rasecdev/conductor/issues/112)
+- [x] [Tarefa 4: fechamento da rodada v1.8](https://github.com/rasecdev/conductor/issues/113)
+
+### Checkpoint: Fase 2
+
+- [x] Seção "Qualidade" do README mostra os gráficos gerados, sem a tabela fixa da v1.4 duplicando a mesma informação
+- [x] Linha sobre "estrutura de acompanhamento no Notion" corrigida
+- [x] Toda story da #109 conferida (não verificável por eval, com justificativa) e `SPEC.md` incorpora o delta da v1.8
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Biblioteca de plotting escolhida não estar disponível no ambiente de CI | Baixo | Job novo instala só o necessário para o teste determinístico; imagem é comitada, não gerada a cada PR |
+| Gráfico e tabela antiga do README ficarem redundantes/divergentes se a tabela não for removida | Baixo | Critério de aceite da Tarefa 3 exige remover a tabela ao embutir o gráfico |

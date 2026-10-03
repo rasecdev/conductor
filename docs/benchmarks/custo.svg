@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 488" width="560" height="488" font-family="sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g transform="translate(0,0)">
+<text x="280" y="18" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">Tokens medianos por execução</text>
+<line x1="56" y1="186" x2="540" y2="186" stroke="#888" stroke-width="1"/>
+<text x="177.0" y="202" text-anchor="middle" font-size="11" fill="#333">v1.4</text>
+<rect x="61.0" y="55.6" width="116.0" height="130.4" fill="#2f6f4f"/>
+<text x="119.0" y="51.6" text-anchor="middle" font-size="10" fill="#1a1a1a">69.724</text>
+<rect x="177.0" y="92.4" width="116.0" height="93.6" fill="#9a9a9a"/>
+<text x="235.0" y="88.4" text-anchor="middle" font-size="10" fill="#1a1a1a">50.055</text>
+<text x="419.0" y="202" text-anchor="middle" font-size="11" fill="#333">v1.5</text>
+<rect x="303.0" y="62.4" width="116.0" height="123.6" fill="#2f6f4f"/>
+<text x="361.0" y="58.4" text-anchor="middle" font-size="10" fill="#1a1a1a">66.069</text>
+<rect x="56" y="2" width="10" height="10" fill="#2f6f4f"/>
+<text x="70" y="11" font-size="10" fill="#333">com a skill</text>
+<rect x="186" y="2" width="10" height="10" fill="#9a9a9a"/>
+<text x="200" y="11" font-size="10" fill="#333">sem a skill</text>
+</g>
+<g transform="translate(0,220)">
+<text x="280" y="18" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">Duração mediana por execução</text>
+<line x1="56" y1="186" x2="540" y2="186" stroke="#888" stroke-width="1"/>
+<text x="177.0" y="202" text-anchor="middle" font-size="11" fill="#333">v1.4</text>
+<rect x="61.0" y="55.6" width="116.0" height="130.4" fill="#2f6f4f"/>
+<text x="119.0" y="51.6" text-anchor="middle" font-size="10" fill="#1a1a1a">70.7s</text>
+<rect x="177.0" y="102.8" width="116.0" height="83.2" fill="#9a9a9a"/>
+<text x="235.0" y="98.8" text-anchor="middle" font-size="10" fill="#1a1a1a">45.1s</text>
+<text x="419.0" y="202" text-anchor="middle" font-size="11" fill="#333">v1.5</text>
+<rect x="303.0" y="73.0" width="116.0" height="113.0" fill="#2f6f4f"/>
+<text x="361.0" y="69.0" text-anchor="middle" font-size="10" fill="#1a1a1a">61.2s</text>
+<rect x="56" y="2" width="10" height="10" fill="#2f6f4f"/>
+<text x="70" y="11" font-size="10" fill="#333">com a skill</text>
+<rect x="186" y="2" width="10" height="10" fill="#9a9a9a"/>
+<text x="200" y="11" font-size="10" fill="#333">sem a skill</text>
+</g>
+<text x="56" y="456" font-size="10" fill="#555">v1.4: modelo não registrado, 2026-09-25</text>
+<text x="56" y="471" font-size="10" fill="#555">v1.5: claude-opus-5-5, 2026-09-25</text>
+</svg>

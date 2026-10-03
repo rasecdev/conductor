@@ -339,9 +339,9 @@ própria — mesmo tipo de exceção documentado na "Rodada infra" acima.
 
 ### Checkpoint
 
-- [ ] `scripts/catalog.sh` testado com registro de plugin vazio/ausente (fresh install) sem quebrar
-- [ ] Caso correspondente em `evals/evals.json` pra cada comportamento novo
-- [ ] CI verde (gitleaks, shellcheck, evals, markdownlint) antes do merge em `development`
+- [x] `scripts/catalog.sh` testado com registro de plugin vazio/ausente (fresh install) sem quebrar — `scripts/test_catalog.sh`, job `catalog-script` no CI
+- [x] Caso correspondente em `evals/evals.json` pra cada comportamento novo — já cobertos: `catalog-includes-plugin-skills` (id 20), `stage-without-any-skill` (id 18), `checkpoint-reconsult` (id 19)
+- [x] CI verde (gitleaks, shellcheck, evals, markdownlint) antes do merge em `development`
 
 # Rodada v1.7 — lembrete de reconsulta via TodoWrite nos gates G3/G4/G5
 
@@ -387,6 +387,16 @@ entra em cena se este mecanismo mais barato não for suficiente.
 - [x] `evals/evals.json` cobre o cenário (gate dispara → TodoWrite; reconsulta → item concluído), validado por leitura do schema (`scripts/validate_evals.py` aceita campos extra; Python indisponível no ambiente local)
 - [x] Suíte de eval **não executada** nesta rodada — fica pro próximo lote acumulado, com aprovação explícita
 - [x] CI verde (gitleaks, shellcheck, evals, markdownlint, state-script, check-gates-script) antes do merge em `development`
+
+### Fase 2: Fechamento da rodada
+
+- [x] Conferir as 12 stories da #93 contra `evals/evals.json`: 5 por caso de eval (`reconsult-registers-todo`, id 24, agora com `#93:10` também), 7 por `stories_nao_verificaveis`
+- [x] Incorporar o delta ao `SPEC.md` (User Stories 52–60 "Lembrete de reconsulta via TodoWrite", Implementation Decisions, linha na tabela de rodadas, "Estado consolidado" → v1.7)
+
+### Checkpoint: Fase 2
+
+- [x] Toda story da #93 coberta por caso de eval ou marcada como não verificável com justificativa
+- [x] `SPEC.md` incorpora o delta da v1.7
 
 ## Risks and Mitigations
 

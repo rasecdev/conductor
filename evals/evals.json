@@ -332,7 +332,8 @@
         "#93:1",
         "#93:2",
         "#93:3",
-        "#93:4"
+        "#93:4",
+        "#93:10"
       ]
     },
     {
@@ -359,6 +360,13 @@
     {"story": "#25:20", "motivo": "verificado por scripts/test_check_gates.sh (fixture pasta-vazia: G9 'nao avaliado' quando o projeto nao registra convencao de rastreabilidade)."},
     {"story": "#25:22", "motivo": "comportamento de 'aponta o caminho, nunca instala sozinho' coberto conceitualmente pela ADR 0001 e pelo padrao 'avisa, nunca bloqueia' ja exercido nos casos de gate de qualidade (ids 10-15); nao fazia parte dos casos minimos (a-e) definidos no Testing Decisions da spec #25."},
     {"story": "#25:23", "motivo": "disable-model-invocation e bloqueio mecanico do harness, nao do conductor; o nao-contorno e reforcado implicitamente em qualquer caso que recomenda skill manual sem invoca-la, nao exige caso dedicado."},
-    {"story": "#25:24", "motivo": "regra de processo de desenvolvimento do proprio conductor (fluxo de rodada do CLAUDE.md deste repositorio), nao comportamento do conductor num projeto alvo."}
+    {"story": "#25:24", "motivo": "regra de processo de desenvolvimento do proprio conductor (fluxo de rodada do CLAUDE.md deste repositorio), nao comportamento do conductor num projeto alvo."},
+    {"story": "#93:5", "motivo": "TodoWrite e um registro informativo, nunca um mecanismo de bloqueio -- nao ha como simular em eval uma acao (commit/PR) falhando por causa dele, porque ele estruturalmente nao intercepta nada."},
+    {"story": "#93:6", "motivo": "funcionar sem configuracao extra e garantido pela propria implementacao (instrucao dentro do SKILL.md, sem setup nem arquivo novo), conferido por leitura do Passo 8, nao por comportamento em eval."},
+    {"story": "#93:7", "motivo": "TodoWrite ja e escopado por sessao pelo proprio host; nao ha comportamento adicional da skill a testar alem do que o host garante, e eval nao simula duas sessoes concorrentes."},
+    {"story": "#93:8", "motivo": "G3/G4/G5 continuarem classificados como julgamento/avisar e conferido por leitura direta de references/transition-gates.md apos a PR #98."},
+    {"story": "#93:9", "motivo": "ausencia de mudanca em scripts/check-gates.sh e fato negativo conferido pelo diff da PR #98, nao comportamento observavel em eval."},
+    {"story": "#93:11", "motivo": "documentacao explicita no SKILL.md e conferida por leitura do Passo 8 e do Passo 1, nao por comportamento em eval."},
+    {"story": "#93:12", "motivo": "ausencia de efeito nos gates mecanicos (G1, G2, G6-G10) e fato negativo conferido pelo diff da PR #98 e pela tabela, nao comportamento positivo observavel em eval."}
   ]
 }

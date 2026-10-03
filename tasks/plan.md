@@ -449,7 +449,7 @@ comportamento do `SKILL.md`.
 
 ### Fase 2: README e fechamento
 
-- [ ] [Tarefa 3: README embute os gráficos e corrige a linha do Notion](https://github.com/rasecdev/conductor/issues/112)
+- [x] [Tarefa 3: README embute os gráficos e corrige a linha do Notion](https://github.com/rasecdev/conductor/issues/112)
 - [ ] [Tarefa 4: fechamento da rodada v1.8](https://github.com/rasecdev/conductor/issues/113)
 
 ### Checkpoint: Fase 2

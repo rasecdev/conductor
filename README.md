@@ -29,7 +29,7 @@ Não depende de nenhuma configuração adicional. Funciona melhor com o pipeline
 3. **Monta o catálogo de skills disponíveis** dinamicamente (`scripts/catalog.sh`) e cruza com a ordem de estágios documentada em `references/pipeline-stages.md`.
 4. **Recomenda o próximo passo** — chama direto as skills automáticas, devolve o comando exato para as manuais (`wayfinder`, `to-spec`, `grill-with-docs` continuam exigindo confirmação sua, por design).
 5. **Avalia skills novas** propostas para o pipeline, comparando contra o que já existe e contra precedentes já registrados no próprio projeto.
-6. **Mantém a estrutura de acompanhamento no Notion** (página de projeto → fase → diagrama de dependência de tarefas) — opcional, não bloqueia o resto se o conector não estiver disponível.
+6. **Mantém os artefatos vivos do processo** (board de fases, diagrama de arquitetura, fluxo de tela, artefato de QA) acompanhando sua fonte de verdade no repositório — a ferramenta é escolha do usuário (Notion é só uma opção entre outras); o `conductor` nunca assume uma por padrão.
 
 Ver `SKILL.md` para o processo completo.
 
@@ -48,14 +48,17 @@ conductor/
 
 ## Qualidade
 
-Avaliada com o framework de eval do `skill-creator`: 16 casos, cada um rodado com e sem a skill em projetos sintéticos isolados. O baseline já tem **todas as skills de SDD instaladas** — a pergunta é se o `conductor` agrega em cima delas.
+Avaliada com o framework de eval do `skill-creator`: cada rodada roda os mesmos casos com e sem a skill em projetos sintéticos isolados. O baseline já tem **todas as skills de SDD instaladas** — a pergunta é se o `conductor` agrega em cima delas.
 
-| | Com o `conductor` | Sem (só o pipeline) |
-|---|---|---|
-| Acerto das assertions (v1.4) | **100%** | 77,9% |
-| Casos com acerto total | 16 de 16 | 7 de 16 |
+**Ganho** (taxa de acerto, com a skill vs. sem ela, por versão):
 
-A diferença aparece em encaminhar projeto novo para a descoberta certa, apontar gates de qualidade esperados e ausentes, e avisar sem travar quando um gate está vermelho. Em 7 casos o pipeline sozinho já acerta tudo. Uma run por configuração e grading pelo mesmo modelo que desenvolve a skill — metodologia, resultado por caso e limites em [`docs/avaliacao.md`](docs/avaliacao.md).
+![Ganho por versão](docs/benchmarks/ganho.svg)
+
+**Custo** (tokens e duração medianos por execução, por versão):
+
+![Custo por versão](docs/benchmarks/custo.svg)
+
+Gerados por `scripts/generate_benchmark_charts.py` a partir de `evals/benchmarks/<versão>.json` — nunca mantidos à mão; rode o script de novo a qualquer momento para reproduzir a partir dos mesmos dados. Uma versão sem a comparação `with_skill`/`without_skill` (ex: v1.5, que reaproveita o baseline sem skill da v1.4 porque não mudou o comportamento da skill) aparece só com a barra que tem. Uma run por configuração e grading pelo mesmo modelo que desenvolve a skill — metodologia, resultado por caso e limites em [`docs/avaliacao.md`](docs/avaliacao.md).
 
 ## Licença
 

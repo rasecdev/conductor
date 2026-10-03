@@ -10,7 +10,7 @@ do que a skill faz; o `SKILL.md` é a implementação dela.
 - Visão de longo prazo e o princípio que não muda ficam em `ROADMAP.md`; plano
   de tarefas em `tasks/plan.md`.
 
-Estado consolidado: v1.0 → v1.7.
+Estado consolidado: v1.0 → v1.8.
 
 ## Problem Statement
 
@@ -290,6 +290,54 @@ run em `evals/benchmarks/`.
     continuem sem esse comportamento, restrito ao problema real (reconsulta
     esquecida).
 
+### Gráficos de custo × ganho no README
+
+61. Como alguém avaliando se instala o `conductor`, quero ver no README
+    quanto a skill custa em tokens por execução, para estimar o impacto no
+    orçamento de contexto antes de instalar.
+62. Como alguém avaliando se instala o `conductor`, quero ver no README
+    quanto a skill custa em tempo por execução, para saber se o ganho
+    compensa a latência.
+63. Como alguém avaliando se instala o `conductor`, quero ver o ganho de
+    qualidade (nota com a skill vs. sem ela) ao lado do custo, para decidir
+    com os dois lados da troca visíveis juntos.
+64. Como alguém avaliando se instala o `conductor`, quero ver esses números
+    por versão, para entender se o custo ou o ganho mudou ao longo do tempo.
+65. Como mantenedor, quero que o gráfico seja gerado por um script a partir
+    de `evals/benchmarks/<versão>.json`, nunca desenhado à mão, para que ele
+    nunca desalinhe dos números reais.
+66. Como mantenedor, quero rodar esse script de novo a qualquer momento e
+    obter o mesmo resultado a partir dos mesmos arquivos de entrada, para
+    confiar que o gráfico no README reflete os dados versionados.
+67. Como mantenedor, quero que o script leia todos os
+    `evals/benchmarks/*.json` existentes automaticamente, para não ter que
+    listar versões à mão quando uma rodada nova registrar benchmark.
+68. Como mantenedor, quero que uma versão sem comparação `with_skill` vs.
+    `without_skill` (ex: v1.5) apareça só com a barra que tem, sem forçar
+    uma barra de ganho inexistente.
+69. Como mantenedor, quero que o modelo e a data de cada rodada apareçam
+    junto do gráfico, para que a leitura não presuma que todas as rodadas
+    usaram o mesmo modelo.
+70. Como mantenedor, quero que o script nunca leia nem exponha
+    `response.md`/evidência de eval, usando só os números já presentes em
+    `evals/benchmarks/`, para manter a mesma regra de privacidade já
+    aplicada a esses arquivos.
+71. Como mantenedor, quero que os arquivos gerados sejam versionados no
+    repositório, para que o README renderize o gráfico sem depender de
+    geração em tempo real no GitHub.
+72. Como mantenedor, quero que a linha do README sobre "estrutura de
+    acompanhamento no Notion" seja corrigida para descrever o Passo 6 atual,
+    para o README não contradizer o que a skill faz desde a v1.1.
+73. Como mantenedor, quero que a tabela antiga da seção "Qualidade" seja
+    substituída pelo gráfico multi-versão, sem duplicar a mesma informação
+    em dois formatos divergentes.
+74. Como mantenedor, ao fechar uma rodada futura com benchmark novo, quero
+    só rodar o script de novo e commitar o resultado, sem editar nenhuma
+    tabela ou imagem do README à mão.
+75. Como mantenedor, quero um teste determinístico do script de gráfico,
+    para pegar regressão na geração sem depender de inspeção visual a cada
+    rodada.
+
 ## Implementation Decisions
 
 - **Skill global**, não por projeto: funciona em qualquer repositório sem
@@ -380,6 +428,20 @@ run em `evals/benchmarks/`.
   de G3/G4/G5 (continuam julgamento/avisar). Hosts sem a tool `TodoWrite`
   (ex: extensões fora do Claude Code CLI) não têm onde executar essa
   instrução hoje — lacuna registrada no `ROADMAP.md`.
+- **Gráficos de custo × ganho no README**: `scripts/generate_benchmark_charts.py`
+  lê todos os `evals/benchmarks/*.json` (sem argumento de versão) e gera
+  `docs/benchmarks/custo.svg` (tokens e duração medianos por execução) e
+  `ganho.svg` (taxa de acerto `with_skill` vs. `without_skill`), versionados
+  no repositório; SVG construído por código puro (stdlib Python, sem lib de
+  plotting), nunca editado à mão. Versão sem uma das duas configs (ex: v1.5,
+  que reaproveita o baseline sem skill da v1.4) desenha só a barra que tem.
+  Modelo e data de cada versão aparecem como legenda, lidos dos mesmos
+  campos já presentes em `evals/benchmarks/<versão>.json`. README (seção
+  "Qualidade") embute os dois SVGs em vez da tabela fixa anterior (só
+  cobria a v1.4); item 6 de "Como funciona" corrigido para não descrever
+  Notion como estrutura fixa de acompanhamento. Rodada de infraestrutura de
+  documentação do próprio repositório — nenhuma mudança de comportamento do
+  `SKILL.md`.
 
 ## Testing Decisions
 
@@ -443,6 +505,15 @@ run em `evals/benchmarks/`.
 - **Prior art**: a iteração 1 de `mature-feature` expôs que a skill (e a
   assertion) presumiam falta de spec sem ler `tasks/plan.md` a fundo — origem
   da regra "ler conteúdo, não só existência".
+- **Seam 4, teste do gerador de gráficos**: `scripts/test_generate_benchmark_charts.sh`
+  roda `scripts/generate_benchmark_charts.py` contra os
+  `evals/benchmarks/*.json` já versionados e compara a saída entre duas
+  execuções (determinismo) e contra o SVG comitado (drift); job
+  `benchmark-chart-script` no CI. Não é caso de eval: a rodada v1.8 não
+  muda o comportamento do `SKILL.md` recomendado a um projeto alvo — é
+  infraestrutura do próprio repositório, por isso todas as stories 61–75
+  ficam em `stories_nao_verificaveis`, cobertas por este seam de script e
+  checagem manual do README renderizado.
 
 ## Out of Scope
 
@@ -472,3 +543,4 @@ foi incorporada acima.
 | v1.6.1 | sem spec formal — [#79](https://github.com/rasecdev/conductor/issues/79), [#80](https://github.com/rasecdev/conductor/issues/80), [#81](https://github.com/rasecdev/conductor/issues/81) (decisão explícita do usuário, 2026-09-29) | Reconsulta a cada checkpoint (Passo 4); catálogo soma plugins de marketplace e skills da sessão (Passo 3); estágio sem skill é dito explicitamente; estágio novo sem skill pode ser registrado com gate | pendente (ver `evals/evals.json`) |
 | v1.6 | [#25](https://github.com/rasecdev/conductor/issues/25) | Gates de transição como tabela declarativa (`references/transition-gates.md` + `scripts/check-gates.sh`, Passo 8), consolidando os portões implícitos dos Passos 2/4/6 e o gate de qualidade vermelho (v1.4); gates de rastreabilidade SDD (spec sem user stories; story sem caso de verificação) | `evals/evals.json` (26 stories da #25: 13 por caso de eval/retag, 13 por `stories_nao_verificaveis`) + `scripts/test_check_gates.sh` |
 | v1.7 | [#93](https://github.com/rasecdev/conductor/issues/93) | Lembrete de reconsulta via `TodoWrite` nos gates G3/G4/G5 (dedup + conclusão automática no Passo 1); achado em dogfooding real: `TodoWrite` pode não existir no host (registrado no `ROADMAP.md`) | `evals/evals.json` (12 stories da #93: 5 por caso de eval, 7 por `stories_nao_verificaveis`) |
+| v1.8 | [#109](https://github.com/rasecdev/conductor/issues/109) | Gráficos de custo × ganho no README (`scripts/generate_benchmark_charts.py`, a partir de `evals/benchmarks/*.json`); README corrigido (linha do Notion); infraestrutura do próprio repositório, sem mudança de comportamento do `SKILL.md` | `scripts/test_generate_benchmark_charts.sh` (Seam 4) + checagem manual do README; 15 stories da #109, todas em `stories_nao_verificaveis` |

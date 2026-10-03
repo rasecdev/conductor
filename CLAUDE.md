@@ -57,6 +57,12 @@ issue). Modelo "spec atual + propostas de mudança" (mesmo do OpenSpec):
   errada aqui, isso é defeito da skill — vira issue (label `bug`) e caso de
   eval (ex: [#27](https://github.com/rasecdev/conductor/issues/27)).
 - Decisões difíceis de reverter ficam em `docs/adr/`.
+- **Dogfooding ≠ uso real.** Dogfooding (acima) é o `conductor` conduzindo o
+  desenvolvimento dele mesmo, neste repositório. **Uso real** é o uso da
+  skill já **instalada**, em outros projetos do usuário — mantido em registro
+  próprio, fora deste repositório, porque cita projetos privados ([#77](https://github.com/rasecdev/conductor/issues/77)).
+  Achado de uso real sem spec formal (decisão explícita do usuário) é
+  implementado direto, igual a um achado de dogfooding.
 
 ## Como registrar trabalho
 

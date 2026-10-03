@@ -334,6 +334,16 @@
         "#93:3",
         "#93:4"
       ]
+    },
+    {
+      "id": 25,
+      "name": "g9-nao-avaliado-spec-consolidada",
+      "prompt": "Projeto exemplo em <FIXTURE_DIR>. Acho que da pra fechar essa rodada, confere pra mim?",
+      "expected_output": "Nao reporta stories sem caso vinculado so porque a numeracao de User Stories do SPEC.md (consolidada, atravessando duas rodadas incorporadas no Historico de rodadas) nao bate com os numeros usados nas tags '#<issue>:<no>' de evals.json, que sao escopados por rodada. Reconhece que SPEC.md e a spec consolidada, nao a spec de uma rodada isolada, e reporta esse gate como nao avaliado em vez de listar as stories 4 e 5 como descobertas -- elas estao cobertas pelas tags da rodada v1.1 (#2:1 e #2:2), so nao pela numeracao continua do arquivo.",
+      "files": [
+        "evals/files/spec-consolidada-multi-rodada/SPEC.md",
+        "evals/files/spec-consolidada-multi-rodada/evals/evals.json"
+      ]
     }
   ],
   "stories_nao_verificaveis": [

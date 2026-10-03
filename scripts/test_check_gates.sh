@@ -37,8 +37,10 @@ run_once() { # $1 = fixture name -> prints normalized output, cleans up
 
 # Mechanical signal disparado / nao disparado (G8/G9), binding ausente -> nao
 # avaliado (G7, always -- no fixture has a structured artifact binding),
-# story com justificativa de nao-verificabilidade conta como coberta (G9).
-cases=(spec-sem-stories spec-com-stories pasta-vazia story-sem-verificacao story-justificada)
+# story com justificativa de nao-verificabilidade conta como coberta (G9),
+# SPEC.md consolidando 2+ rodadas -> G9 nao avaliado em vez de falso positivo
+# (issue #102).
+cases=(spec-sem-stories spec-com-stories pasta-vazia story-sem-verificacao story-justificada spec-consolidada-multi-rodada)
 
 failed=0
 for name in "${cases[@]}"; do

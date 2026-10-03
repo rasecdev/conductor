@@ -450,13 +450,13 @@ comportamento do `SKILL.md`.
 ### Fase 2: README e fechamento
 
 - [x] [Tarefa 3: README embute os gráficos e corrige a linha do Notion](https://github.com/rasecdev/conductor/issues/112)
-- [ ] [Tarefa 4: fechamento da rodada v1.8](https://github.com/rasecdev/conductor/issues/113)
+- [x] [Tarefa 4: fechamento da rodada v1.8](https://github.com/rasecdev/conductor/issues/113)
 
 ### Checkpoint: Fase 2
 
-- [ ] Seção "Qualidade" do README mostra os gráficos gerados, sem a tabela fixa da v1.4 duplicando a mesma informação
-- [ ] Linha sobre "estrutura de acompanhamento no Notion" corrigida
-- [ ] Toda story da #109 conferida (não verificável por eval, com justificativa) e `SPEC.md` incorpora o delta da v1.8
+- [x] Seção "Qualidade" do README mostra os gráficos gerados, sem a tabela fixa da v1.4 duplicando a mesma informação
+- [x] Linha sobre "estrutura de acompanhamento no Notion" corrigida
+- [x] Toda story da #109 conferida (não verificável por eval, com justificativa) e `SPEC.md` incorpora o delta da v1.8
 
 ## Risks and Mitigations
 

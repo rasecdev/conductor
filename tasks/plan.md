@@ -464,3 +464,62 @@ comportamento do `SKILL.md`.
 |------|--------|------------|
 | Biblioteca de plotting escolhida não estar disponível no ambiente de CI | Baixo | Job novo instala só o necessário para o teste determinístico; imagem é comitada, não gerada a cada PR |
 | Gráfico e tabela antiga do README ficarem redundantes/divergentes se a tabela não for removida | Baixo | Critério de aceite da Tarefa 3 exige remover a tabela ao embutir o gráfico |
+
+---
+
+# Rodada v1.9 — lista de skills por tarefa, resposta curta e Passo 6 sem pergunta repetida
+
+Spec: [issue #119](https://github.com/rasecdev/conductor/issues/119), publicada
+via `/to-spec`. Origem: duas semanas de uso real (2026-09-25 a 2026-10-06) —
+G10 lista skills sem indicar qual usar, `conductor` acionado fora de tarefa de
+spec e Passo 6 perguntando ferramenta já citada.
+
+## Overview
+
+Três mudanças de comportamento do `SKILL.md`: o Passo 4 entrega uma lista
+curta "para esta tarefa" montada a partir do catálogo; o G10 passa a reportar
+só skills candidatas à tarefa (sem mudar `check-gates.sh`, opção A da spec);
+pedido que não é tarefa de spec recebe resposta curta sem rodar scripts; o
+Passo 6 não pergunta a ferramenta que o usuário já nomeou no pedido.
+
+## Architecture Decisions
+
+- Opção A: a filtragem do G10 é instrução (Passo 8 e `references/transition-gates.md`),
+  não script. Nenhuma mudança em `check-gates.sh`, `catalog.sh`, `state.sh` nem
+  nos fixtures esperados.
+- Seam único: eval (Seam 1). Cinco casos novos em `evals/evals.json`; as
+  stories 20–22 (estruturais) ficam em `stories_nao_verificaveis`.
+- Fora de escopo (ver spec #119): hook de reconsulta mecânica; registro
+  estático de skills por tela; invocação automática de skill manual.
+
+## Task List
+
+### Fase 1: Comportamentos independentes
+
+- [ ] [Tarefa 1: resposta curta fora de tarefa de spec](https://github.com/rasecdev/conductor/issues/120)
+- [ ] [Tarefa 2: Passo 6 sem pergunta repetida](https://github.com/rasecdev/conductor/issues/121)
+- [ ] [Tarefa 3: lista de skills para esta tarefa no Passo 4](https://github.com/rasecdev/conductor/issues/122)
+
+### Checkpoint: Fase 1
+
+- [ ] Os casos novos de T1–T3 existem em `evals/evals.json` com `stories` marcadas e o CI está verde
+- [ ] Smoke test de poucos casos, só com aprovação explícita do usuário
+
+### Fase 2: G10 e fechamento
+
+- [ ] [Tarefa 4: G10 só reporta skill candidata à tarefa](https://github.com/rasecdev/conductor/issues/123)
+- [ ] [Tarefa 5: fechamento da rodada v1.9](https://github.com/rasecdev/conductor/issues/124)
+
+### Checkpoint: Fase 2
+
+- [ ] Toda story da #119 conferida contra a skill (verificável por caso de eval ou com justificativa) e `SPEC.md` incorpora o delta da v1.9
+- [ ] Lote completo de evals e `evals/benchmarks/v1.9.json`, só com aprovação explícita do usuário
+
+## Risks and Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| A regra de resposta curta fazer o `conductor` pular tarefa de spec de verdade | Alto | T1 inclui a volta ao fluxo completo no G5 e aviso de uma linha para problema percebido |
+| Texto novo inflar o `SKILL.md` (ADR 0002) | Médio | Texto mínimo no `SKILL.md`, detalhe em referência sob gatilho |
+| Fixture da T3 parecer projeto real | Médio | Fixture sintético, sem nome de cliente nem de tela real |
+| Eval custar caro (~1M+ tokens) | Médio | Nada roda sem aprovação; lote só depois de acumular as mudanças |

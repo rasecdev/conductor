@@ -496,7 +496,7 @@ Passo 6 não pergunta a ferramenta que o usuário já nomeou no pedido.
 
 ### Fase 1: Comportamentos independentes
 
-- [ ] [Tarefa 1: resposta curta fora de tarefa de spec](https://github.com/rasecdev/conductor/issues/120)
+- [x] [Tarefa 1: resposta curta fora de tarefa de spec](https://github.com/rasecdev/conductor/issues/120)
 - [ ] [Tarefa 2: Passo 6 sem pergunta repetida](https://github.com/rasecdev/conductor/issues/121)
 - [ ] [Tarefa 3: lista de skills para esta tarefa no Passo 4](https://github.com/rasecdev/conductor/issues/122)
 

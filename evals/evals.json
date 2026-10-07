@@ -345,6 +345,43 @@
         "evals/files/spec-consolidada-multi-rodada/SPEC.md",
         "evals/files/spec-consolidada-multi-rodada/evals/evals.json"
       ]
+    },
+    {
+      "id": 26,
+      "name": "incident-investigation-short-answer",
+      "prompt": "Projeto em <FIXTURE_DIR>. O bot parou de responder no Telegram desde ontem a noite e preciso investigar o que aconteceu nos logs. Por onde eu comeco?",
+      "expected_output": "Reconhece que e uma investigacao de incidente, nao uma tarefa de spec (nao vai mudar codigo nem planejamento ainda), e diz isso em uma ou duas linhas, sem recomendacao de pipeline. Nao roda scripts/state.sh, scripts/check-gates.sh nem scripts/catalog.sh, e nao lista skills do catalogo nem gates. Nao despeja estado do projeto nem pergunta sobre artefatos vivos. Deixa claro que, se a investigacao virar mudanca de codigo ou de planejamento, volta a consultar o conductor nesse ponto.",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ],
+      "stories": [
+        "#119:11",
+        "#119:12"
+      ]
+    },
+    {
+      "id": 27,
+      "name": "standalone-question-short-answer",
+      "prompt": "Projeto em <FIXTURE_DIR>. So uma duvida rapida: o que o git rebase --onto faz, na pratica?",
+      "expected_output": "Reconhece que e uma pergunta avulsa, fora de tarefa de spec, e responde curto que nao ha recomendacao de pipeline para isso, sem rodar scripts/state.sh, scripts/check-gates.sh nem scripts/catalog.sh e sem listar gates, skills ou artefatos vivos. Nao transforma a pergunta em planejamento nem em spec.",
+      "files": [
+        "evals/files/maduro-com-plano/.fixture-setup.sh",
+        "evals/files/maduro-com-plano/CLAUDE.md",
+        "evals/files/maduro-com-plano/PLANO.md",
+        "evals/files/maduro-com-plano/docs/adr/0001-canais-como-adaptadores.md",
+        "evals/files/maduro-com-plano/package.json",
+        "evals/files/maduro-com-plano/src/canais/telegram.ts",
+        "evals/files/maduro-com-plano/tasks/plan.md"
+      ],
+      "stories": [
+        "#119:12"
+      ]
     }
   ],
   "stories_nao_verificaveis": [
@@ -367,6 +404,8 @@
     {"story": "#93:8", "motivo": "G3/G4/G5 continuarem classificados como julgamento/avisar e conferido por leitura direta de references/transition-gates.md apos a PR #98."},
     {"story": "#93:9", "motivo": "ausencia de mudanca em scripts/check-gates.sh e fato negativo conferido pelo diff da PR #98, nao comportamento observavel em eval."},
     {"story": "#93:11", "motivo": "documentacao explicita no SKILL.md e conferida por leitura do Passo 8 e do Passo 1, nao por comportamento em eval."},
-    {"story": "#93:12", "motivo": "ausencia de efeito nos gates mecanicos (G1, G2, G6-G10) e fato negativo conferido pelo diff da PR #98 e pela tabela, nao comportamento positivo observavel em eval."}
+    {"story": "#93:12", "motivo": "ausencia de efeito nos gates mecanicos (G1, G2, G6-G10) e fato negativo conferido pelo diff da PR #98 e pela tabela, nao comportamento positivo observavel em eval."},
+    {"story": "#119:13", "motivo": "depende de a conversa mudar de foco no meio do caminho (G5); o eval roda um unico prompt, nao uma conversa de varios turnos."},
+    {"story": "#119:14", "motivo": "depende de a skill notar um problema real incidental; sem um problema plantado no fixture nao ha comportamento observavel, e plantar um distorce o caso de resposta curta."}
   ]
 }

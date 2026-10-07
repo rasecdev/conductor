@@ -36,6 +36,15 @@ implementação, revisão) em geral podem ser chamadas diretamente. Confira
 sempre `scripts/catalog.sh` pra saber, na hora, quais têm
 `disable-model-invocation` — não assuma pela lista de exemplo.
 
+## Antes do Passo 1 — É tarefa de spec?
+
+Se o pedido não vai mudar código nem planejamento (investigação de incidente,
+pergunta avulsa, dúvida pontual), responda curto: diga em uma ou duas linhas
+que não há recomendação de pipeline pra isso, sem rodar `state.sh`,
+`check-gates.sh` nem `catalog.sh`. Se notar de passagem um problema real,
+avise em uma linha. Se o foco virar mudança de código ou de planejamento,
+trate como mudança de foco (G5) e siga o fluxo completo a partir do Passo 1.
+
 ## Passo 1 — Ler o estado do projeto
 
 Antes de mais nada: se a lista de tarefas tiver um item pendente de
